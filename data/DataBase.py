@@ -7,6 +7,7 @@ from gspread_dataframe import get_as_dataframe
 from gsheetsdb import connect
 import gspread
 
+# Create a connection object.
 credentials = service_account.Credentials.from_service_account_info(
     st.secrets["gcp_service_account"],
     scopes=[
@@ -14,6 +15,14 @@ credentials = service_account.Credentials.from_service_account_info(
     ],
 )
 conn = connect(credentials=credentials)
+
+def get_sheet():
+    sa = gspread.service_account("credentials.json")
+    sh = sa.open("CNAS_DataSet")
+    worksheet = sh.get_worksheet(1)
+    df_read = get_as_dataframe(worksheet, usecols=[0,1], nrows=20)
+    st.write(df_read)
+    return df_read
 
 def set_auction_summary_values(auction_summary_json_dictionary):
     auction_start = auction_summary_json_dictionary.get("dtInicioProposta")
