@@ -2,11 +2,14 @@
 import streamlit as st
 import data.Extractor as Extractor
 import data.DataBase as DataBase
+import gspread
 
 # In-house dependencies
 st.title("ComprasNet's Auction Solver (CNAS)")
 
-DataBase.get_db()
+sa = gspread.service_account("CNAS/credentials.json")
+
+DataBase.get_db(sa)
 # DataBase.post_db()
 # DataBase.get_db()
 
