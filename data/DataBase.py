@@ -36,9 +36,12 @@ SHEET_URL = st.secrets["private_gsheets_url"]
 def get_db():
     query = f'SELECT * FROM "{SHEET_URL}"'
     rows = CURSOR.execute(query)
-    for r in rows:
-        st.write(r)
-
+    df = pd.DataFrame(rows, columns = ['Auction_Id', 'Start_Date',
+                                  'End_Date', 'Total_Estimated_Price',
+                                  'Total_Homologated_Price', 'Items_Auctioned',
+                                  'Winning_Bids', 'Suppliers_Winner_ID',
+                                  'History_Bids_Items', 'History_Bids_Date'])
+    st.write(df)
 
 def post_db():
     # query = f'INSERT INTO "{sheet_url}" VALUES ("{name}", "{email}", "{q1a1}", "{q1a2}", "{q1a3}")'
