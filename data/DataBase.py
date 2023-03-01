@@ -21,6 +21,7 @@ client = gspread.authorize(credentials)
 def get_db(): 
     sheet_id = re.search('/d/(.+?)/edit?', st.secrets["private_gsheets_url"]).group(1)
     csv_url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv"
+    st.write(csv_url)
     df =  pd.read_csv(csv_url, on_bad_lines='skip')
     st.write(df)
     return df
