@@ -38,6 +38,7 @@ def get_db():
     rows = CURSOR.execute(query, headers=1)
     rows = rows.fetchall()
     st.write(rows)
+    new_df = pd.DataFrame(data=rows)
 
 def post_db():
     # query = f'INSERT INTO "{sheet_url}" VALUES ("{name}", "{email}", "{q1a1}", "{q1a2}", "{q1a3}")'
