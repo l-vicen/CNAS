@@ -2,10 +2,19 @@
 import streamlit as st
 import pandas as pd
 
-from gspread_dataframe import get_as_dataframe
+import gspread
+from google.oauth2 import service_account
 
-def get_db(sa):
-    sh = sa.open("CNAS_DataSet")
-    worksheet = sh.get_worksheet(1)
-    df_read = get_as_dataframe(worksheet)
-    return df_read
+# Create a connection object.
+credentials = service_account.Credentials.from_service_account_info(
+    st.secrets["gcp_service_account"],
+    scopes=[
+        "https://www.googleapis.com/auth/spreadsheets",
+    ],
+)
+conn = connect(credentials=credentials)
+
+def get_db(): 
+    sheet_id = st.secrets["private_gsheets_url"]
+    csv_url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv"
+    return pd.read_csv(csv_url, on_bad_lines='skip')

@@ -7,9 +7,7 @@ import gspread
 # In-house dependencies
 st.title("ComprasNet's Auction Solver (CNAS)")
 
-sa = gspread.service_account("CNAS/credentials.json")
-
-DataBase.get_db(sa)
+DataBase.get_db()
 # DataBase.post_db()
 # DataBase.get_db()
 
