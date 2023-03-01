@@ -3,6 +3,7 @@ import streamlit as st
 import pandas as pd
 
 from google.oauth2 import service_account
+from gspread_dataframe import get_as_dataframe
 from gsheetsdb import connect
 
 def get_db():
@@ -16,17 +17,23 @@ def get_db():
     )
     conn = connect(credentials=credentials)
 
-    # Perform SQL query on the Google Sheet.
-    # Uses st.cache_data to only rerun when the query changes or after 10 min.
-    @st.cache_data(ttl=600)
-    def run_query(query):
-        rows = conn.execute(query, headers=1)
-        rows = rows.fetchall()
-        return rows
+    sh = conn.open("CNAS_DataSet")
+    worksheet = sh.get_worksheet(1)
+    df_read = get_as_dataframe(worksheet)
+    st.write(df_read)
+    # return df_read
 
-    sheet_url = st.secrets["private_gsheets_url"]
-    rows = run_query(f'SELECT * FROM "{sheet_url}"')
+    # # Perform SQL query on the Google Sheet.
+    # # Uses st.cache_data to only rerun when the query changes or after 10 min.
+    # @st.cache_data(ttl=600)
+    # def run_query(query):
+    #     rows = conn.execute(query, headers=1)
+    #     rows = rows.fetchall()
+    #     return rows
 
-    # Print results.
-    for row in rows:
-        st.write(row)
+    # sheet_url = st.secrets["private_gsheets_url"]
+    # rows = run_query(f'SELECT * FROM "{sheet_url}"')
+
+    # # Print results.
+    # for row in rows:
+    #     st.write(row)
