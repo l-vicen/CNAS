@@ -16,12 +16,11 @@ credentials = service_account.Credentials.from_service_account_info(
     ],
 )
 conn = connect(credentials=credentials) # Connection
-client = gspread.authorize(credentials)
+gc, client = gspread.authorize(credentials)
 
 # Get Request to own built DB -> Data containing <Wallet | Credit Score>
 def get_db():
-    sa = gspread.service_account()
-    sh = sa.open("CNAS_DataSet")
+    sh = gc.open("CNAS_DataSet")
     worksheet = sh.get_worksheet(1)
     df_read = get_as_dataframe(worksheet)
     st.write(df_read)
