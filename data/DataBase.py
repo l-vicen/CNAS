@@ -9,10 +9,7 @@ from shillelagh.backends.apsw.db import connect
 # Create a connection object and config
 CREDENTIALS = service_account.Credentials.from_service_account_info(
     st.secrets["gcp_service_account"],
-    scopes=[
-        "https://www.googleapis.com/auth/spreadsheets",
-    ],
-)
+    scopes=["https://www.googleapis.com/auth/spreadsheets",],)
 
 connection = connect(":memory:", adapter_kwargs={
     "gsheetsapi" : { 
@@ -31,13 +28,12 @@ connection = connect(":memory:", adapter_kwargs={
     },
 })
 
-def run_query(query):
-    rows = connection.execute(query, headers=1)
-    rows = rows.fetchall()
-    return rows
-
-
 def get_db():
+
+    def run_query(query):
+        rows = connection.execute(query, headers=1)
+        rows = rows.fetchall()
+        return rows
 
     sheet_url = st.secrets["private_gsheets_url"]
     rows = run_query(f'SELECT * FROM "{sheet_url}"')
