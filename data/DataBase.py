@@ -8,21 +8,21 @@ from gsheetsdb import connect
 import gspread
 
 # Create a connection object.
-credentials = service_account.Credentials.from_service_account_info(
+CREDENTIALS = service_account.Credentials.from_service_account_info(
     st.secrets["gcp_service_account"],
     scopes=[
         "https://www.googleapis.com/auth/spreadsheets",
     ],
 )
-conn = connect(credentials=credentials)
+CONN = connect(credentials=CREDENTIALS)
 
-def get_sheet_as_dataframe():
+def get_sheet_as_dataframe(CONN):
 
     # Perform SQL query on the Google Sheet.
     # Uses st.cache_data to only rerun when the query changes or after 10 min.
     @st.cache_data(ttl=600)
     def run_query(query):
-        rows = conn.execute(query, headers=1)
+        rows = CONN.execute(query, headers=1)
         rows = rows.fetchall()
         return rows
 
