@@ -1,7 +1,6 @@
 # 3rdParty Libraries
 import streamlit as st
 import pandas as pd
-import re
 
 from google.oauth2 import service_account
 from shillelagh.backends.apsw.db import connect
@@ -41,7 +40,7 @@ def get_db():
                                   'Total_Homologated_Price', 'Items_Auctioned',
                                   'Winning_Bids', 'Suppliers_Winner_ID',
                                   'History_Bids_Items', 'History_Bids_Date'])
-    st.write(df)
+    return df
 
 def post_db():
     # query = f'INSERT INTO "{sheet_url}" VALUES ("{name}", "{email}", "{q1a1}", "{q1a2}", "{q1a3}")'
