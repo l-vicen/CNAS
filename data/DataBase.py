@@ -13,7 +13,7 @@ credentials = service_account.Credentials.from_service_account_info(
         "https://www.googleapis.com/auth/spreadsheets",
     ],
 )
-conn = connect(credentials=credentials)
+connection = connect(credentials=credentials)
 
 def run_query(query):
     rows = connection.execute(query, headers=1)
