@@ -29,4 +29,4 @@ def get_db():
 
     # Print results.
     for row in rows:
-        st.write(f"{row.name} has a :{row.pet}:")
+        st.write(row)
