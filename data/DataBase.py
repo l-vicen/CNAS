@@ -16,7 +16,7 @@ credentials = service_account.Credentials.from_service_account_info(
 )
 conn = connect(credentials=credentials) # Connection
 
-CONNECTION =  gspread.service_account("CNAS/data/credentials.json")
+CONNECTION =  gspread.service_account("credentials.json")
 DB = CONNECTION.open("CNAS_DataSet")
 WORKSHEET = DB.get_worksheet(1)
 
