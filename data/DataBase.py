@@ -24,9 +24,13 @@ def get_sheet():
     st.write(df_read)
     return df_read
 
-def set_auction_summary_values(auction_summary_json_dictionary):
-    auction_start = auction_summary_json_dictionary.get("dtInicioProposta")
-    auction_end = auction_summary_json_dictionary.get("dtFimProposta")
-    homologated_value = auction_summary_json_dictionary.get("valorHomologadoTotal")
-    estimated_value = auction_summary_json_dictionary.get("valorEstimadoTotal")
-    pass
+def post_sheet():
+    sa = gspread.service_account("credentials.json")
+    sh = sa.open("CNAS_DataSet")
+    worksheetCS = sh.get_worksheet(1)
+    worksheetCS.insert_row(["Testing",	"Testing",	"Testing",	"Testing",	"Testing",	"Testing",	"Testing",	"Testing",	"Testing", "Testing"])
+    # auction_start = auction_summary_json_dictionary.get("dtInicioProposta")
+    # auction_end = auction_summary_json_dictionary.get("dtFimProposta")
+    # homologated_value = auction_summary_json_dictionary.get("valorHomologadoTotal")
+    # estimated_value = auction_summary_json_dictionary.get("valorEstimadoTotal")
+    # pass
