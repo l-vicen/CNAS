@@ -7,7 +7,7 @@ from gspread_dataframe import get_as_dataframe
 from gsheetsdb import connect
 import gspread
 
-CONNECTION =  gspread.service_account("credentials.json")
+CONNECTION =  gspread.service_account("CNAS/credentials.json")
 DB = CONNECTION.open("CNAS_DataSet")
 WORKSHEET = DB.get_worksheet(1)
 
