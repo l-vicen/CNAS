@@ -19,7 +19,7 @@ conn = connect(credentials=credentials) # Connection
 
 # Get Request to own built DB -> Data containing <Wallet | Credit Score>
 def get_db():
-    sa = gspread.service_account("CNAS/credentials.json")
+    sa = gspread.service_account("credentials.json")
     sh = sa.open("CNAS_DataSet")
     worksheet = sh.get_worksheet(1)
     df_read = get_as_dataframe(worksheet)
