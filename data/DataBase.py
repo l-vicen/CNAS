@@ -3,9 +3,7 @@ import streamlit as st
 import pandas as pd
 
 from google.oauth2 import service_account
-from gspread_dataframe import get_as_dataframe
 from gsheetsdb import connect
-import gspread
 
 def get_db():
 
