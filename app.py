@@ -2,7 +2,6 @@
 import streamlit as st
 import data.Extractor as Extractor
 import data.DataBase as DataBase
-import gspread
 
 # In-house dependencies
 st.title("ComprasNet's Auction Solver (CNAS)")
