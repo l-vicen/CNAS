@@ -21,7 +21,7 @@ def get_db():
         rows = conn.execute(query, headers=1)
         return rows
 
-    sheet_url = st.secrets["tickers_gsheets_url"]
+    sheet_url = st.secrets["private_gsheets_url"]
     rows = run_query(f'SELECT * FROM "{sheet_url}"')
 
     tickers = []
