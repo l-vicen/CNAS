@@ -22,7 +22,7 @@ def get_db():
     sheet_id = re.search('/d/(.+?)/edit?', st.secrets["private_gsheets_url"]).group(1)
     csv_url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv"
     st.write(csv_url)
-    df =  pd.read_csv(csv_url)
+    df =  pd.read_csv(csv_url, usecols= ['Auction_Id','Start_Date','End_Date','Total_Estimated_Price','Total_Homologated_Price','Items_Auctioned', 'Winning_Bids','Suppliers_Winner_ID', 'History_Bids_Items','History_Bids_Date'])
     st.write(df)
     return df
 
