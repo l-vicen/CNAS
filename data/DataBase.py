@@ -3,50 +3,30 @@ import streamlit as st
 import pandas as pd
 
 from google.oauth2 import service_account
+from gspread_dataframe import get_as_dataframe
 from gsheetsdb import connect
+import gspread
 
-# Create a connection object.
-CREDENTIALS = service_account.Credentials.from_service_account_info(
-    st.secrets["gcp_service_account"],
-    scopes=[
-        "https://www.googleapis.com/auth/spreadsheets",
-    ],
-)
-CONNECTION = connect(credentials=CREDENTIALS)
+CONNECTION =  gspread.service_account("credentials.json")
+DB = CONNECTION.open("CNAS_DataSet")
+WORKSHEET = DB.get_worksheet(1)
 
-def run_get_query(query):
-    rows = CONNECTION.execute(query, headers=1)
-    rows = rows.fetchall()
-    return rows
-
-def run_post_query(query):
-    rows = CONNECTION.execute(query, headers=1)
-
+# Get Request to own built DB -> Data containing <Wallet | Credit Score>
 def get_db():
-    sheet_url = st.secrets["private_gsheets_url"]
-    rows = run_get_query(f'SELECT * FROM "{sheet_url}"')
-    dataframe = pd.DataFrame(list(rows))
-    return dataframe
+    df_read = get_as_dataframe(WORKSHEET, usecols=[0,1], nrows=20)
+    st.write(df_read)
+    return df_read
 
-def insert_row_db():
-    sheet_url = st.secrets["private_gsheets_url"]
-    run_post_query(f'INSERT INTO "{sheet_url}" (Auction_Id,\
-                                                  Start_Date,\
-                                             	  End_Date,\
-                                          	      Total_Estimated_Price,\
-                                                  Total_Homologated_Price,\
-                     	                          Items_Auctioned,\
-                                            	  Winning_Bids,\
-                                                  Suppliers_Winner_ID,\
-                                                  History_Bids_Items,\
-                     	                          History_Bids_Date)\
-                       VALUES                     ("{10}",\
-                                                   "{11}",\
-                                             	   "{12}",\
-                                          	       "{13}",\
-                                                   "{14}",\
-                     	                           "{15}",\
-                                            	   "{16}",\
-                                                   "{17}",\
-                                                   "{18}",\
-                     	                           "{19}")')
+def post_db():
+    l = len(WORKSHEET.col_values(1))+1
+
+    WORKSHEET.update_cell(l, 1, "A1")
+    WORKSHEET.update_cell(l, 2,  "A2")
+    WORKSHEET.update_cell(l, 3, "A3")
+    WORKSHEET.update_cell(l, 4,  "A4")
+    WORKSHEET.update_cell(l, 5,  "A5")
+    WORKSHEET.update_cell(l, 6,  "A6")
+    WORKSHEET.update_cell(l, 7,  "A7")
+    WORKSHEET.update_cell(l, 8,  "A8")
+    WORKSHEET.update_cell(l, 9,  "A9")
+    WORKSHEET.update_cell(l, 10,  "A10")
