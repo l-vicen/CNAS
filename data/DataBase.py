@@ -4,9 +4,7 @@ import pandas as pd
 import re
 
 from google.oauth2 import service_account
-from gspread_dataframe import get_as_dataframe
-from gsheetsdb import connect
-import gspread
+from shillelagh.backends.apsw.db import connect
 
 # Create a connection object and config
 CREDENTIALS = service_account.Credentials.from_service_account_info(
@@ -16,11 +14,31 @@ CREDENTIALS = service_account.Credentials.from_service_account_info(
     ],
 )
 
-# Get Request to own built DB -> Data containing <Wallet | Credit Score>
+connection = connect(":memory:", adapter_kwargs={
+    "gsheetaspi" : { 
+    "service_account_info" : {
+        "type" : st.secrets["gcp_service_account"]["type"],
+        "project_id" : st.secrets["gcp_service_account"]["project_id"],
+        "private_key_id" : st.secrets["gcp_service_account"]["private_key_id"],
+        "private_key" : st.secrets["gcp_service_account"]["private_key"],
+        "client_email" : st.secrets["gcp_service_account"]["client_email"],
+        "client_id" : st.secrets["gcp_service_account"]["client_id"],
+        "auth_uri" : st.secrets["gcp_service_account"]["auth_uri"],
+        "token_uri" : st.secrets["gcp_service_account"]["token_uri"],
+        "auth_provider_x509_cert_url" : st.secrets["gcp_service_account"]["auth_provider_x509_cert_url"],
+        "client_x509_cert_url" : st.secrets["gcp_service_account"]["client_x509_cert_url"],
+        }
+    },
+})
+
+
 def get_db():
-    gc = gspread.service_account_from_dict(CREDENTIALS)
-    sh = gc.open("CNAS_DataSet")
-    worksheet = sh.get_worksheet(1)
-    df_read = get_as_dataframe(worksheet)
-    st.write(df_read)
-    return df_read
+    pass
+
+def post_db():
+    cursor = connection.cursor()
+    sheet_url = st.secrets["private_gsheets_url"]
+    # query = f'INSERT INTO "{sheet_url}" VALUES ("{name}", "{email}", "{q1a1}", "{q1a2}", "{q1a3}")'
+    query = f'INSERT INTO "{sheet_url}" VALUES ("{2}", "{5}", "{6}", "{7}", "{8}")'
+    cursor.execute(query)
+
