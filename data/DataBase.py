@@ -36,7 +36,8 @@ SHEET_URL = st.secrets["private_gsheets_url"]
 def get_db():
     query = f'SELECT * FROM "{SHEET_URL}"'
     rows = CURSOR.execute(query)
-    st.write(rows)
+    for r in rows:
+        st.write(r)
 
 
 def post_db():
