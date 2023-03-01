@@ -23,24 +23,25 @@ connection = connect(":memory:", adapter_kwargs={
         "auth_uri" : st.secrets["gcp_service_account"]["auth_uri"],
         "token_uri" : st.secrets["gcp_service_account"]["token_uri"],
         "auth_provider_x509_cert_url" : st.secrets["gcp_service_account"]["auth_provider_x509_cert_url"],
-        "client_x509_cert_url" : st.secrets["gcp_service_account"]["client_x509_cert_url"],
+        "client_x509_cert_url" : st.secrets["gcp_service_account"]["client_x509_cert_url"]
         }
     },
 })
 
-def get_db():
+def run_query(query):
+    rows = connection.execute(query, headers=1)
+    rows = rows.fetchall()
+    st.write(rows)
+    return rows
 
-    def run_query(query):
-        rows = connection.execute(query, headers=1)
-        rows = rows.fetchall()
-        return rows
+def get_db():
 
     sheet_url = st.secrets["private_gsheets_url"]
     rows = run_query(f'SELECT * FROM "{sheet_url}"')
 
     # Print results.
     for row in rows:
-        st.write(f"{row}:")
+        st.write(row)
 
 # def post_db():
 #     cursor = connection.cursor()
