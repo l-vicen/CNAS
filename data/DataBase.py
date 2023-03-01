@@ -17,24 +17,17 @@ credentials = service_account.Credentials.from_service_account_info(
 conn = connect(credentials=credentials) # Connection
 
 def get_db():   
-    sa = gspread.service_account(st.secrets())
-    sh = sa.open("CNAS_DataSet")
-    worksheet = sh.get_worksheet(1)
-    df_read = get_as_dataframe(worksheet)
-    st.write(df_read)
-    # return df_read
+    # Perform SQL query on the Google Sheet.
+    # Uses st.cache_data to only rerun when the query changes or after 10 min.
+    @st.cache_data(ttl=600)
+    def run_query(query):
+        rows = conn.execute(query, headers=1)
+        rows = rows.fetchall()
+        return rows
 
-    # # Perform SQL query on the Google Sheet.
-    # # Uses st.cache_data to only rerun when the query changes or after 10 min.
-    # @st.cache_data(ttl=600)
-    # def run_query(query):
-    #     rows = conn.execute(query, headers=1)
-    #     rows = rows.fetchall()
-    #     return rows
+    sheet_url = st.secrets["private_gsheets_url"]
+    rows = run_query(f'SELECT * FROM "{sheet_url}"')
 
-    # sheet_url = st.secrets["private_gsheets_url"]
-    # rows = run_query(f'SELECT * FROM "{sheet_url}"')
-
-    # # Print results.
-    # for row in rows:
-    #     st.write(row)
+    # Print results.
+    for row in rows:
+        st.write(row.Auction_Id)
