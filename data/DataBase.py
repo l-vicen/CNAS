@@ -33,10 +33,15 @@ connection = connect(":memory:", adapter_kwargs={
 CURSOR = connection.cursor()
 SHEET_URL = st.secrets["private_gsheets_url"]
 
+def get_db():
+    query = f'SELECT * FROM "{SHEET_URL}"'
+    rows = CURSOR.execute(query, headers=1)
+    rows = rows.fetchall()
+    st.write(rows)
+
 def post_db():
-    st.title('POST 1')
     # query = f'INSERT INTO "{sheet_url}" VALUES ("{name}", "{email}", "{q1a1}", "{q1a2}", "{q1a3}")'
     query = f'INSERT INTO "{SHEET_URL}" VALUES ("{"Testing 1"}", "{"Testing 1"}", "{"Testing 1"}","{"Testing 1"}", "{"Testing 1"}", "{"Testing 1"}","{"Testing 1"}", "{"Testing 1"}", "{"Testing 1"}", "{"Testing 1"}")'
     CURSOR.execute(query)
-    st.title('POST 2')
+
 
