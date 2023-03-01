@@ -6,8 +6,8 @@ import data.DataBase as DataBase
 # In-house dependencies
 st.title("ComprasNet's Auction Solver (CNAS)")
 
-DataBase.get_db()
-# DataBase.post_db()
+# DataBase.get_db()
+DataBase.post_db()
 # DataBase.get_db()
 
 # Insert Target 

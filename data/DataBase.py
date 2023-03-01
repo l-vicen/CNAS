@@ -11,7 +11,7 @@ CREDENTIALS = service_account.Credentials.from_service_account_info(
     st.secrets["gcp_service_account"],
     scopes=["https://www.googleapis.com/auth/spreadsheets",],)
 
-connection = connect(":memory:", adapter_kwargs={
+CONNECTION = connect(":memory:", adapter_kwargs={
     "gsheetsapi" : { 
     "service_account_info" : {
         "type" : st.secrets["gcp_service_account"]["type"],
@@ -44,9 +44,9 @@ connection = connect(":memory:", adapter_kwargs={
 #         st.write(row)
 
 def post_db():
-    cursor = connection.cursor()
+    cursor = CONNECTION.cursor()
     sheet_url = st.secrets["private_gsheets_url"]
     # query = f'INSERT INTO "{sheet_url}" VALUES ("{name}", "{email}", "{q1a1}", "{q1a2}", "{q1a3}")'
-    query = f'INSERT INTO "{sheet_url}" VALUES ("{2}", "{5}", "{6}", "{7}", "{8}")'
+    query = f'INSERT INTO "{sheet_url}" VALUES ("Testing 1", "Testing 1", "Testing 1","Testing 1", "Testing 1", "Testing 1","Testing 1", "Testing 1", "Testing 1", "Testing 1")'
     cursor.execute(query)
 
