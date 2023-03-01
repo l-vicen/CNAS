@@ -17,16 +17,6 @@ credentials = service_account.Credentials.from_service_account_info(
 conn = connect(credentials=credentials) # Connection
 
 def get_db():   
-    # Perform SQL query on the Google Sheet.
-    # Uses st.cache_data to only rerun when the query changes or after 10 min.
-    def run_query(query):
-        rows = conn.execute(query, headers=1)
-        rows = rows.fetchall()
-        return rows
-
     sheet_url = st.secrets["private_gsheets_url"]
-    rows = run_query(f'SELECT * FROM "{sheet_url}"')
-
-    # Print results.
-    for row in rows:
-        st.write(row.Auction_Id)
+    sheet = gspread.open_by_url(sheet_url)
+    st.write(sheet)
