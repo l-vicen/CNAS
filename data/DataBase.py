@@ -19,12 +19,16 @@ conn = connect(credentials=credentials)
 client = gspread.authorize(credentials)
 
 def get_db(): 
-    sheet_id = re.search('/d/(.+?)/edit?', st.secrets["private_gsheets_url"]).group(1)
-    csv_url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv"
-    st.write(csv_url)
-    df =  pd.read_csv(csv_url, usecols= ['Auction_Id','Start_Date','End_Date','Total_Estimated_Price','Total_Homologated_Price','Items_Auctioned', 'Winning_Bids','Suppliers_Winner_ID', 'History_Bids_Items','History_Bids_Date'])
-    st.write(df)
-    return df
+
+    @st.cache_data(ttl=600)
+    def run_query(query):
+        rows = conn.execute(query, headers=1)
+        rows = rows.fetchall()
+        return rows
+    
+    sheet_url = st.secrets["private_gsheets_url"]
+    rows = run_query(f'SELECT * FROM "{sheet_url}"')
+    st.write(pd.DataFrame(rows))
 
 def post_db():
     database_df = database_df.astype(str)
