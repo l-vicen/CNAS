@@ -7,9 +7,27 @@ from gspread_dataframe import get_as_dataframe
 from gsheetsdb import connect
 import gspread
 
-def get_db():   
-    sa = gspread.service_account(st.secrets["gcp_service_account"])
-    sh = sa.open("CNAS_DataSet")
-    worksheet = sh.get_worksheet(1)
-    df_read = get_as_dataframe(worksheet, usecols=[0,1], nrows=20)
-    return df_read
+# Create a connection object.
+credentials = service_account.Credentials.from_service_account_info(
+    st.secrets["gcp_service_account"],
+    scopes=[
+        "https://www.googleapis.com/auth/spreadsheets",
+    ],
+)
+conn = connect(credentials=credentials)
+
+def get_sheet_as_dataframe():
+
+    # Perform SQL query on the Google Sheet.
+    # Uses st.cache_data to only rerun when the query changes or after 10 min.
+    @st.cache_data(ttl=600)
+    def run_query(query):
+        rows = conn.execute(query, headers=1)
+        rows = rows.fetchall()
+        return rows
+
+    sheet_url = st.secrets["private_gsheets_url"]
+    rows = run_query(f'SELECT * FROM "{sheet_url}"')
+    dataframe = pd.DataFrame(list(rows))
+    st.write(dataframe)
+    return dataframe
