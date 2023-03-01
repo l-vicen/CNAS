@@ -17,4 +17,6 @@ conn = connect(credentials=credentials)
 def get_db(): 
     sheet_id = st.secrets["private_gsheets_url"]
     csv_url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv"
-    return pd.read_csv(csv_url, on_bad_lines='skip')
+    df =  pd.read_csv(csv_url, on_bad_lines='skip')
+    st.write(df)
+    return df
