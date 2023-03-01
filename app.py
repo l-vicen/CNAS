@@ -1,9 +1,12 @@
 # 3rd party library dependencies
 import streamlit as st
 import data.Extractor as Extractor
+import data.DataBase as DataBase
 
 # In-house dependencies
 st.title("ComprasNet's Auction Solver (CNAS)")
+
+
 
 # Insert Target 
 text_input = st.text_input("Enter the auctionID: ", help= "The actionID is the identifier of the Pregao.")
@@ -24,5 +27,7 @@ if(text_input):
     st.markdown("## Items Bid History")
     st.write(items_bid_history)
     st.markdown("---")
+
+
 
 
