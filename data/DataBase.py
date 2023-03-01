@@ -17,6 +17,8 @@ credentials = service_account.Credentials.from_service_account_info(
 conn = connect(credentials=credentials) # Connection
 
 def get_db():   
-    sheet_url = st.secrets["private_gsheets_url"]
-    sheet = gspread.open_by_url(sheet_url)
-    st.write(sheet)
+    sa = gspread.service_account(conn)
+    sh = sa.open("CNAS_DataSet")
+    worksheet = sh.get_worksheet(1)
+    df_read = get_as_dataframe(worksheet, usecols=[0,1], nrows=20)
+    return df_read
