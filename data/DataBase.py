@@ -48,10 +48,10 @@ def get_db():
     for row in rows:
         st.write(f"{row}:")
 
-def post_db():
-    cursor = connection.cursor()
-    sheet_url = st.secrets["private_gsheets_url"]
-    # query = f'INSERT INTO "{sheet_url}" VALUES ("{name}", "{email}", "{q1a1}", "{q1a2}", "{q1a3}")'
-    query = f'INSERT INTO "{sheet_url}" VALUES ("{2}", "{5}", "{6}", "{7}", "{8}")'
-    cursor.execute(query)
+# def post_db():
+#     cursor = connection.cursor()
+#     sheet_url = st.secrets["private_gsheets_url"]
+#     # query = f'INSERT INTO "{sheet_url}" VALUES ("{name}", "{email}", "{q1a1}", "{q1a2}", "{q1a3}")'
+#     query = f'INSERT INTO "{sheet_url}" VALUES ("{2}", "{5}", "{6}", "{7}", "{8}")'
+#     cursor.execute(query)
 
