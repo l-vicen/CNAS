@@ -9,6 +9,9 @@ st.title("ComprasNet's Auction Solver (CNAS)")
 # Insert Target 
 text_input = st.text_input("Enter the auctionID: ", help= "The actionID is the identifier of the Pregao.")
 
+auction_summary_data = NULL
+items_auctioned = NULL
+
 if(text_input):
 
     auction_summary_data = Extractor.get_auction_summary(text_input)
@@ -26,7 +29,7 @@ if(text_input):
     # st.write(items_bid_history)
     # st.markdown("---")
 
-
-    DataBase.post_db(text_input, auction_summary_data, items_auctioned)
+    if (items_auctioned != NULL):
+        DataBase.post_db(text_input, auction_summary_data, items_auctioned)
 
 
