@@ -83,7 +83,7 @@ def post_db(auction_id, auction_summary, auction_items):
 
     pregoes = auction_items["_embedded"]["pregoes"]
 
-    Items_Auctioned = [pregoes[i]["descricao_item"] for i in range(len(pregoes))]
+    Items_Auctioned = [pregoes[i]["descricao_item"].rstrip() for i in range(len(pregoes))]
     st.write(Items_Auctioned)
 
     query = f'INSERT INTO "{SHEET_URL}" VALUES ("{auction_id}",\
