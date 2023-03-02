@@ -35,9 +35,9 @@ and return a .json object with the information on the items auctioned in a speci
 
 param auction_summary_json_dictionary <TODO>
 """
-def get_auction_itens_information(auction_summary_json_dictionary):
-    targetItems = URL_MAIN + auction_summary_json_dictionary["_links"]["itens"]["href"] + JSON_TYPE
-
+def get_auction_itens_information(auctionID):
+    # targetItems = URL_MAIN + auction_summary_json_dictionary["_links"]["itens"]["href"] + JSON_TYPE
+    targetItems = URL_AUCTION + auctionID + ITEMS + JSON_TYPE
     st.write(targetItems)
 
     try:
