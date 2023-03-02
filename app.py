@@ -5,7 +5,8 @@ import data.DataBase as DataBase
 import sidebar
 
 # Creates SideBar
-sidebar.SideBar()
+sidebar = sidebar.SideBar()
+sidebar.__init__
 
 # In-house dependencies
 st.title("ComprasNet's Auction Solver (CNAS)")
