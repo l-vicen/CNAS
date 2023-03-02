@@ -20,12 +20,12 @@ if(text_input):
     st.write(auction_summary_data)
     st.markdown("---")
 
-    items_auctioned = Extractor.get_auction_itens_information(auction_summary_data)
-    st.markdown("## Items Auctioned")
-    st.write(items_auctioned)
-    st.markdown("---")
+    # items_auctioned = Extractor.get_auction_itens_information(auction_summary_data)
+    # st.markdown("## Items Auctioned")
+    # st.write(items_auctioned)
+    # st.markdown("---")
 
-    items_bid_history = Extractor.get_items_bid_history_for_auction(items_auctioned)
+    # items_bid_history = Extractor.get_items_bid_history_for_auction(items_auctioned)
     # st.markdown("## Items Bid History")
     # st.write(items_bid_history)
     # st.markdown("---")

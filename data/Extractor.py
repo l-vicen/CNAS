@@ -5,8 +5,8 @@ import re
 import json
 
 # Global Variables used to build http request targets
-URL_MAIN =  "https://compras.dados.gov.br"
-URL_AUCTION = "/pregoes/doc/pregao/"
+URL_AUCTION =  "http://compras.dados.gov.br/pregoes/id/pregao/"
+ITEMS = "/itens"
 JSON_TYPE = ".json"
 
 """
@@ -18,7 +18,7 @@ and return a .json object with summary data from one auction.
 param auctionID Auction Identifier 
 """
 def get_auction_summary(auctionID):
-    target = URL_MAIN + URL_AUCTION + auctionID + JSON_TYPE
+    target = URL_AUCTION + auctionID + JSON_TYPE
 
     try:
         responseAuctionSummary = requests.get(url = target)
