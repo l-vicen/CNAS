@@ -6,6 +6,7 @@ import json
 
 # Global Variables used to build http request targets
 URL_AUCTION =  "http://compras.dados.gov.br/pregoes/doc/pregao/"
+URL_AUCTION_ITEM =  "http://compras.dados.gov.br/pregoes/id/pregao/"
 ITEMS = "/itens"
 JSON_TYPE = ".json"
 
@@ -36,8 +37,7 @@ and return a .json object with the information on the items auctioned in a speci
 param auction_summary_json_dictionary <TODO>
 """
 def get_auction_itens_information(auctionID):
-    # targetItems = URL_MAIN + auction_summary_json_dictionary["_links"]["itens"]["href"] + JSON_TYPE
-    targetItems = URL_AUCTION + auctionID + ITEMS + JSON_TYPE
+    targetItems = URL_AUCTION_ITEM + auctionID + ITEMS + JSON_TYPE
     st.write(targetItems)
 
     try:
