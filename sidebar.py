@@ -1,14 +1,26 @@
 import streamlit as st
 
-class SideBar:
+class SideBar():
     """Side Bar Class Declaration""" 
 
-    # Sidebar attribute Logo
-    def sidebar_functionality(self):
-        st.sidebar.image('assets/tum_logo.png')
-        st.sidebar.markdown('---')
+    st.sidebar.image('assets/tum_logo.png')
+    st.sidebar.markdown('---')
 
-    def sidebar_contact(self):
-        st.sidebar.markdown('##### Creator')
-        st.sidebar.markdown('Lucas Perasolo')
-        st.sidebar.markdown('---')
+    # Sidebar attributes
+    features = ['Home Page', 'Solve Auction', 'Data Set']
+    page = st.sidebar.selectbox('Choose Page', features)
+    st.sidebar.markdown('---')
+
+    if page == features[0]:
+        pass
+
+    elif page == features[1]:
+        pass
+
+    else:
+        pass
+
+    st.sidebar.markdown('---')
+    st.sidebar.markdown('##### Creator')
+    st.sidebar.markdown('Lucas Perasolo')
+    st.sidebar.markdown('---')
