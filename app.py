@@ -2,7 +2,7 @@
 import streamlit as st
 import data.Extractor as Extractor
 import data.DataBase as DataBase
-import sidebar
+import sidebar as sb
 
 # In-house dependencies
 st.title("ComprasNet's Auction Solver (CNAS)")
@@ -38,6 +38,6 @@ if (items_bid_history != None):
 
 
 # Adding sidebar component
-Sidebar = sidebar()
+sidebar = sb.SideBar()
 sidebar.sidebar_functionality()
 sidebar.sidebar_contact()

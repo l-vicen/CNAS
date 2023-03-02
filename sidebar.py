@@ -1,6 +1,6 @@
 import streamlit as st
 
-class Sidebar:
+class SideBar:
     """Side Bar Class Declaration""" 
 
     # Sidebar attribute Logo
