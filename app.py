@@ -2,7 +2,10 @@
 import streamlit as st
 import data.Extractor as Extractor
 import data.DataBase as DataBase
-import sidebar as sb
+import router
+
+# Creates Router
+router.Router()
 
 # In-house dependencies
 st.title("ComprasNet's Auction Solver (CNAS)")
