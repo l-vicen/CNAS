@@ -16,9 +16,9 @@ items_bid_history = None
 if(text_input):
 
     auction_summary_data = Extractor.get_auction_summary(text_input)
-    # st.markdown("## Auction Summary")
-    # st.write(auction_summary_data)
-    # st.markdown("---")
+    st.markdown("## Auction Summary")
+    st.write(auction_summary_data)
+    st.markdown("---")
 
     items_auctioned = Extractor.get_auction_itens_information(auction_summary_data)
     st.markdown("## Items Auctioned")
