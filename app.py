@@ -9,8 +9,7 @@ st.title("ComprasNet's Auction Solver (CNAS)")
 # Insert Target 
 text_input = st.text_input("Enter the auctionID: ", help= "The actionID is the identifier of the Pregao.")
 
-auction_summary_data = NULL
-items_auctioned = NULL
+items_auctioned = None
 
 if(text_input):
 
@@ -29,7 +28,7 @@ if(text_input):
     # st.write(items_bid_history)
     # st.markdown("---")
 
-    if (items_auctioned != NULL):
+    if (items_auctioned != None):
         DataBase.post_db(text_input, auction_summary_data, items_auctioned)
 
 
