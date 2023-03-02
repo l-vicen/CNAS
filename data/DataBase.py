@@ -95,6 +95,7 @@ def post_db(auction_id, auction_summary, auction_items):
                                                 "{Items_Auctioned}",\
                                                 "{"Testing 1"}",\
                                                 "{"Testing 1"}",\
+                                                "{"Testing 1"}",\
                                                 "{"Testing 1"}")'
     CURSOR.execute(query)
 
