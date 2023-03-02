@@ -3,7 +3,6 @@ import pandas as pd
 import streamlit as st
 import requests
 import re
-import DataBase 
 
 # Global Variables used to build http request targets
 URL_MAIN =  "https://compras.dados.gov.br"
@@ -22,8 +21,8 @@ def get_auction_summary(auctionID):
     target = URL_MAIN + URL_AUCTION + auctionID + JSON_TYPE
     responseAuctionSummary = requests.get(url = target)
     auction_summary_json_dictionary = responseAuctionSummary.json()
+    
     return auction_summary_json_dictionary 
-
 """
 
 get_auction_itens_information(auction_summary_json_dictionary) does http request
