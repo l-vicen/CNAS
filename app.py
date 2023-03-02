@@ -27,6 +27,5 @@ if(text_input):
 
 
     DataBase.post_db(text_input, auction_summary_data, items_auctioned)
-    st.write(DataBase.get_db())
 
 

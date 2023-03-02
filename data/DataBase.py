@@ -92,7 +92,7 @@ def post_db(auction_id, auction_summary, auction_items):
                                                 "{auction_summary["valorEstimadoTotal"]}",\
                                                 "{auction_summary["valorHomologadoTotal"]}",\
                                                 "{auction_items["count"]}",\
-                                                "{"Testing 1"}",\
+                                                "{Items_Auctioned}",\
                                                 "{"Testing 1"}",\
                                                 "{"Testing 1"}",\
                                                 "{"Testing 1"}")'
