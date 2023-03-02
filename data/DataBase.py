@@ -81,10 +81,16 @@ can have multiple lots.
 """
 def post_db(auction_id, auction_summary, auction_items):
 
+    # Variable to avoid re-accessing the inside of the auction_items json multiple times
     pregoes = auction_items["_embedded"]["pregoes"]
+    length_pregoes = len(pregoes)
 
-    Items_Auctioned = [pregoes[i]["descricao_item"].rstrip() for i in range(len(pregoes))]
-    st.write(Items_Auctioned)
+    # Creating a list with all auctioned items in the auction
+    Items_Auctioned = [pregoes[i]["descricao_item"].rstrip() for i in range(length_pregoes)]
+    # st.write(Items_Auctioned)
+
+    Winning_Bids = [pregoes[i]["menor_lance"] for i in range(length_pregoes)]
+    st.write(Winning_Bids)
 
     query = f'INSERT INTO "{SHEET_URL}" VALUES ("{auction_id}",\
                                                 "{auction_summary["dtInicioProposta"]}",\
