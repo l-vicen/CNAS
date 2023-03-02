@@ -5,7 +5,7 @@ import re
 import json
 
 # Global Variables used to build http request targets
-URL_AUCTION =  "http://compras.dados.gov.br/licitacoes/id/licitacao/"
+URL_AUCTION =  "http://compras.dados.gov.br/pregoes/doc/pregao/"
 ITEMS = "/itens"
 JSON_TYPE = ".json"
 
