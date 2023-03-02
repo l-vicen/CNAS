@@ -1,6 +1,6 @@
 import streamlit as st
 
-class SideBar():
+class SideBar:
     """Side Bar Class Declaration""" 
 
     st.sidebar.image('assets/tum_logo.png')

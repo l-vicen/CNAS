@@ -5,8 +5,7 @@ import data.DataBase as DataBase
 import sidebar
 
 # Creates Router
-sidebar = sidebar.SideBar()
-sidebar.sidebar_functionality()
+sidebar.SideBar()
 
 # In-house dependencies
 st.title("ComprasNet's Auction Solver (CNAS)")
