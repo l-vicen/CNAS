@@ -30,7 +30,7 @@ if(text_input):
     # st.write(items_bid_history)
     # st.markdown("---")
 
-    if (items_bid_history != None):
-        DataBase.post_db(text_input, auction_summary_data, items_auctioned)
+if (items_bid_history != None):
+    DataBase.post_db(text_input, auction_summary_data, items_auctioned)
 
 
