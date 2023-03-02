@@ -3,6 +3,7 @@ import streamlit as st
 import pandas as pd
 from google.oauth2 import service_account
 from shillelagh.backends.apsw.db import connect
+import re
 
 # Credential setting to access the private Google Sheet Data Set
 credentials = service_account.Credentials.from_service_account_info(
@@ -44,6 +45,19 @@ CURSOR = connection.cursor()
 # URL of private Google Sheet
 SHEET_URL = st.secrets["private_gsheets_url"]
 
+# Name of the columns in the google sheet
+GOOGLE_SHEET_COLUMNS = ['Auction_Id', 
+                        'Start_Date',
+                        'End_Date',
+                        'Total_Estimated_Price',
+                        'Total_Homologated_Price',
+                        'Number_Items_Auctioned',
+                        'Items_Auctioned',
+                        'Winning_Bids',
+                        'Winner_Supplier_Id',
+                        'Items_Bid_History',
+                        'Dates_Bid_History']
+
 """
 get_db() uses shillelagh lib to perform a common get
 request in SQL & Python. Here, I retrive all Tuples from the
@@ -53,11 +67,7 @@ I convert the tuples to a dataframe.
 def get_db():
     query = f'SELECT * FROM "{SHEET_URL}"'
     rows = CURSOR.execute(query)
-    df = pd.DataFrame(rows, columns = ['Auction_Id', 'Start_Date',
-                                  'End_Date', 'Total_Estimated_Price',
-                                  'Total_Homologated_Price', 'Items_Auctioned',
-                                  'Winning_Bids', 'Suppliers_Winner_ID',
-                                  'History_Bids_Items', 'History_Bids_Date'])
+    df = pd.DataFrame(rows, columns = GOOGLE_SHEET_COLUMNS)
     return df
 
 """
@@ -69,17 +79,26 @@ One row in the Google Sheet represents one Auction lot, one Auction
 can have multiple lots.
 
 """
-def post_db(auction_id, auction_summary):
+def post_db(auction_id, auction_summary, auction_items):
+
+    pregoes = auction_items["_embedded"]["pregoes"]
+
+    Items_Auctioned = [re.sub(' +', ' ', pregoes[i]["descricao_item"]) for i in range(len(pregoes))]
+    st.write(Items_Auctioned)
+
     query = f'INSERT INTO "{SHEET_URL}" VALUES ("{auction_id}",\
                                                 "{auction_summary["dtInicioProposta"]}",\
                                                 "{auction_summary["dtFimProposta"]}",\
                                                 "{auction_summary["valorEstimadoTotal"]}",\
                                                 "{auction_summary["valorHomologadoTotal"]}",\
-                                                "{"Testing 1"}",\
+                                                "{auction_items["count"]}",\
                                                 "{"Testing 1"}",\
                                                 "{"Testing 1"}",\
                                                 "{"Testing 1"}",\
                                                 "{"Testing 1"}")'
     CURSOR.execute(query)
+
+
+
 
 
