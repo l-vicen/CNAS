@@ -12,8 +12,8 @@ class Router:
     def display_router(self, sidebar):
         # Sidebar attributes
         self.features = ['Home Page', 'Solve Auction', 'Data Set']
-        self.page = sidebar.selectbox('Choose Page', self.features)
-        sidebar.markdown('---')
+        self.page = st.selectbox('Choose Page', self.features)
+        st.markdown('---')
 
     def route(self):        
     
