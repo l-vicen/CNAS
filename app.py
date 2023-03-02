@@ -4,6 +4,11 @@ import data.Extractor as Extractor
 import data.DataBase as DataBase
 import sidebar as sb
 
+# Adding sidebar component
+sidebar = sb.SideBar()
+sidebar.sidebar_functionality()
+sidebar.sidebar_contact()
+
 # In-house dependencies
 st.title("ComprasNet's Auction Solver (CNAS)")
 
@@ -35,9 +40,3 @@ if(text_input):
 
 if (items_bid_history != None):
     DataBase.post_db(text_input, auction_summary_data, items_auctioned)
-
-
-# Adding sidebar component
-sidebar = sb.SideBar()
-sidebar.sidebar_functionality()
-sidebar.sidebar_contact()

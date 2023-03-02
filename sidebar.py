@@ -5,7 +5,7 @@ class SideBar:
 
     # Sidebar attribute Logo
     def sidebar_functionality(self):
-        st.sidebar.image('CNAS/assets/tum_logo.png')
+        st.sidebar.image('assets/tum_logo.png')
         st.sidebar.markdown('---')
 
     def sidebar_contact(self):
