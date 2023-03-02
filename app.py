@@ -6,8 +6,6 @@ import data.DataBase as DataBase
 # In-house dependencies
 st.title("ComprasNet's Auction Solver (CNAS)")
 
-st.write(DataBase.get_db())
-
 # Insert Target 
 text_input = st.text_input("Enter the auctionID: ", help= "The actionID is the identifier of the Pregao.")
 
