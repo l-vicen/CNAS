@@ -4,7 +4,7 @@ import data.Extractor as Extractor
 import data.DataBase as DataBase
 import sidebar
 
-# Creates Router
+# Creates SideBar
 sidebar.SideBar()
 
 # In-house dependencies
