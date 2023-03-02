@@ -8,11 +8,12 @@ sidebar.sidebar_functionality()
 sidebar.sidebar_contact()
 
 class Router:
-    def display_router(self):
+
+    def display_router(self, sidebar):
         # Sidebar attributes
         self.features = ['Home Page', 'Solve Auction', 'Data Set']
-        self.page = st.sidebar.selectbox('Choose Page', self.features)
-        st.sidebar.markdown('---')
+        self.page = sidebar.selectbox('Choose Page', self.features)
+        sidebar.markdown('---')
 
     def route(self):        
     
