@@ -69,9 +69,17 @@ One row in the Google Sheet represents one Auction lot, one Auction
 can have multiple lots.
 
 """
-def post_db():
-    # query = f'INSERT INTO "{sheet_url}" VALUES ("{name}", "{email}", "{q1a1}", "{q1a2}", "{q1a3}")'
-    query = f'INSERT INTO "{SHEET_URL}" VALUES ("{"Testing 1"}", "{"Testing 1"}", "{"Testing 1"}","{"Testing 1"}", "{"Testing 1"}", "{"Testing 1"}","{"Testing 1"}", "{"Testing 1"}", "{"Testing 1"}", "{"Testing 1"}")'
+def post_db(auction_id, auction_summary):
+    query = f'INSERT INTO "{SHEET_URL}" VALUES ("{auction_id}",\
+                                                "{auction_summary["dtInicioProposta"]}",\
+                                                "{auction_summary["dtFimProposta"]}",\
+                                                "{auction_summary["valorEstimadoTotal"]}",\
+                                                "{auction_summary["valorHomologadoTotal"]}",\
+                                                "{"Testing 1"}",\
+                                                "{"Testing 1"}",\
+                                                "{"Testing 1"}",\
+                                                "{"Testing 1"}",\
+                                                "{"Testing 1"}")'
     CURSOR.execute(query)
 
 
