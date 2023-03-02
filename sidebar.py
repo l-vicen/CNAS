@@ -2,7 +2,7 @@ import streamlit as st
 
 class SideBar:
 
-    def __init__():
+    def start(self):
         """Side Bar Class Declaration""" 
 
         st.sidebar.image('assets/tum_logo.png')

@@ -6,7 +6,7 @@ import sidebar
 
 # Creates SideBar
 sidebar = sidebar.SideBar()
-sidebar.__init__
+sidebar.start()
 
 # In-house dependencies
 st.title("ComprasNet's Auction Solver (CNAS)")
