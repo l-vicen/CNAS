@@ -38,6 +38,8 @@ param auction_summary_json_dictionary <TODO>
 def get_auction_itens_information(auction_summary_json_dictionary):
     targetItems = URL_MAIN + auction_summary_json_dictionary["_links"]["itens"]["href"] + JSON_TYPE
 
+    st.write(targetItems)
+
     try:
         responseItems = requests.get(url = targetItems)
     except (requests.exceptions.ConnectionError, json.decoder.JSONDecodeError):
