@@ -26,7 +26,6 @@ def get_auction_summary(auctionID):
         st.warning("The request took too long!")
 
     auction_summary_json_dictionary = responseAuctionSummary.json()
-    
     return auction_summary_json_dictionary 
 """
 
@@ -63,7 +62,7 @@ def get_items_bid_history_for_auction(auction_items_json_dictionary):
         responseItems = requests.get(url = list_target[0])
     except (requests.exceptions.ConnectionError, json.decoder.JSONDecodeError):
         st.warning("The request took too long!")
-        
+
     responseItemsJSON = responseItems.json()
     return responseItemsJSON
 
