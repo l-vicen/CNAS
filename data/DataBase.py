@@ -89,8 +89,9 @@ def post_db(auction_id, auction_summary, auction_items):
     Items_Auctioned = [pregoes[i]["descricao_item"].rstrip() for i in range(length_pregoes)]
     # st.write(Items_Auctioned)
 
+    # Creating a list with all winning bids (smallest) prices
     Winning_Bids = [pregoes[i]["menor_lance"] for i in range(length_pregoes)]
-    st.write(Winning_Bids)
+    # st.write(Winning_Bids)
 
     query = f'INSERT INTO "{SHEET_URL}" VALUES ("{auction_id}",\
                                                 "{auction_summary["dtInicioProposta"]}",\
@@ -99,7 +100,7 @@ def post_db(auction_id, auction_summary, auction_items):
                                                 "{auction_summary["valorHomologadoTotal"]}",\
                                                 "{auction_items["count"]}",\
                                                 "{Items_Auctioned}",\
-                                                "{"Testing 1"}",\
+                                                "{Winning_Bids}",\
                                                 "{"Testing 1"}",\
                                                 "{"Testing 1"}",\
                                                 "{"Testing 1"}")'
