@@ -29,7 +29,7 @@ if(text_input):
     st.markdown("---")
 
 
-DataBase.post_db(text_input, auction_summary_data)
-DataBase.get_db()
+    DataBase.post_db(text_input, auction_summary_data)
+    DataBase.get_db()
 
 
