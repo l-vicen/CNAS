@@ -53,6 +53,8 @@ GOOGLE_SHEET_COLUMNS = ['Auction_Id',
                         'Total_Homologated_Price',
                         'Number_Items_Auctioned',
                         'Items_Auctioned',
+                        'Demanded_Quantity_Items',
+                        'Estimated_Price_Items',
                         'Winning_Bids',
                         'Winner_Supplier_Id',
                         'Items_Bid_History',
@@ -93,6 +95,14 @@ def post_db(auction_id, auction_summary, auction_items):
     Winning_Bids = [pregoes[i]["menor_lance"] for i in range(length_pregoes)]
     # st.write(Winning_Bids)
 
+    # Creating a list with the demanded quantity for item
+    Demanded_Quantity_Items = [pregoes[i]["quantidade_item"] for i in range(length_pregoes)]
+    st.write(Demanded_Quantity_Items)
+
+    Estimated_Price_Items = [pregoes[i]["valor_estimado_item"] for i in range(length_pregoes)]
+    st.write(Estimated_Price_Items)
+
+
     query = f'INSERT INTO "{SHEET_URL}" VALUES ("{auction_id}",\
                                                 "{auction_summary["dtInicioProposta"]}",\
                                                 "{auction_summary["dtFimProposta"]}",\
@@ -100,6 +110,8 @@ def post_db(auction_id, auction_summary, auction_items):
                                                 "{auction_summary["valorHomologadoTotal"]}",\
                                                 "{auction_items["count"]}",\
                                                 "{Items_Auctioned}",\
+                                                "{Demanded_Quantity_Items}",\
+                                                "{Estimated_Price_Items}",\
                                                 "{Winning_Bids}",\
                                                 "{"Testing 1"}",\
                                                 "{"Testing 1"}",\
