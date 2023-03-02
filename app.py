@@ -5,7 +5,9 @@ import data.DataBase as DataBase
 import router
 
 # Creates Router
-router.Router()
+router = router.Router()
+router.display_router()
+router.route()
 
 # In-house dependencies
 st.title("ComprasNet's Auction Solver (CNAS)")
