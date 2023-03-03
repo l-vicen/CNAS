@@ -112,6 +112,9 @@ def post_db(auction_id, auction_summary, auction_items, auction_history):
     Participating_Suppliers = [auction_history[i]["nu_cpfcnpj_fornecedor"] for i in range(length_auction_history)]
     st.write(Participating_Suppliers)
 
+    item_date_history_2Dlist = [[float(i) for i in j if (Participating_Suppliers[j] == auction_history[j]["nu_cpfcnpj_fornecedor"])] for j in auction_history["vl_global"]]
+    st.write(item_date_history_2Dlist)
+
     query = f'INSERT INTO "{SHEET_URL}" VALUES ("{auction_id}",\
                                                 "{auction_summary["dtInicioProposta"]}",\
                                                 "{auction_summary["dtFimProposta"]}",\
