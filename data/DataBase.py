@@ -110,7 +110,7 @@ def post_db(auction_id, auction_summary, auction_items, auction_history):
 
     #  Creating a list with all participating suppliers
     Participating_Suppliers = [auction_history[i]["nu_cpfcnpj_fornecedor"] for i in range(length_auction_history)]
-    number_supplier = len(number_supplier)
+    number_supplier = len(Participating_Suppliers)
     st.write(Participating_Suppliers)
 
     item_date_history_2Dlist = [[auction_history[i]["vl_global"] for i in range(length_auction_history) if (auction_history[i]["nu_cpfcnpj_fornecedor"] == Participating_Suppliers[j])] for j in range(number_supplier)]
