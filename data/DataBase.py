@@ -122,7 +122,8 @@ def parse_auction_lot(auction_lot):
 
     # auction_lot_item = auction_lot["_embedded"]["pregoes"][0]["ds_item"].rstrip()
     auction_lot_item = "XXX"
-    smallest_bid = auction_lot["_embedded"]["pregoes"][0]["vl_menorlance"]
+    smallest_bid = 0
+    # smallest_bid = auction_lot["_embedded"]["pregoes"][0]["vl_menorlance"]
 
     # Variable to avoid re-accessing the inside of the auction_history json multiple times
     auction_lot_history = auction_lot["_embedded"]["pregoes"]
