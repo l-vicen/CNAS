@@ -61,9 +61,9 @@ def get_items_bid_history_for_auction(auction_items_json_dictionary):
     length_pregoes_list = len(pregoes_list)
 
     list_target = [(URL_MAIN + re.sub(r"(.html)", r".json", pregoes_list[i]["_links"]["Propostas"]["href"])) for i in range(length_pregoes_list)]
-
+    list_target_length = len(list_target)
     try:
-        responseItems = requests.get(url = list_target[0])
+        responseItems = [requests.get(url = list_target[i]) for i in range(list_target_length)]
     except (requests.exceptions.ConnectionError, json.decoder.JSONDecodeError):
         st.warning("The request took too long!")
 
