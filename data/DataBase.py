@@ -119,6 +119,7 @@ def post_db(auction_id, auction_summary, auction_items, auction_history):
                                                 "{Winning_Bids}",\
                                                 "{Auction_Lot_Summary}")'
     CURSOR.execute(query)
+    st.success("Auction has been added to data set!")
 
 
 def parse_auction_lot(auction_lot, auction_lot_item, smallest_bid):
@@ -143,12 +144,14 @@ def parse_auction_lot(auction_lot, auction_lot_item, smallest_bid):
     # st.write("Dates of bids of every Supplier")
     # st.write(item_date_history_2D_list)
 
-    winner_supplier = 0
+    # TODO: Review this part
+    winner_supplier = None
     for i in range(len(item_bid_history_2D_list)):
         for j in range(len(item_bid_history_2D_list[i])):
             if (item_bid_history_2D_list[i][j] == smallest_bid):
                 winner_supplier = Participating_Suppliers[i]
-                break
+            else:
+                continue
 
     # Summary Dictionary
     dictionary_lot_summary =  {
