@@ -103,6 +103,10 @@ def post_db(auction_id, auction_summary, auction_items, auction_history):
     Winning_Bids = [float(pregoes[i]["menor_lance"]) if pregoes[i]["menor_lance"] != None else -1 for i in range(length_pregoes)]
 
     """ 2nd Part: Getting data from auction_items query """
+    
+    st.write(auction_history[0]["_embedded"]["pregoes"])
+
+
 
     # Variable to avoid re-accessing the inside of the auction_history json multiple times
     # auction_history = auction_history["_embedded"]["pregoes"]
@@ -120,24 +124,24 @@ def post_db(auction_id, auction_summary, auction_items, auction_history):
 
     # smallest_bid = auction_history[0]["vl_menorlance"]
 
-    query = f'INSERT INTO "{SHEET_URL}" VALUES ("{auction_id}",\
-                                                "{auction_summary["dtInicioProposta"]}",\
-                                                "{auction_summary["dtFimProposta"]}",\
-                                                "{auction_summary["valorEstimadoTotal"]}",\
-                                                "{auction_summary["valorHomologadoTotal"]}",\
-                                                "{auction_items["count"]}",\
-                                                "{Items_Auctioned}",\
-                                                "{Demanded_Quantity_Items}",\
-                                                "{Estimated_Price_Items}",\
-                                                "{Winning_Bids}",\
-                                                "{"Testing 1"}",\
-                                                "{"Testing 1"}",\
-                                                "{"Testing 1"}",\
-                                                "{"Testing 1"}")'
-                                                # "{Participating_Suppliers}",\
-                                                # "{item_bid_history_2Dlist}",\
-                                                # "{item_date_history_2Dlist}")'
-    CURSOR.execute(query)
+    # query = f'INSERT INTO "{SHEET_URL}" VALUES ("{auction_id}",\
+    #                                             "{auction_summary["dtInicioProposta"]}",\
+    #                                             "{auction_summary["dtFimProposta"]}",\
+    #                                             "{auction_summary["valorEstimadoTotal"]}",\
+    #                                             "{auction_summary["valorHomologadoTotal"]}",\
+    #                                             "{auction_items["count"]}",\
+    #                                             "{Items_Auctioned}",\
+    #                                             "{Demanded_Quantity_Items}",\
+    #                                             "{Estimated_Price_Items}",\
+    #                                             "{Winning_Bids}",\
+    #                                             "{"Testing 1"}",\
+    #                                             "{"Testing 1"}",\
+    #                                             "{"Testing 1"}",\
+    #                                             "{"Testing 1"}")'
+    #                                             # "{Participating_Suppliers}",\
+    #                                             # "{item_bid_history_2Dlist}",\
+    #                                             # "{item_date_history_2Dlist}")'
+    # CURSOR.execute(query)
 
 def get_item_bid_history():
 
