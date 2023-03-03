@@ -57,6 +57,7 @@ GOOGLE_SHEET_COLUMNS = ['Auction_Id',
                         'Estimated_Price_Items',
                         'Winning_Bids',
                         'Winner_Supplier_Id',
+                        'Participating_Suppliers',
                         'Items_Bid_History',
                         'Dates_Bid_History']
 
@@ -122,6 +123,7 @@ def post_db(auction_id, auction_summary, auction_items, auction_history):
                                                 "{Estimated_Price_Items}",\
                                                 "{Winning_Bids}",\
                                                 "{"Testing 1"}",\
+                                                "{Participating_Suppliers}",\
                                                 "{"Testing 1"}",\
                                                 "{"Testing 1"}")'
     CURSOR.execute(query)
