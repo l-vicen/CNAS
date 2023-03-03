@@ -37,4 +37,4 @@ if(text_input):
 
 
 if (items_bid_history != None):
-    DataBase.post_db(text_input, auction_summary_data, items_auctioned)
+    DataBase.post_db(text_input, auction_summary_data, items_auctioned, items_bid_history)

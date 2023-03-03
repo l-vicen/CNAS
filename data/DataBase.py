@@ -81,7 +81,9 @@ One row in the Google Sheet represents one Auction lot, one Auction
 can have multiple lots.
 
 """
-def post_db(auction_id, auction_summary, auction_items):
+def post_db(auction_id, auction_summary, auction_items, auction_history):
+
+    """ 1st Part: Getting data from auction_items query """
 
     # Variable to avoid re-accessing the inside of the auction_items json multiple times
     pregoes = auction_items["_embedded"]["pregoes"]
@@ -99,7 +101,14 @@ def post_db(auction_id, auction_summary, auction_items):
     # Creating a list with all winning bids (smallest) prices
     Winning_Bids = [float(pregoes[i]["menor_lance"]) for i in range(length_pregoes)]
 
-    Participating_Suppliers = [pregoes[i]["nu_cpfcnpj_fornecedor"] for i in range(length_pregoes)]
+    """ 2nd Part: Getting data from auction_items query """
+
+    # Variable to avoid re-accessing the inside of the auction_history json multiple times
+    auction_history = auction_history["_embedded"]["pregoes"]
+    length_auction_history = len(auction_history)
+
+    #  Creating a list with all participating suppliers
+    Participating_Suppliers = [auction_history[i]["nu_cpfcnpj_fornecedor"] for i in range(length_auction_history)]
     st.write(Participating_Suppliers)
 
     query = f'INSERT INTO "{SHEET_URL}" VALUES ("{auction_id}",\
@@ -119,9 +128,9 @@ def post_db(auction_id, auction_summary, auction_items):
 
 def get_item_bid_history():
 
-    item_date_history_2Dlist = [[int(i) for i in line.split()] for line in data]
+    # item_date_history_2Dlist = [[int(i) for i in line.split()] for line in data]
 
-    dict.fromkeys(keys, value)
+    # dict.fromkeys(keys, value)
     pass
 
 def get_dates_bid_history():
