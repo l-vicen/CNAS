@@ -5,6 +5,7 @@ import re
 import json
 
 # Global Variables used to build http request targets
+URL_MAIN = "https://compras.dados.gov.br"
 URL_AUCTION =  "http://compras.dados.gov.br/pregoes/doc/pregao/"
 URL_AUCTION_ITEM =  "http://compras.dados.gov.br/pregoes/id/pregao/"
 ITEMS = "/itens"
