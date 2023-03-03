@@ -133,6 +133,9 @@ def post_db(auction_id, auction_summary, auction_items, auction_history):
 
 def parse_auction_lot(auction_lot):
 
+    auction_lot_item = auction_lot["_embedded"]["pregoes"][0]["ds_item"].rstrip()
+    smallest_bid = auction_lot["_embedded"]["pregoes"][0]["vl_menorlance"]
+
     # Variable to avoid re-accessing the inside of the auction_history json multiple times
     auction_lot_history = auction_lot["_embedded"]["pregoes"]
     number_bids_in_lot = len(auction_lot_history)
@@ -140,27 +143,25 @@ def parse_auction_lot(auction_lot):
     #  Creating a list with all participating suppliers
     Participating_Suppliers = [auction_lot_history[i]["nu_cpfcnpj_fornecedor"] for i in range(number_bids_in_lot)]
     number_suppliers = len(Participating_Suppliers)
-    st.write("Participating Suppliers")
-    st.write(Participating_Suppliers)
+    # st.write("Participating Suppliers")
+    # st.write(Participating_Suppliers)
 
     # Creates a list with the history bids of the respective supplier
     item_bid_history_2D_list = [[auction_lot_history[i]["vl_global"] for i in range(number_bids_in_lot) if (auction_lot_history[i]["nu_cpfcnpj_fornecedor"] == Participating_Suppliers[j])] for j in range(number_suppliers)]
-    st.write("Bid History of Every Supplier")
-    st.write(item_bid_history_2D_list)
+    # st.write("Bid History of Every Supplier")
+    # st.write(item_bid_history_2D_list)
 
     # Creates a list with the history dates of the bids of the respective supplier
     item_date_history_2D_list = [[auction_lot_history[i]["dtRegistro"] for i in range(number_bids_in_lot) if (auction_lot_history[i]["nu_cpfcnpj_fornecedor"] == Participating_Suppliers[j])] for j in range(number_suppliers)]
-    st.write("Dates of bids of every Supplier")
-    st.write(item_date_history_2D_list)
-
-    # smallest_bid = auction_lot[0]["vl_menorlance"]
+    # st.write("Dates of bids of every Supplier")
+    # st.write(item_date_history_2D_list)
 
     dictionary_lot_summary =  {
-        "Lot_Item": "XXX",
+        "Lot_Item": auction_lot_item,
         "Participating_Suppliers": Participating_Suppliers,
         "History_Bids_Lot": item_bid_history_2D_list,
         "History_Bid_Dates_Lot": item_date_history_2D_list,
-        "Winning_Bid": 0
+        "Winning_Bid": smallest_bid
     }
 
     st.write(dictionary_lot_summary)
