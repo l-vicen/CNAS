@@ -101,7 +101,10 @@ def post_db(auction_id, auction_summary, auction_items, auction_history):
 
     """ 2nd Part: Getting data from auction_items query """
 
+    # Variable to avoid re-accessing the inside of the auction_history json multiple times
     number_auction_lots = len(auction_history)
+
+    # List with a summary of the auction lot. It calls the helper method: def parse_auction_lot(...)
     Auction_Lot_Summary= [parse_auction_lot(auction_history[i], Items_Auctioned[i], Winning_Bids[i]) for i in range(number_auction_lots)]
 
     query = f'INSERT INTO "{SHEET_URL}" VALUES ("{auction_id}",\
@@ -140,6 +143,7 @@ def parse_auction_lot(auction_lot, auction_lot_item, smallest_bid):
     # st.write("Dates of bids of every Supplier")
     # st.write(item_date_history_2D_list)
 
+    # Summary Dictionary
     dictionary_lot_summary =  {
         "Lot_Item": auction_lot_item,
         "Participating_Suppliers": Participating_Suppliers,
@@ -147,7 +151,6 @@ def parse_auction_lot(auction_lot, auction_lot_item, smallest_bid):
         "History_Bid_Dates_Lot": item_date_history_2D_list,
         "Winning_Bid": smallest_bid
     }
-
-    st.write(dictionary_lot_summary)
+    # st.write(dictionary_lot_summary)
 
     return dictionary_lot_summary
