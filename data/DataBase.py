@@ -102,7 +102,7 @@ def post_db(auction_id, auction_summary, auction_items, auction_history):
     """ 2nd Part: Getting data from auction_items query """
 
     number_auction_lots = len(auction_history)
-    Auction_Lot_Summary= [parse_auction_lot(auction_history[i]) for i in range(number_auction_lots)]
+    Auction_Lot_Summary= [parse_auction_lot(auction_history[i], Items_Auctioned[i], Winning_Bids[i]) for i in range(number_auction_lots)]
 
     query = f'INSERT INTO "{SHEET_URL}" VALUES ("{auction_id}",\
                                                 "{auction_summary["dtInicioProposta"]}",\
@@ -118,12 +118,7 @@ def post_db(auction_id, auction_summary, auction_items, auction_history):
     CURSOR.execute(query)
 
 
-def parse_auction_lot(auction_lot):
-
-    # auction_lot_item = auction_lot["_embedded"]["pregoes"][0]["ds_item"].rstrip()
-    auction_lot_item = "XXX"
-    smallest_bid = 0
-    # smallest_bid = auction_lot["_embedded"]["pregoes"][0]["vl_menorlance"]
+def parse_auction_lot(auction_lot, auction_lot_item, smallest_bid):
 
     # Variable to avoid re-accessing the inside of the auction_history json multiple times
     auction_lot_history = auction_lot["_embedded"]["pregoes"]
