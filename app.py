@@ -32,7 +32,6 @@ if(text_input):
     # st.markdown("## Items Bid History")
     # st.write(items_bid_history)
     # st.markdown("---")
-    st.write(items_bid_history)
 
 
 if (len(items_bid_history) > 0):
