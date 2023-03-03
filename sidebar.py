@@ -22,7 +22,6 @@ class SideBar:
         else:
             pass
 
-        st.sidebar.markdown('---')
         st.sidebar.markdown('##### Creator')
         st.sidebar.markdown('Lucas Perasolo')
         st.sidebar.markdown('---')
