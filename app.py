@@ -31,8 +31,8 @@ if(text_input):
     st.markdown("---")
 
     items_bid_history = Extractor.get_items_bid_history_for_auction(items_auctioned)
-    # st.markdown("## Items Bid History")
-    # st.write(items_bid_history)
+    st.markdown("## Items Bid History")
+    st.write(items_bid_history)
     st.markdown("---")
 
 
