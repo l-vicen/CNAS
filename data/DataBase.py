@@ -111,8 +111,6 @@ def post_db(auction_id, auction_summary, auction_items, auction_history):
 
 
 
-
-
     # query = f'INSERT INTO "{SHEET_URL}" VALUES ("{auction_id}",\
     #                                             "{auction_summary["dtInicioProposta"]}",\
     #                                             "{auction_summary["dtFimProposta"]}",\
@@ -140,14 +138,20 @@ def parse_auction_lot(auction_lot):
     number_bids_in_lot = len(auction_lot_history)
 
     #  Creating a list with all participating suppliers
-    Participating_Suppliers = [auction_lot[i]["nu_cpfcnpj_fornecedor"] for i in range(number_bids_in_lot)]
+    Participating_Suppliers = [auction_lot_history[i]["nu_cpfcnpj_fornecedor"] for i in range(number_bids_in_lot)]
     number_suppliers = len(Participating_Suppliers)
+    st.write("Participating Suppliers")
+    st.write(Participating_Suppliers)
 
     # Creates a list with the history bids of the respective supplier
-    item_bid_history_2D_list = [[auction_lot[i]["vl_global"] for i in range(number_bids_in_lot) if (auction_lot[i]["nu_cpfcnpj_fornecedor"] == Participating_Suppliers[j])] for j in range(number_suppliers)]
+    item_bid_history_2D_list = [[auction_lot_history[i]["vl_global"] for i in range(number_bids_in_lot) if (auction_lot_history[i]["nu_cpfcnpj_fornecedor"] == Participating_Suppliers[j])] for j in range(number_suppliers)]
+    st.write("Bid History of Every Supplier")
+    st.write(item_bid_history_2D_list)
 
     # Creates a list with the history dates of the bids of the respective supplier
-    item_date_history_2D_list = [[auction_lot[i]["dtRegistro"] for i in range(number_bids_in_lot) if (auction_lot[i]["nu_cpfcnpj_fornecedor"] == Participating_Suppliers[j])] for j in range(number_suppliers)]
+    item_date_history_2D_list = [[auction_lot_history[i]["dtRegistro"] for i in range(number_bids_in_lot) if (auction_lot_history[i]["nu_cpfcnpj_fornecedor"] == Participating_Suppliers[j])] for j in range(number_suppliers)]
+    st.write("Dates of bids of every Supplier")
+    st.write(item_date_history_2D_list)
 
     # smallest_bid = auction_lot[0]["vl_menorlance"]
 
@@ -158,5 +162,7 @@ def parse_auction_lot(auction_lot):
         "History_Bid_Dates_Lot": item_date_history_2D_list,
         "Winning_Bid": 0
     }
+
+    st.write(dictionary_lot_summary)
 
     return dictionary_lot_summary
