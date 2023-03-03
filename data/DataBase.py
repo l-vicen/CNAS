@@ -111,10 +111,14 @@ def post_db(auction_id, auction_summary, auction_items, auction_history):
     #  Creating a list with all participating suppliers
     Participating_Suppliers = [auction_history[i]["nu_cpfcnpj_fornecedor"] for i in range(length_auction_history)]
     number_supplier = len(Participating_Suppliers)
-    st.write(Participating_Suppliers)
 
-    item_date_history_2Dlist = [[auction_history[i]["vl_global"] for i in range(length_auction_history) if (auction_history[i]["nu_cpfcnpj_fornecedor"] == Participating_Suppliers[j])] for j in range(number_supplier)]
-    st.write(item_date_history_2Dlist)
+    # Creates a list with the history bids of the respective supplier
+    item_bid_history_2Dlist = [[auction_history[i]["vl_global"] for i in range(length_auction_history) if (auction_history[i]["nu_cpfcnpj_fornecedor"] == Participating_Suppliers[j])] for j in range(number_supplier)]
+
+    # Creates a list with the history dates of the bids of the respective supplier
+    item_date_history_2Dlist = [[auction_history[i]["dtRegistro"] for i in range(length_auction_history) if (auction_history[i]["nu_cpfcnpj_fornecedor"] == Participating_Suppliers[j])] for j in range(number_supplier)]
+
+    smallest_bid = auction_history[0]["vl_menorlance"]
 
     query = f'INSERT INTO "{SHEET_URL}" VALUES ("{auction_id}",\
                                                 "{auction_summary["dtInicioProposta"]}",\
@@ -128,8 +132,8 @@ def post_db(auction_id, auction_summary, auction_items, auction_history):
                                                 "{Winning_Bids}",\
                                                 "{"Testing 1"}",\
                                                 "{Participating_Suppliers}",\
-                                                "{"Testing 1"}",\
-                                                "{"Testing 1"}")'
+                                                "{item_bid_history_2Dlist}",\
+                                                "{item_date_history_2Dlist}")'
     CURSOR.execute(query)
 
 def get_item_bid_history():
