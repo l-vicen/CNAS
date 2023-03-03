@@ -103,22 +103,24 @@ def post_db(auction_id, auction_summary, auction_items, auction_history):
     Winning_Bids = [float(pregoes[i]["menor_lance"]) if pregoes[i]["menor_lance"] != None else -1 for i in range(length_pregoes)]
 
     """ 2nd Part: Getting data from auction_items query """
-    
-    st.write(auction_history[0]["_embedded"])
 
+    number_auction_lots = len(auction_history)
+
+    number_bids_in_every_auction_lot = [len(auction_history[i]["_embedded"]["pregoes"]) for i in range(number_auction_lots)]
+    
     # Variable to avoid re-accessing the inside of the auction_history json multiple times
-    # auction_history = auction_history["_embedded"]["pregoes"]
-    # length_auction_history = len(auction_history)
+    auction_history = [[auction_history[i]["_embedded"]["pregoes"][j] for i in range(number_auction_lots)] for j in range(number_bids_in_every_auction_lot[k] for k in range(number_auction_lots))]
+    st.write(auction_history)
 
     # #  Creating a list with all participating suppliers
     # Participating_Suppliers = [auction_history[i]["nu_cpfcnpj_fornecedor"] for i in range(length_auction_history)]
     # number_supplier = len(Participating_Suppliers)
 
     # Creates a list with the history bids of the respective supplier
-    item_bid_history_2Dlist = [[auction_history[i]["vl_global"] for i in range(length_auction_history) if (auction_history[i]["nu_cpfcnpj_fornecedor"] == Participating_Suppliers[j])] for j in range(number_supplier)]
+    # item_bid_history_2Dlist = [[auction_history[i]["vl_global"] for i in range(length_auction_history) if (auction_history[i]["nu_cpfcnpj_fornecedor"] == Participating_Suppliers[j])] for j in range(number_supplier)]
 
     # Creates a list with the history dates of the bids of the respective supplier
-    item_date_history_2Dlist = [[auction_history[i]["dtRegistro"] for i in range(length_auction_history) if (auction_history[i]["nu_cpfcnpj_fornecedor"] == Participating_Suppliers[j])] for j in range(number_supplier)]
+    # item_date_history_2Dlist = [[auction_history[i]["dtRegistro"] for i in range(length_auction_history) if (auction_history[i]["nu_cpfcnpj_fornecedor"] == Participating_Suppliers[j])] for j in range(number_supplier)]
 
     # smallest_bid = auction_history[0]["vl_menorlance"]
 
