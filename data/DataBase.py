@@ -136,17 +136,27 @@ def post_db(auction_id, auction_summary, auction_items, auction_history):
 def parse_auction_lot(auction_lot):
 
     # Variable to avoid re-accessing the inside of the auction_history json multiple times
-    # auction_history = auction_history["_embedded"]["pregoes"]
-    # length_auction_history = len(auction_history)
+    auction_lot_history = auction_lot["_embedded"]["pregoes"]
+    number_bids_in_lot = len(auction_lot_history)
 
-    # #  Creating a list with all participating suppliers
-    # Participating_Suppliers = [auction_history[i]["nu_cpfcnpj_fornecedor"] for i in range(length_auction_history)]
-    # number_supplier = len(Participating_Suppliers)
+    #  Creating a list with all participating suppliers
+    Participating_Suppliers = [auction_lot[i]["nu_cpfcnpj_fornecedor"] for i in range(number_bids_in_lot)]
+    number_suppliers = len(Participating_Suppliers)
 
     # Creates a list with the history bids of the respective supplier
-    # item_bid_history_2Dlist = [[auction_history[i]["vl_global"] for i in range(length_auction_history) if (auction_history[i]["nu_cpfcnpj_fornecedor"] == Participating_Suppliers[j])] for j in range(number_supplier)]
+    item_bid_history_2D_list = [[auction_lot[i]["vl_global"] for i in range(number_bids_in_lot) if (auction_lot[i]["nu_cpfcnpj_fornecedor"] == Participating_Suppliers[j])] for j in range(number_suppliers)]
 
     # Creates a list with the history dates of the bids of the respective supplier
-    # item_date_history_2Dlist = [[auction_history[i]["dtRegistro"] for i in range(length_auction_history) if (auction_history[i]["nu_cpfcnpj_fornecedor"] == Participating_Suppliers[j])] for j in range(number_supplier)]
+    item_date_history_2D_list = [[auction_lot[i]["dtRegistro"] for i in range(number_bids_in_lot) if (auction_lot[i]["nu_cpfcnpj_fornecedor"] == Participating_Suppliers[j])] for j in range(number_suppliers)]
 
-    # smallest_bid = auction_history[0]["vl_menorlance"]
+    # smallest_bid = auction_lot[0]["vl_menorlance"]
+
+    dictionary_lot_summary =  {
+        "Lot_Item": "XXX",
+        "Participating_Suppliers": Participating_Suppliers,
+        "History_Bids_Lot": item_bid_history_2D_list,
+        "History_Bid_Dates_Lot": item_date_history_2D_list,
+        "Winning_Bid": 0
+    }
+
+    return dictionary_lot_summary
