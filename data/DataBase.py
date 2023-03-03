@@ -120,7 +120,8 @@ def post_db(auction_id, auction_summary, auction_items, auction_history):
 
 def parse_auction_lot(auction_lot):
 
-    auction_lot_item = auction_lot["_embedded"]["pregoes"][0]["ds_item"].rstrip()
+    # auction_lot_item = auction_lot["_embedded"]["pregoes"][0]["ds_item"].rstrip()
+    auction_lot_item = "XXX"
     smallest_bid = auction_lot["_embedded"]["pregoes"][0]["vl_menorlance"]
 
     # Variable to avoid re-accessing the inside of the auction_history json multiple times
