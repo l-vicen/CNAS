@@ -38,7 +38,6 @@ param auction_summary_json_dictionary <TODO>
 """
 def get_auction_itens_information(auctionID):
     targetItems = URL_AUCTION_ITEM + auctionID + ITEMS + JSON_TYPE
-    st.write(targetItems)
 
     try:
         responseItems = requests.get(url = targetItems)
