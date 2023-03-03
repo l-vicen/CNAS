@@ -100,7 +100,7 @@ def post_db(auction_id, auction_summary, auction_items, auction_history):
     Estimated_Price_Items = [float(pregoes[i]["valor_estimado_item"]) for i in range(length_pregoes)]
 
     # Creating a list with all winning bids (smallest) prices
-    Winning_Bids = [float(pregoes[i]["menor_lance"]) for i in range(length_pregoes)]
+    Winning_Bids = [float(pregoes[i]["menor_lance"]) if pregoes[i]["menor_lance"] != None else -1 for i in range(length_pregoes)]
 
     """ 2nd Part: Getting data from auction_items query """
 
