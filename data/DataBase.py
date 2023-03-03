@@ -93,11 +93,14 @@ def post_db(auction_id, auction_summary, auction_items):
     # Creating a list with the demanded quantity for item
     Demanded_Quantity_Items = [int(pregoes[i]["quantidade_item"]) for i in range(length_pregoes)]
 
-    # # Creating a list with the estimated price for items
+    # Creating a list with the estimated price for items
     Estimated_Price_Items = [float(pregoes[i]["valor_estimado_item"]) for i in range(length_pregoes)]
 
-    # # Creating a list with all winning bids (smallest) prices
+    # Creating a list with all winning bids (smallest) prices
     Winning_Bids = [float(pregoes[i]["menor_lance"]) for i in range(length_pregoes)]
+
+    Participating_Suppliers = [pregoes[i]["nu_cpfcnpj_fornecedor"] for i in range(length_pregoes)]
+    st.write(Participating_Suppliers)
 
     query = f'INSERT INTO "{SHEET_URL}" VALUES ("{auction_id}",\
                                                 "{auction_summary["dtInicioProposta"]}",\
@@ -114,7 +117,15 @@ def post_db(auction_id, auction_summary, auction_items):
                                                 "{"Testing 1"}")'
     CURSOR.execute(query)
 
+def get_item_bid_history():
 
+    item_date_history_2Dlist = [[int(i) for i in line.split()] for line in data]
 
+    dict.fromkeys(keys, value)
+    pass
 
+def get_dates_bid_history():
+    pass
 
+def find_winner_supplier():
+    pass
