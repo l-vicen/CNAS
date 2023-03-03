@@ -143,11 +143,11 @@ def parse_auction_lot(auction_lot, auction_lot_item, smallest_bid):
     # st.write("Dates of bids of every Supplier")
     # st.write(item_date_history_2D_list)
 
-    winner_supplier = None
+    winner_supplier = 0
     for i in range(len(item_bid_history_2D_list)):
         for j in range(len(item_bid_history_2D_list[i])):
             if (item_bid_history_2D_list[i][j] == smallest_bid):
-                winner_supplier = item_bid_history_2D_list[i]
+                winner_supplier = Participating_Suppliers[i]
                 break
 
     # Summary Dictionary
