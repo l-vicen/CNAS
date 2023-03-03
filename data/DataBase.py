@@ -56,10 +56,7 @@ GOOGLE_SHEET_COLUMNS = ['Auction_Id',
                         'Demanded_Quantity_Items',
                         'Estimated_Price_Items',
                         'Winning_Bids',
-                        'Winner_Supplier_Id',
-                        'Participating_Suppliers',
-                        'Items_Bid_History',
-                        'Dates_Bid_History']
+                        'Auction_Lot_Summary']
 
 """
 get_db() uses shillelagh lib to perform a common get
@@ -103,32 +100,22 @@ def post_db(auction_id, auction_summary, auction_items, auction_history):
     Winning_Bids = [float(pregoes[i]["menor_lance"]) if pregoes[i]["menor_lance"] != None else -1 for i in range(length_pregoes)]
 
     """ 2nd Part: Getting data from auction_items query """
-    
-    st.write(auction_history[0])
+
     number_auction_lots = len(auction_history)
+    Auction_Lot_Summary= [parse_auction_lot(auction_history[i]) for i in range(number_auction_lots)]
 
-    auction_lot_list = [parse_auction_lot(auction_history[i]) for i in range(number_auction_lots)]
-
-
-
-    # query = f'INSERT INTO "{SHEET_URL}" VALUES ("{auction_id}",\
-    #                                             "{auction_summary["dtInicioProposta"]}",\
-    #                                             "{auction_summary["dtFimProposta"]}",\
-    #                                             "{auction_summary["valorEstimadoTotal"]}",\
-    #                                             "{auction_summary["valorHomologadoTotal"]}",\
-    #                                             "{auction_items["count"]}",\
-    #                                             "{Items_Auctioned}",\
-    #                                             "{Demanded_Quantity_Items}",\
-    #                                             "{Estimated_Price_Items}",\
-    #                                             "{Winning_Bids}",\
-    #                                             "{"Testing 1"}",\
-    #                                             "{"Testing 1"}",\
-    #                                             "{"Testing 1"}",\
-    #                                             "{"Testing 1"}")'
-    #                                             # "{Participating_Suppliers}",\
-    #                                             # "{item_bid_history_2Dlist}",\
-    #                                             # "{item_date_history_2Dlist}")'
-    # CURSOR.execute(query)
+    query = f'INSERT INTO "{SHEET_URL}" VALUES ("{auction_id}",\
+                                                "{auction_summary["dtInicioProposta"]}",\
+                                                "{auction_summary["dtFimProposta"]}",\
+                                                "{auction_summary["valorEstimadoTotal"]}",\
+                                                "{auction_summary["valorHomologadoTotal"]}",\
+                                                "{auction_items["count"]}",\
+                                                "{Items_Auctioned}",\
+                                                "{Demanded_Quantity_Items}",\
+                                                "{Estimated_Price_Items}",\
+                                                "{Winning_Bids}",\
+                                                "{Auction_Lot_Summary}")'
+    CURSOR.execute(query)
 
 
 def parse_auction_lot(auction_lot):
@@ -164,6 +151,6 @@ def parse_auction_lot(auction_lot):
         "Winning_Bid": smallest_bid
     }
 
-    st.write(dictionary_lot_summary)
+    # st.write(dictionary_lot_summary)
 
     return dictionary_lot_summary
