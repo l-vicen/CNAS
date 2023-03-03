@@ -145,9 +145,9 @@ def parse_auction_lot(auction_lot, auction_lot_item, smallest_bid):
 
     winner_supplier = None
     for i in range(len(item_bid_history_2D_list)):
-        for j in range(len(item_date_history_2D_list[i])):
-            if (item_date_history_2D_list[i][j] == smallest_bid):
-                winner_supplier = item_date_history_2D_list[i]
+        for j in range(len(item_bid_history_2D_list[i])):
+            if (item_bid_history_2D_list[i][j] == smallest_bid):
+                winner_supplier = item_bid_history_2D_list[i]
                 break
 
     # Summary Dictionary
