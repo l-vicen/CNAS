@@ -151,6 +151,6 @@ def parse_auction_lot(auction_lot):
         "Winning_Bid": smallest_bid
     }
 
-    # st.write(dictionary_lot_summary)
+    st.write(dictionary_lot_summary)
 
     return dictionary_lot_summary
