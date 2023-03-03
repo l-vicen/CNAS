@@ -104,7 +104,7 @@ def post_db(auction_id, auction_summary, auction_items, auction_history):
 
     """ 2nd Part: Getting data from auction_items query """
     
-    st.write(auction_history[0])
+    st.write(auction_history[0]["_embedded"])
 
     # Variable to avoid re-accessing the inside of the auction_history json multiple times
     # auction_history = auction_history["_embedded"]["pregoes"]
