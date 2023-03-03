@@ -57,8 +57,12 @@ param auction_summary_json_dictionary <TODO>
 """
 def get_items_bid_history_for_auction(auction_items_json_dictionary):
     pregoes_list = auction_items_json_dictionary["_embedded"]["pregoes"]
-    list_target = [(URL_MAIN + re.sub(r"(.html)", r".json", pregoes_list[i]["_links"]["Propostas"]["href"])) for i in range(len(pregoes_list))]
-    
+    length_pregoes_list = len(pregoes_list)
+    st.write(pregoes_list)
+
+    list_target = [(URL_MAIN + re.sub(r"(.html)", r".json", pregoes_list[i]["_links"]["Propostas"]["href"])) for i in range(length_pregoes_list)]
+    st.write(list_target)
+
     try:
         responseItems = requests.get(url = list_target[0])
     except (requests.exceptions.ConnectionError, json.decoder.JSONDecodeError):
