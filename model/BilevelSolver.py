@@ -110,7 +110,7 @@ def build_model():
     # model.pprint()
 
     st.write(model.o)
-    st.wrtie(model.o.L)
+    st.write(model.o.L)
 
     # model.display()
     # solver.write()
