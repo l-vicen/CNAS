@@ -1,5 +1,6 @@
 from pyomo.environ import *
 from pao.pyomo import *
+import streamlit as st
 from streamlit.scriptrunner.script_run_context import get_script_run_ctx
 from threading import current_thread
 from contextlib import contextmanager
@@ -122,7 +123,8 @@ def st_redirect(src, dst):
         old_write = src.write
 
         def new_write(b):
-            if getattr(current_thread(), get_script_run_ctx, None):
+            script_run_ctx = get_script_run_ctx()
+            if getattr(current_thread(), script_run_ctx, None):
                 buffer.write(b + '')
                 output_func(buffer.getvalue() + '')
             else:
