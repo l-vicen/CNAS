@@ -2,14 +2,34 @@
 import streamlit as st
 import data.Extractor as Extractor
 import data.DataBase as DataBase
-import view.sidebar as sidebar
+import view.DataSet_View as ds_view
 
-# Creates SideBar
-sidebar = sidebar.SideBar()
-sidebar.start()
-
-# In-house dependencies
+# Home page title
 st.title("ComprasNet's Auction Solver (CNAS)")
+
+"""Side Bar Class Declaration""" 
+
+st.sidebar.image('assets/tum_logo.png')
+st.sidebar.markdown('---')
+
+# Sidebar attributes
+features = ['Home Page', 'Solve Auction', 'Data Set']
+page = st.sidebar.selectbox('Choose Page', features)
+st.sidebar.markdown('---')
+
+if page == features[0]:
+    pass
+
+elif page == features[1]:
+    pass
+
+else:
+    ds_view.construct_data_set_page()
+
+st.sidebar.markdown('##### Creator')
+st.sidebar.markdown('Lucas Perasolo')
+st.sidebar.markdown('---')
+
 
 # Insert Target 
 text_input = st.text_input("Enter the auctionID: ", help= "The actionID is the identifier of the Pregao.")
