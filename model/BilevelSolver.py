@@ -1,5 +1,10 @@
 from pyomo.environ import *
 from pao.pyomo import *
+from streamlit.scriptrunner.script_run_context import get_script_run_ctx
+from threading import current_thread
+from contextlib import contextmanager
+from io import StringIO
+import sys
 
 ''' Model Objective Functions
 1) Upper-level: 
@@ -104,3 +109,41 @@ def build_model():
     # Calling the Big-M Relaxation Solver
     solver = Solver('pao.pyomo.FA')
     solver.solve(model)
+
+    model.pprint()
+
+
+@contextmanager
+def st_redirect(src, dst):
+    placeholder = st.empty()
+    output_func = getattr(placeholder, dst)
+
+    with StringIO() as buffer:
+        old_write = src.write
+
+        def new_write(b):
+            if getattr(current_thread(), get_script_run_ctx, None):
+                buffer.write(b + '')
+                output_func(buffer.getvalue() + '')
+            else:
+                old_write(b)
+
+        try:
+            src.write = new_write
+            yield
+        finally:
+            src.write = old_write
+
+
+@contextmanager
+def st_stdout(dst):
+    "this will show the prints"
+    with st_redirect(sys.stdout, dst):
+        yield
+
+
+@contextmanager
+def st_stderr(dst):
+    "This will show the logging"
+    with st_redirect(sys.stderr, dst):
+        yield
