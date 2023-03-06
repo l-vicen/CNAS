@@ -109,7 +109,7 @@ def build_model():
     # Visualizing model composition with results
     # model.pprint()
 
-    st.write(model.o)
+    st.write(model.pprint())
 
     # model.display()
     # solver.write()
