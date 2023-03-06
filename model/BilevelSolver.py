@@ -1,11 +1,7 @@
 from pyomo.environ import *
+import pyomo.environ as pyo
 from pao.pyomo import *
 import streamlit as st
-from streamlit.scriptrunner.script_run_context import get_script_run_ctx
-from threading import current_thread
-from contextlib import contextmanager
-from io import StringIO
-import sys
 
 ''' Model Objective Functions
 1) Upper-level: 
@@ -105,47 +101,22 @@ def build_model():
     model.L.DemandConstraint = Constraint(model.j, model.i, rule=lower_and_upper_bound_constraint, doc='Bid Price is non-negative')
 
     # Visualizing model composition
-    # model.pprint()
+    model.pprint()
 
     # Calling the Big-M Relaxation Solver
     solver = Solver('pao.pyomo.FA')
-    solver.solve(model)
+    results = solver.solve(model)
 
+    # Visualizing solved model composition
     model.pprint()
 
+    # st.write(model.L.P_index)
 
-@contextmanager
-def st_redirect(src, dst):
-    placeholder = st.empty()
-    output_func = getattr(placeholder, dst)
+    st.write(model.display())
 
-    with StringIO() as buffer:
-        old_write = src.write
-
-        def new_write(b):
-            script_run_ctx = get_script_run_ctx()
-            if getattr(current_thread(), script_run_ctx, None):
-                buffer.write(b + '')
-                output_func(buffer.getvalue() + '')
-            else:
-                old_write(b)
-
-        try:
-            src.write = new_write
-            yield
-        finally:
-            src.write = old_write
+    print("##############")
+    print(value(model.o))
+    print(value(model.L.o))
 
 
-@contextmanager
-def st_stdout(dst):
-    "this will show the prints"
-    with st_redirect(sys.stdout, dst):
-        yield
 
-
-@contextmanager
-def st_stderr(dst):
-    "This will show the logging"
-    with st_redirect(sys.stderr, dst):
-        yield
