@@ -3,7 +3,6 @@ import streamlit as st
 import pandas as pd
 from google.oauth2 import service_account
 from shillelagh.backends.apsw.db import connect
-import re
 
 # Credential setting to access the private Google Sheet Data Set
 credentials = service_account.Credentials.from_service_account_info(
@@ -39,8 +38,6 @@ connection = connect(":memory:", adapter_kwargs={
     },
 })
 
-# Establishing the connection
-CURSOR = connection.cursor()
 
 # URL of private Google Sheet
 SHEET_URL = st.secrets["private_gsheets_url"]
@@ -65,8 +62,11 @@ Google Sheet (A Tuple is a single row in the data set). Then,
 I convert the tuples to a dataframe.
 """
 def get_db():
+    # Establishing the connection
+    cursor = connection.cursor()
+
     query = f'SELECT * FROM "{SHEET_URL}"'
-    rows = CURSOR.execute(query)
+    rows = cursor.execute(query)
     df = pd.DataFrame(rows, columns = GOOGLE_SHEET_COLUMNS)
     return df
 
@@ -118,8 +118,10 @@ def post_db(auction_id, auction_summary, auction_items, auction_history):
                                                 "{Estimated_Price_Items}",\
                                                 "{Winning_Bids}",\
                                                 "{Auction_Lot_Summary}")'
-    CURSOR.execute(query)
-    st.success("Auction has been added to data set!")
+    # Establishing the connection
+    cursor = connection.cursor()
+    cursor.execute(query)
+    st.sucess("Auction successfully added to data set!")
 
 
 def parse_auction_lot(auction_lot, auction_lot_item, smallest_bid):
