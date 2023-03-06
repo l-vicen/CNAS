@@ -3,6 +3,9 @@ import streamlit as st
 import view.Get_Data_Set_View as get_view
 import view.Post_Data_Set_View as post_view
 
+# App global config setting
+st.set_page_config(layout="wide")
+
 # Side Bar Class Declaration
 st.sidebar.image('assets/tum_logo.png')
 st.sidebar.markdown('---')
