@@ -1,6 +1,6 @@
 from contextlib import contextmanager
 from io import StringIO
-from streamlit.report_thread import REPORT_CONTEXT_ATTR_NAME
+from streamlit.script_run_context import REPORT_CONTEXT_ATTR_NAME
 from threading import current_thread
 import sys
 from pyomo.environ import *
@@ -115,7 +115,7 @@ def build_model():
     # model.pprint()
 
     st_redirect(model.pprint())
-    
+
     # model.display()
     # solver.write()
     # solver.pptrint()
