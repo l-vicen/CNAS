@@ -1,8 +1,7 @@
-import subprocess
-import tempfile
 from pyomo.environ import *
 from pao.pyomo import *
 import streamlit as st
+import streamlit.redirect as rd
 
 ''' Model Objective Functions
 1) Upper-level: 
@@ -111,17 +110,11 @@ def build_model():
     # Visualizing model composition with results
     # model.pprint()
 
-    model.pprint()
-    display_model()
+    with rd.stdout:
+        model.pprint()
 
     # model.display()
     # solver.write()
     # solver.pptrint()
 
 
-def display_model():
-    with tempfile.TemporaryFile() as tempf:
-        proc = subprocess.Popen(['echo', 'a', 'b'], stdout=tempf)
-        proc.wait()
-        tempf.seek(0)
-        st.write(tempf.read())
