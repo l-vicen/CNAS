@@ -1,4 +1,5 @@
 import streamlit as st
+import DataSet_View
 
 class SideBar:
 
@@ -20,7 +21,7 @@ class SideBar:
             pass
 
         else:
-            pass
+            DataSet_View.construct_data_set_page()
 
         st.sidebar.markdown('##### Creator')
         st.sidebar.markdown('Lucas Perasolo')
