@@ -1,3 +1,8 @@
+from contextlib import contextmanager
+from io import StringIO
+from streamlit.report_thread import REPORT_CONTEXT_ATTR_NAME
+from threading import current_thread
+import sys
 from pyomo.environ import *
 from pao.pyomo import *
 import streamlit as st
@@ -109,8 +114,42 @@ def build_model():
     # Visualizing model composition with results
     # model.pprint()
 
-    st.write(model.pprint())
-
+    st_redirect(model.pprint())
+    
     # model.display()
     # solver.write()
     # solver.pptrint()
+
+
+# Source: https://discuss.streamlit.io/t/cannot-print-the-terminal-output-in-streamlit/6602/9
+@contextmanager
+def st_redirect(src, dst):
+    placeholder = st.empty()
+    output_func = getattr(placeholder, dst)
+
+    with StringIO() as buffer:
+        old_write = src.write
+
+        def new_write(b):
+            if getattr(current_thread(), REPORT_CONTEXT_ATTR_NAME, None):
+                buffer.write(b)
+                output_func(buffer.getvalue())
+            else:
+                old_write(b)
+
+        try:
+            src.write = new_write
+            yield
+        finally:
+            src.write = old_write
+
+@contextmanager
+def st_stdout(dst):
+    with st_redirect(sys.stdout, dst):
+        yield
+
+
+@contextmanager
+def st_stderr(dst):
+    with st_redirect(sys.stderr, dst):
+        yield
