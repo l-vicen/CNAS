@@ -4,6 +4,8 @@ import data.DataBase as DataBase
 
 def insert_into_data_set_view():
 
+    st.title("Insert new auctions to data set")
+
     # Insert Target 
     text_input = st.text_input("Enter the auctionID: ", help= "The actionID is the identifier of the Pregao.")
 
