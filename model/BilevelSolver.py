@@ -104,12 +104,3 @@ def build_model():
     # Calling the Big-M Relaxation Solver
     solver = Solver('pao.pyomo.FA')
     solver.solve(model)
-
-    # Visualizing model composition with results
-    # model.pprint()
-
-    model.pprint() 
-
-    # model.display()
-    # solver.write()
-    # solver.pptrint()
