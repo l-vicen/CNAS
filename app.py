@@ -2,7 +2,7 @@
 import streamlit as st
 import data.Extractor as Extractor
 import data.DataBase as DataBase
-import sidebar
+import view.sidebar as sidebar
 
 # Creates SideBar
 sidebar = sidebar.SideBar()
