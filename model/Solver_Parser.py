@@ -16,8 +16,8 @@ def get_cell_as_list(auction_id, dataframe, column):
 
 def get_lot_summary_as_list_of_dictionaries(auction_id, dataframe):
     string_items = dataframe.loc[dataframe["Auction_Id"] == auction_id, "Auction_Lot_Summary"][0]
-    string_items_list_dict = string_items.replace("},{", "}&{").lstrip().rstrip()
-    return string_items_list_dict.split('&')
+    string_items = string_items.replace("},{", "}&{").lstrip().rstrip()
+    return string_items
 
 
 """ Parser helper method to construct dictionary """
