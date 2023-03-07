@@ -22,7 +22,7 @@ without disclosing critical information.
 
 """
 CONNECTION = connect(":memory:", adapter_kwargs={
-    "gsheetsapi" : { 
+    "gsheetaspi" : { 
     "service_account_info" : {
         "type" : st.secrets["gcp_service_account"]["type"], 
         "project_id" : st.secrets["gcp_service_account"]["project_id"],
