@@ -3,7 +3,7 @@ import re
 
 def get_items_auctioned(auction_id, dataframe):
     string_items = dataframe.loc[dataframe["Auction_Id"] == auction_id, "Items_Auctioned"][0]
-    string_items.replace("\'",'').replace("]","").replace("[","")
+    string_items = string_items.replace("\'",'').replace("]","").replace("[","")
     return string_items.split(',')
 
 def get_demand_items_auctioned(auction_id, dataframe):
