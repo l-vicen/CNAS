@@ -1,10 +1,11 @@
 import pandas as pd
 import re
 
-def get_items_auctioned(auction_id, dataframe):
-    string_items = dataframe.loc[dataframe["Auction_Id"] == auction_id, "Items_Auctioned"][0]
+def get_items_auctioned(auction_id, dataframe, column_name):
+    string_items = dataframe.loc[dataframe["Auction_Id"] == auction_id, column_name][0]
     string_items.replace("\'",'').replace("]","").replace("[","")
-    return string_items.split(',')
+    list_strings = string_items.split(',')
+    return  list_strings if (column_name != "Demanded_Quantity_Items") else [int(x) for x in list_strings]
 
 def get_demand_items_auctioned(auction_id, dataframe):
     return list(dataframe.loc[dataframe["Auction_Id"] == auction_id, "Demanded_Quantity_Items"][0])

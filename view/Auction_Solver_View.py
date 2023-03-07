@@ -24,11 +24,11 @@ def solve_auction():
         # TODO: Dictionary {Tuple, Integer} of Supplier Capacity 
 
         # Getting list of auctioned items
-        list_auction_items = sl.get_cell_as_list(text_input, dataframe, "Items_Auctioned")
+        list_auction_items = sl.get_cell_as_list(text_input, dataframe, "Auction_Id")
         st.write(list_auction_items)
 
         # Getting list of auctioned items
-        list_demand_items = sl.get_cell_as_list(text_input, dataframe, "Demand_Quantity_Items")
+        list_demand_items = sl.get_cell_as_list(text_input, dataframe, "Demanded_Quantity_Items")
         st.write(list_auction_items)
 
         # Building DICT: {Item, Demand}
