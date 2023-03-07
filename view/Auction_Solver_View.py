@@ -33,26 +33,30 @@ def solve_auction():
 
         # Getting list of expected prices per item
         list_budget_items = sl.get_cell_as_list(text_input, dataframe, "Estimated_Price_Items")
-        st.write(list_budget_items)
+        # st.write(list_budget_items)
 
         # Getting list of winner bids per item
         list_winner_bids = sl.get_cell_as_list(text_input, dataframe, "Winning_Bids")
-        st.write(list_winner_bids)
+        # st.write(list_winner_bids)
 
         # Building DICT: {Item, Demand}
         Demand = sl.parse_to_dictionary_format(list_auction_items, list_demand_items)
         st.markdown("##### Item Demand")
-        st.write(Demand)
+        # st.write(Demand)
 
         # Building DICT: {Item, Budget}
         Budget = sl.parse_to_dictionary_format(list_auction_items, list_budget_items)
         st.markdown("##### Item Budget")
-        st.write(Budget)
+        # st.write(Budget)
+
+        # Getting list of auction lots
+        list_auction_lots = sl.get_cell_as_list(text_input, dataframe, "Auction_Lot_Summary")
+        st.write(list_auction_lots)
 
         # Building DICT: {Item, Demand}
         # utility_input = get_utility_from_user()
-        utility = sl.parse_to_dictionary_format(list_auction_items, 0)
-        st.write(utility)
+        # utility = sl.parse_to_dictionary_format(list_auction_items, 0)
+        # st.write(utility)
 
         # st.write({'Lot_Item': 'RODO', 'Participating_Suppliers': ['41205907000174', '06910908000119'], 'History_Bids_Lot': [['1804'], ['4800']], 'History_Bid_Dates_Lot': [['2006-06-07T00:00:00'], ['2006-06-08T00:00:00']], 'Winning_Bid': 1804.0, 'Winner_Supplier': None})
 
