@@ -115,7 +115,7 @@ def build_model():
     results = solver.solve(model)   
 
     with st_stdout("info"), st_stderr("code"):
-        model.display()
+        model.pprint()
 
     # Display built model in streamlit
     # display_model_built(model, 1)
