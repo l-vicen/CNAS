@@ -1,14 +1,17 @@
 import pandas as pd
 import re
 
-def get_items_auctioned(auction_id, dataframe, column):
-    string_items = dataframe.loc[dataframe["Auction_Id"] == auction_id, column][0]
-    string_items = string_items.replace("\'",'').replace("]","").replace("[","").lstrip()
-    list_string_items = string_items.split(',')
-    return list_string_items if column == "Items_Auctioned" else [int(i) for i in list_string_items]
+def get_cell_as_list(auction_id, dataframe, column):
 
-def get_demand_items_auctioned(auction_id, dataframe):
-    return list(dataframe.loc[dataframe["Auction_Id"] == auction_id, "Demanded_Quantity_Items"][0])
+    # Parsing cell's string
+    string_items = dataframe.loc[dataframe["Auction_Id"] == auction_id, column][0]
+    string_items = string_items.replace("\'",'').replace("]","").replace("[","")
+
+    # Getting list
+    list_target = string_items.split(',')
+    list_target = [s.lstrip() for s in list_target]
+
+    return list_target if column == "Items_Auctioned" else [int(i) for i in list_target]
 
 """ Parser helper method to construct dictionary """
 def parse_to_dictionary_format(auctioned_items, numeric_value_list):
