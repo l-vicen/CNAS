@@ -9,6 +9,8 @@ credentials = service_account.Credentials.from_service_account_info(
     st.secrets["gcp_service_account"],
     scopes=[
         "https://www.googleapis.com/auth/spreadsheets",
+        "https://www.googleapis.com/auth/drive.readonly",
+        "https://spreadsheets.google.com/feeds"
     ],
 )
 
