@@ -16,7 +16,7 @@ def get_cell_as_list(auction_id, dataframe, column):
 
 def get_lot_summary_as_list_of_dictionaries(auction_id, dataframe):
     string_items = dataframe.loc[dataframe["Auction_Id"] == auction_id, "Auction_Lot_Summary"][0]
-    return [ast.literal_eval(x) for x in string_items]
+    return [x for x in string_items]
 
 
 """ Parser helper method to construct dictionary """
