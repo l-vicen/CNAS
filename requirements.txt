@@ -26,6 +26,7 @@ GitPython==3.1.31
 glpk==0.4.7
 google-auth==2.16.2
 greenlet==2.0.2
+gsheetsdb==0.1.13.1
 idna==3.4
 importlib-metadata==6.0.0
 importlib-resources==5.12.0
@@ -42,6 +43,12 @@ markdown-it-py==2.2.0
 MarkupSafe==2.1.2
 matplotlib-inline==0.1.6
 mdurl==0.1.0
+mo-dots==4.22.21108
+mo-future==3.147.20327
+mo-imports==3.149.20327
+mo-kwargs==4.22.21108
+mo-logs==4.23.21108
+moz-sql-parser==4.40.21126
 munch==2.5.0
 nbformat==5.7.3
 nest-asyncio==1.5.6
