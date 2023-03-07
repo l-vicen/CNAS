@@ -7,13 +7,13 @@ from shillelagh.backends.apsw.db import connect
 
 def establish_connection():
 
-    # # Credential setting to access the private Google Sheet Data Set
-    # credentials = service_account.Credentials.from_service_account_info(
-    #     st.secrets["gcp_service_account"],
-    #     scopes=[
-    #         "https://www.googleapis.com/auth/spreadsheets",
-    #     ],
-    # )
+    # Credential setting to access the private Google Sheet Data Set
+    credentials = service_account.Credentials.from_service_account_info(
+        st.secrets["gcp_service_account"],
+        scopes=[
+            "https://www.googleapis.com/auth/spreadsheets",
+        ],
+    )
 
     """
 
