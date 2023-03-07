@@ -114,7 +114,7 @@ def build_model():
     solver = Solver('pao.pyomo.FA')
     results = solver.solve(model)   
 
-    with st_stdout("warning"):
+    with st_stdout("info"):
         model.display()
 
     # Display built model in streamlit
