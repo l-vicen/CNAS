@@ -19,7 +19,7 @@ def get_lot_summary_as_list_of_dictionaries(auction_id, dataframe):
     string_items = string_items.lstrip()
     string_items = string_items.rstrip()
     string_items = string_items.replace(", {'Lot_Item':", "**&** {'Lot_Item':")
-    return string_items
+    return string_items.strip("**&** ")
 
 
 """ Parser helper method to construct dictionary """
