@@ -9,6 +9,6 @@ def solve_auction():
 
     dataframe = db.get_db()
 
-    st.write(sl.get_items_auctioned("1530740900092006", dataframe))
+    st.write(sl.get_items_auctioned(1530740900092006, dataframe))
 
     bls.build_model()
