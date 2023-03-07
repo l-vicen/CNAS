@@ -25,11 +25,11 @@ def solve_auction():
 
         # Getting list of auctioned items
         list_auction_items = sl.get_items_auctioned(text_input, dataframe)
-        st.write(list_auction_items)
+        st.write(len(list_auction_items))
 
         # Getting list of auctioned items
         list_demand_items = sl.get_demand_items_auctioned(text_input, dataframe)
-        st.write(list_demand_items)
+        st.write(len(list_demand_items))
 
         # Building DICT: {Item, Demand}
         demand = sl.parse_to_dictionary_format(list_auction_items, list_demand_items)
@@ -40,10 +40,10 @@ def solve_auction():
         utility = sl.parse_to_dictionary_format(list_auction_items, utility_input)
         st.write(utility)
 
-        st.write({'Lot_Item': 'RODO', 'Participating_Suppliers': ['41205907000174', '06910908000119'], 'History_Bids_Lot': [['1804'], ['4800']], 'History_Bid_Dates_Lot': [['2006-06-07T00:00:00'], ['2006-06-08T00:00:00']], 'Winning_Bid': 1804.0, 'Winner_Supplier': None})
+        # st.write({'Lot_Item': 'RODO', 'Participating_Suppliers': ['41205907000174', '06910908000119'], 'History_Bids_Lot': [['1804'], ['4800']], 'History_Bid_Dates_Lot': [['2006-06-07T00:00:00'], ['2006-06-08T00:00:00']], 'Winning_Bid': 1804.0, 'Winner_Supplier': None})
 
         # Build model & Solve
-        bls.build_model()
+        # bls.build_model()
 
 def get_utility_from_user():
 
