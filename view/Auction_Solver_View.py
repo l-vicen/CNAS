@@ -25,19 +25,23 @@ def solve_auction():
 
         # Getting list of auctioned items
         list_auction_items = sl.get_cell_as_list(text_input, dataframe, "Items_Auctioned")
-        # st.write(list_auction_items)
+        st.write("#### List Items")
+        st.write(list_auction_items)
 
         # Getting list of demands for items
         list_demand_items = sl.get_cell_as_list(text_input, dataframe, "Demanded_Quantity_Items")
-        # st.write(list_demand_items)
+        st.write("#### Demand Items")
+        st.write(list_demand_items)
 
         # Getting list of expected prices per item
         list_budget_items = sl.get_cell_as_list(text_input, dataframe, "Estimated_Price_Items")
-        # st.write(list_budget_items)
+        st.write("#### Budget Items")
+        st.write(list_budget_items)
 
         # Getting list of winner bids per item
         list_winner_bids = sl.get_cell_as_list(text_input, dataframe, "Winning_Bids")
-        # st.write(list_winner_bids)
+        st.write("#### Winner Items")
+        st.write(list_winner_bids)
 
         # Building DICT: {Item, Demand}
         Demand = sl.parse_to_dictionary_format(list_auction_items, list_demand_items)
@@ -62,13 +66,3 @@ def solve_auction():
 
         # Build model & Solve
         # bls.build_model()
-
-def get_utility_from_user():
-
-    collect_numbers = lambda x : [int(i) for i in re.split("[^0-9]", x) if i != ""]
-    numbers = st.text_input("PLease enter numbers")
-    st.write(collect_numbers(numbers))
-
-    fixed_numbers = st.multiselect("Please select numbers", [1, 2, 3, 4, 5])
-    st.write(fixed_numbers)
-    return fixed_numbers

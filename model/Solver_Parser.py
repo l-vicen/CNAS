@@ -3,16 +3,18 @@ import ast
 import re
 
 def get_cell_as_list(auction_id, dataframe, column):
-
-    # Parsing cell's string
     string_items = dataframe.loc[dataframe["Auction_Id"] == auction_id, column][0]
-    string_items = string_items.replace("\'",'').replace("]","").replace("[","")
+    return ast.literal_eval(string_items).strip()
 
-    # Getting list
-    list_target = string_items.split(',')
-    list_target = [s.lstrip() for s in list_target]
+    # # Parsing cell's string
+    # string_items = dataframe.loc[dataframe["Auction_Id"] == auction_id, column][0]
+    # string_items = string_items.replace("\'",'').replace("]","").replace("[","")
 
-    return list_target if (column == "Items_Auctioned") else [float(i) for i in list_target]
+    # # Getting list
+    # list_target = string_items.split(',')
+    # list_target = [s.lstrip() for s in list_target]
+
+    # return list_target if (column == "Items_Auctioned") else [float(i) for i in list_target]
 
 def get_lot_summary_as_list_of_dictionaries(auction_id, dataframe):
     string_items = dataframe.loc[dataframe["Auction_Id"] == auction_id, "Auction_Lot_Summary"][0].replace("[{", "{").replace("}]", "}")
