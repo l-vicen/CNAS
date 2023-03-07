@@ -39,7 +39,7 @@ def demand_requirement_constraint(model, i):
 def lower_and_upper_bound_constraint(submodel, j, i):
     return (submodel.production_costs[j,i], submodel.P[j,i], submodel.Budget[i])
 
-def build_model(list_items_auctioned):
+def build_model():
     
     # Upper-level definition: Auction Problem
     model = ConcreteModel("Upper-level: Auction Problem")
@@ -48,7 +48,7 @@ def build_model(list_items_auctioned):
     model.i := Set of auctioned items.
     model.j := Set of auction participating suppliers.
     '''
-    model.i = Set(initialize=list_items_auctioned, doc='Auctioned Items')
+    model.i = Set(initialize=['Apples', 'Bananas', 'Tomatos'], doc='Auctioned Items')
     model.j = Set(initialize=['Christina_GmbH', 'Lucas_GmbH'], doc='Auction Participating Suppliers')
 
     ''' Upper-level decision variable 

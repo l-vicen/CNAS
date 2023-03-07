@@ -25,5 +25,7 @@ def solve_auction():
         list_demand_items = sl.get_demand_items_auctioned(text_input, dataframe)
         st.write(list_demand_items)
 
+        st.write({'Lot_Item': 'RODO', 'Participating_Suppliers': ['41205907000174', '06910908000119'], 'History_Bids_Lot': [['1804'], ['4800']], 'History_Bid_Dates_Lot': [['2006-06-07T00:00:00'], ['2006-06-08T00:00:00']], 'Winning_Bid': 1804.0, 'Winner_Supplier': None})
+        
         # Build model & Solve
-        bls.build_model(list_auction_items)
+        bls.build_model()
