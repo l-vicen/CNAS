@@ -39,7 +39,7 @@ def demand_requirement_constraint(model, i):
 def lower_and_upper_bound_constraint(submodel, j, i):
     return (submodel.production_costs[j,i], submodel.P[j,i], submodel.Budget[i])
 
-def build_model():
+def build_model(list_items_auctioned):
     
     # Upper-level definition: Auction Problem
     model = ConcreteModel("Upper-level: Auction Problem")
@@ -48,7 +48,7 @@ def build_model():
     model.i := Set of auctioned items.
     model.j := Set of auction participating suppliers.
     '''
-    model.i = Set(initialize=['Apples', 'Bananas', 'Tomatos'], doc='Auctioned Items')
+    model.i = Set(initialize=list_items_auctioned, doc='Auctioned Items')
     model.j = Set(initialize=['Christina_GmbH', 'Lucas_GmbH'], doc='Auction Participating Suppliers')
 
     ''' Upper-level decision variable 
@@ -117,26 +117,12 @@ def build_model():
     with st_stdout("code"):
         model.pprint()
 
-    # Display built model in streamlit
-    # display_model_built(model, 1)
 
-    # for i in model.X:
-    #     st.write(model.X[i].value)
-
-
-def display_model_built(model, status):
-    tmp = sys.stdout
-    result = StringIO()
-    sys.stdout = result
-    model.pprint()
-    sys.stdout = tmp
-
-    if (status == 0):
-        st.warning(result.getvalue())
-    else: 
-        st.success(result.getvalue())
-
-
+""" 
+The redirect code was developed different streamlit community members as discussed in this 
+issue / feature forum discussion: https://discuss.streamlit.io/t/cannot-print-the-terminal-output-in-streamlit/6602/25.
+It has been adapted by myself to work in the newest versions of streamlit.
+"""
 @contextmanager
 def st_redirect(src, dst):
     placeholder = st.empty()
@@ -163,10 +149,3 @@ def st_stdout(dst):
     "this will show the prints"
     with st_redirect(sys.stdout, dst):
         yield
-
-@contextmanager
-def st_stderr(dst):
-    "This will show the logging"
-    with st_redirect(sys.stderr, dst):
-        yield
-

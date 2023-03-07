@@ -2,8 +2,6 @@ import streamlit as st
 import model.Bilevel_Programming as bls
 import model.Solver_Parser as sl
 import data.DataBase as db
-from io import StringIO 
-import sys
 
 def solve_auction():
     st.title("SOLVER: Bilevel Programming")
@@ -28,4 +26,4 @@ def solve_auction():
         st.write(list_demand_items)
 
     # Build model & Solve
-    bls.build_model()
+    bls.build_model(list_auction_items)
