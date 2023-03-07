@@ -37,8 +37,8 @@ def solve_auction():
         st.write(demand)
 
         # Building DICT: {Item, Demand}
-        utility_input = get_utility_from_user()
-        utility = sl.parse_to_dictionary_format(list_auction_items, utility_input)
+        # utility_input = get_utility_from_user()
+        utility = sl.parse_to_dictionary_format(list_auction_items, 0)
         st.write(utility)
 
         # st.write({'Lot_Item': 'RODO', 'Participating_Suppliers': ['41205907000174', '06910908000119'], 'History_Bids_Lot': [['1804'], ['4800']], 'History_Bid_Dates_Lot': [['2006-06-07T00:00:00'], ['2006-06-08T00:00:00']], 'Winning_Bid': 1804.0, 'Winner_Supplier': None})
