@@ -27,12 +27,5 @@ def solve_auction():
         list_demand_items = sl.get_demand_items_auctioned(text_input, dataframe)
         st.write(list_demand_items)
 
-    display_bilevel_model()
-
-def display_bilevel_model():
-    tmp = sys.stdout
-    result = StringIO()
-    sys.stdout = result
+    # Build model & Solve
     bls.build_model()
-    sys.stdout = tmp
-    st.info(result.getvalue())

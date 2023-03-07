@@ -1,6 +1,8 @@
 from pyomo.environ import *
 from pao.pyomo import *
 import streamlit as st
+from io import StringIO 
+import sys
 
 ''' Model Objective Functions
 1) Upper-level: 
@@ -99,13 +101,29 @@ def build_model():
     # Lower-level constraint assignment
     model.L.DemandConstraint = Constraint(model.j, model.i, rule=lower_and_upper_bound_constraint, doc='Bid Price is non-negative')
 
+    # Display built model in streamlit
+    display_model_built(model, 0)
+
     # Calling the Big-M Relaxation Solver
     solver = Solver('pao.pyomo.FA')
     results = solver.solve(model)   
 
+    # Display built model in streamlit
+    display_model_built(model, 1)
+
+    # for i in model.X:
+    #     st.write(model.X[i].value)
+
+
+def display_model_built(model, status):
+    tmp = sys.stdout
+    result = StringIO()
+    sys.stdout = result
     model.pprint()
+    sys.stdout = tmp
 
-    for i in model.X:
-        st.write(model.X[i].value)
-
+    if (status == 0):
+        st.warning(result.getvalue())
+    else: 
+        st.success(result.getvalue())
 
