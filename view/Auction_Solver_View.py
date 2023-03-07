@@ -24,21 +24,21 @@ def solve_auction():
         # TODO: Dictionary {Tuple, Integer} of Supplier Capacity 
 
         # Getting list of auctioned items
-        # list_auction_items = sl.get_cell_as_list(text_input, dataframe, "Items_Auctioned")
-        # st.write(list_auction_items)
+        list_auction_items = sl.get_cell_as_list(text_input, dataframe, "Items_Auctioned")
+        st.write(list_auction_items)
 
         # Getting list of auctioned items
         list_demand_items = sl.get_cell_as_list(text_input, dataframe, "Demanded_Quantity_Items")
         st.write(list_demand_items)
 
         # Building DICT: {Item, Demand}
-        # demand = sl.parse_to_dictionary_format(list_auction_items, list_demand_items)
-        # st.write(demand)
+        demand = sl.parse_to_dictionary_format(list_auction_items, list_demand_items)
+        st.write(demand)
 
         # Building DICT: {Item, Demand}
         # utility_input = get_utility_from_user()
-        # utility = sl.parse_to_dictionary_format(list_auction_items, 0)
-        # st.write(utility)
+        utility = sl.parse_to_dictionary_format(list_auction_items, 0)
+        st.write(utility)
 
         # st.write({'Lot_Item': 'RODO', 'Participating_Suppliers': ['41205907000174', '06910908000119'], 'History_Bids_Lot': [['1804'], ['4800']], 'History_Bid_Dates_Lot': [['2006-06-07T00:00:00'], ['2006-06-08T00:00:00']], 'Winning_Bid': 1804.0, 'Winner_Supplier': None})
 
