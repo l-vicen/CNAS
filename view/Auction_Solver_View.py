@@ -50,7 +50,7 @@ def solve_auction():
         # st.write(Budget)
 
         # Getting list of auction lots
-        list_auction_lots = sl.get_lot_summary_as_list(text_input, dataframe)
+        list_auction_lots = sl.get_lot_summary_as_list_of_dictionaries(text_input, dataframe)
         st.write(list_auction_lots)
 
         # Building DICT: {Item, Demand}
