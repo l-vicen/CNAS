@@ -46,12 +46,12 @@ def solve_auction():
         # Building DICT: {Item, Demand}
         Demand = sl.parse_to_dictionary_format(list_auction_items, list_demand_items)
         st.markdown("##### Item Demand")
-        # st.write(Demand)
+        st.write(Demand)
 
         # Building DICT: {Item, Budget}
         Budget = sl.parse_to_dictionary_format(list_auction_items, list_budget_items)
         st.markdown("##### Item Budget")
-        # st.write(Budget)
+        st.write(Budget)
 
         # Getting list of auction lots
         list_auction_lots = sl.get_lot_summary_as_list_of_dictionaries(text_input, dataframe)
