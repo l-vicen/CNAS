@@ -1,8 +1,14 @@
 from pyomo.environ import *
 from pao.pyomo import *
+
 import streamlit as st
-from io import StringIO 
+from streamlit.runtime.scriptrunner.script_run_context import SCRIPT_RUN_CONTEXT_ATTR_NAME
+from threading import current_thread
+from contextlib import contextmanager
+from io import StringIO
 import sys
+import logging
+import time
 
 ''' Model Objective Functions
 1) Upper-level: 
@@ -102,14 +108,17 @@ def build_model():
     model.L.DemandConstraint = Constraint(model.j, model.i, rule=lower_and_upper_bound_constraint, doc='Bid Price is non-negative')
 
     # Display built model in streamlit
-    display_model_built(model, 0)
+    # display_model_built(model, 0)
 
     # Calling the Big-M Relaxation Solver
     solver = Solver('pao.pyomo.FA')
     results = solver.solve(model)   
 
+    with st_stdout("success"):
+        model.pprint()
+
     # Display built model in streamlit
-    display_model_built(model, 1)
+    # display_model_built(model, 1)
 
     # for i in model.X:
     #     st.write(model.X[i].value)
@@ -126,4 +135,38 @@ def display_model_built(model, status):
         st.warning(result.getvalue())
     else: 
         st.success(result.getvalue())
+
+
+@contextmanager
+def st_redirect(src, dst):
+    placeholder = st.empty()
+    output_func = getattr(placeholder, dst)
+
+    with StringIO() as buffer:
+        old_write = src.write
+
+        def new_write(b):
+            if getattr(current_thread(), SCRIPT_RUN_CONTEXT_ATTR_NAME, None):
+                buffer.write(b + '')
+                output_func(buffer.getvalue() + '')
+            else:
+                old_write(b)
+
+        try:
+            src.write = new_write
+            yield
+        finally:
+            src.write = old_write
+
+@contextmanager
+def st_stdout(dst):
+    "this will show the prints"
+    with st_redirect(sys.stdout, dst):
+        yield
+
+@contextmanager
+def st_stderr(dst):
+    "This will show the logging"
+    with st_redirect(sys.stderr, dst):
+        yield
 
