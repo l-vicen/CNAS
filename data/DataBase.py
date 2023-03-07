@@ -113,7 +113,7 @@ def post_db(auction_id, auction_summary, auction_items, auction_history):
     cursor = CONNECTION.cursor()
 
     cursor.execute(query)
-    st.sucess("Auction successfully added to data set!")
+    st.success("Auction successfully added to data set!")
 
 
 def parse_auction_lot(auction_lot, auction_lot_item, smallest_bid):
