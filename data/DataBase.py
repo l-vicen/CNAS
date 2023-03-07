@@ -61,6 +61,7 @@ request in SQL & Python. Here, I retrive all Tuples from the
 Google Sheet (A Tuple is a single row in the data set). Then,
 I convert the tuples to a dataframe.
 """
+@st.cache_data(ttl=150)
 def get_db():
     # Establishing the connection
     cursor = connection.cursor()
