@@ -8,14 +8,11 @@ def insert_into_data_set_view():
 
     # Insert Target 
     text_input = st.text_input("Enter the auctionID: ", key="auction_id", help= "The actionID is the identifier of the Pregao.")
-
     btn_clicked = st.button("Insert")
 
     items_bid_history = []
 
     if(btn_clicked):
-        st.write(text_input)
-
         auction_summary_data = Extractor.get_auction_summary(text_input)
         # st.markdown("## Auction Summary")
         # st.write(auction_summary_data)
@@ -35,7 +32,4 @@ def insert_into_data_set_view():
     if (len(items_bid_history) > 0):
         DataBase.post_db(text_input, auction_summary_data, items_auctioned, items_bid_history)
         items_bid_history = []
-        clear_text()
-
-def clear_text():
-    st.session_state["auction_id"] = ""
+        text_input = ""
