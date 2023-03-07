@@ -4,7 +4,7 @@ import re
 
 def get_cell_as_list(auction_id, dataframe, column):
     string_items = dataframe.loc[dataframe["Auction_Id"] == auction_id, column][0]
-    return ast.literal_eval(string_items).strip()
+    return ast.literal_eval(string_items)
 
     # # Parsing cell's string
     # string_items = dataframe.loc[dataframe["Auction_Id"] == auction_id, column][0]
