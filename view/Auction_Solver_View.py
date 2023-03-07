@@ -25,5 +25,8 @@ def solve_auction():
         # Getting list of auctioned items
         list_demand_items = sl.get_demand_items_auctioned(text_input, dataframe)
         st.write(list_demand_items)
-    
-    
+
+    bls.build_model()
+
+def display_bilevel_model():
+    pass
