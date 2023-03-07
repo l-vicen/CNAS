@@ -40,9 +40,14 @@ def solve_auction():
         st.write(list_winner_bids)
 
         # Building DICT: {Item, Demand}
-        demand = sl.parse_to_dictionary_format(list_auction_items, list_demand_items)
+        Demand = sl.parse_to_dictionary_format(list_auction_items, list_demand_items)
         st.markdown("##### Item Demand")
-        st.write(demand)
+        st.write(Demand)
+
+        # Building DICT: {Item, Budget}
+        Budget = sl.parse_to_dictionary_format(list_auction_items, list_budget_items)
+        st.markdown("##### Item Budget")
+        st.write(Budget)
 
         # Building DICT: {Item, Demand}
         # utility_input = get_utility_from_user()
