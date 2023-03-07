@@ -4,26 +4,40 @@ import pandas as pd
 from google.oauth2 import service_account
 from shillelagh.backends.apsw.db import connect
 
+# URL of private Google Sheet
+SHEET_URL = st.secrets["private_gsheets_url"]
 
-def establish_connection():
+# Name of the columns in the google sheet
+GOOGLE_SHEET_COLUMNS = ['Auction_Id', 
+                        'Start_Date',
+                        'End_Date',
+                        'Total_Estimated_Price',
+                        'Total_Homologated_Price',
+                        'Number_Items_Auctioned',
+                        'Items_Auctioned',
+                        'Demanded_Quantity_Items',
+                        'Estimated_Price_Items',
+                        'Winning_Bids',
+                        'Auction_Lot_Summary']
 
-    # Credential setting to access the private Google Sheet Data Set
-    credentials = service_account.Credentials.from_service_account_info(
-        st.secrets["gcp_service_account"],
-        scopes=[
-            "https://www.googleapis.com/auth/spreadsheets",
-        ],
-    )
+def establish_connection_to_database():
+    
+    # # Credential setting to access the private Google Sheet Data Set
+    # CRENDENTIALS = service_account.Credentials.from_service_account_info(
+    #     st.secrets["gcp_service_account"],
+    #     scopes=[
+    #         "https://www.googleapis.com/auth/spreadsheets",
+    #     ],
+    # )
 
     """
-
     Default way to access the private information on the credentials to access the Google Sheet Data Set.
 
     Via st.secrets["gcp_service_account"] I store private credential info on a file .streamlit/secrets.toml 
     that it is used on the hosting side (Streamlit Cloud) to establish communication between app and data set
     without disclosing critical information.
-
     """
+
     connection = connect(":memory:", adapter_kwargs={
         "gsheetsapi" : { 
         "service_account_info" : {
@@ -43,22 +57,6 @@ def establish_connection():
 
     return connection
 
-# URL of private Google Sheet
-SHEET_URL = st.secrets["private_gsheets_url"]
-
-# Name of the columns in the google sheet
-GOOGLE_SHEET_COLUMNS = ['Auction_Id', 
-                        'Start_Date',
-                        'End_Date',
-                        'Total_Estimated_Price',
-                        'Total_Homologated_Price',
-                        'Number_Items_Auctioned',
-                        'Items_Auctioned',
-                        'Demanded_Quantity_Items',
-                        'Estimated_Price_Items',
-                        'Winning_Bids',
-                        'Auction_Lot_Summary']
-
 """
 get_db() uses shillelagh lib to perform a common get
 request in SQL & Python. Here, I retrive all Tuples from the
@@ -68,7 +66,7 @@ I convert the tuples to a dataframe.
 @st.cache_data(ttl=150)
 def get_db():
     # Establishing the connection
-    connection = establish_connection()
+    connection = establish_connection_to_database()
     cursor = connection.cursor()
 
     query = f'SELECT * FROM "{SHEET_URL}"'
@@ -125,8 +123,9 @@ def post_db(auction_id, auction_summary, auction_items, auction_history):
                                                 "{Winning_Bids}",\
                                                 "{Auction_Lot_Summary}")'
     # Establishing the connection
-    connection = establish_connection()
+    connection = establish_connection_to_database()
     cursor = connection.cursor()
+    
     cursor.execute(query)
     st.sucess("Auction successfully added to data set!")
 
