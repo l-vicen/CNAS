@@ -11,7 +11,13 @@ def get_cell_as_list(auction_id, dataframe, column):
     list_target = string_items.split(',')
     list_target = [s.lstrip() for s in list_target]
 
-    return list_target if (column == "Items_Auctioned" or column == "Auction_Lot_Summary")  else [float(i) for i in list_target]
+    return list_target if (column == "Items_Auctioned") else [float(i) for i in list_target]
+
+def get_lot_summary_as_list(auction_id, dataframe):
+
+    string_items = dataframe.loc[dataframe["Auction_Id"] == auction_id, "Auction_Lot_Summary"][0]
+    return string_items.split(", {")
+
 
 """ Parser helper method to construct dictionary """
 def parse_to_dictionary_format(auctioned_items, numeric_value_list):
