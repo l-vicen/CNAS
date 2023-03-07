@@ -25,5 +25,5 @@ def solve_auction():
         list_demand_items = sl.get_demand_items_auctioned(text_input, dataframe)
         st.write(list_demand_items)
 
-    # Build model & Solve
-    bls.build_model(list_auction_items)
+        # Build model & Solve
+        bls.build_model(list_auction_items)
