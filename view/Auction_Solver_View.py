@@ -29,7 +29,8 @@ def solve_auction():
 
         # Getting list of auctioned items
         list_demand_items = sl.get_demand_items_auctioned(text_input, dataframe)
-        st.write(len(list_demand_items))
+        for i in list_demand_items:
+            st.write(i)
 
         # Building DICT: {Item, Demand}
         demand = sl.parse_to_dictionary_format(list_auction_items, list_demand_items)
