@@ -10,7 +10,7 @@ def insert_into_data_set_view():
     text_input = st.text_input("Enter the auctionID: ", key="auction_id", help= "The actionID is the identifier of the Pregao.")
     auction_id = text_input
 
-    btn_clicked = st.button("Insert", on_click=reset_auction_id)
+    btn_clicked = st.button("Insert")
 
     items_bid_history = []
 
@@ -36,6 +36,3 @@ def insert_into_data_set_view():
     if (len(items_bid_history) > 0):
         DataBase.post_db(auction_id, auction_summary_data, items_auctioned, items_bid_history)
         items_bid_history = []
-
-def reset_auction_id():
-    st.session_state["auction_id"] = ""
