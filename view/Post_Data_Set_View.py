@@ -15,6 +15,7 @@ def insert_into_data_set_view():
     items_bid_history = []
 
     if(btn_clicked):
+        st.write(auction_id)
 
         auction_summary_data = Extractor.get_auction_summary(auction_id)
         # st.markdown("## Auction Summary")
