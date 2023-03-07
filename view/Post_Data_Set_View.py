@@ -2,6 +2,8 @@ import streamlit as st
 import data.Extractor as Extractor
 import data.DataBase as DataBase
 
+TEXT_INPUT = ""
+
 def insert_into_data_set_view():
 
     st.title("POST: Data Set")
@@ -9,6 +11,7 @@ def insert_into_data_set_view():
     # Insert Target 
     text_input = st.text_input("Enter the auctionID: ", key="auction_id", help= "The actionID is the identifier of the Pregao.")
     btn_clicked = st.button("Insert")
+    st.markdown("---")
 
     items_bid_history = []
 
@@ -32,4 +35,4 @@ def insert_into_data_set_view():
     if (len(items_bid_history) > 0):
         DataBase.post_db(text_input, auction_summary_data, items_auctioned, items_bid_history)
         items_bid_history = []
-        text_input = ""
+        TEXT_INPUT = ""
