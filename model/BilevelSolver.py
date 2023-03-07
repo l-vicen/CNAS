@@ -1,5 +1,4 @@
 from pyomo.environ import *
-import pyomo.environ as pyo
 from pao.pyomo import *
 import streamlit as st
 
@@ -100,23 +99,13 @@ def build_model():
     # Lower-level constraint assignment
     model.L.DemandConstraint = Constraint(model.j, model.i, rule=lower_and_upper_bound_constraint, doc='Bid Price is non-negative')
 
-    # Visualizing model composition
-    model.pprint()
-
     # Calling the Big-M Relaxation Solver
     solver = Solver('pao.pyomo.FA')
-    results = solver.solve(model)
+    results = solver.solve(model)   
 
-    # Visualizing solved model composition
     model.pprint()
 
-    # st.write(model.L.P_index)
-
-    st.write(model.display())
-
-    print("##############")
-    print(value(model.o))
-    print(value(model.L.o))
-
+    for i in model.X:
+        st.write(model.X[i].value)
 
 
