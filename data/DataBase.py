@@ -5,12 +5,12 @@ from google.oauth2 import service_account
 from shillelagh.backends.apsw.db import connect
 
 # Credential setting to access the private Google Sheet Data Set
-credentials = service_account.Credentials.from_service_account_info(
-    st.secrets["gcp_service_account"],
-    scopes=[
-        "https://www.googleapis.com/auth/spreadsheets",
-    ],
-)
+# credentials = service_account.Credentials.from_service_account_info(
+#     st.secrets["gcp_service_account"],
+#     scopes=[
+#         "https://www.googleapis.com/auth/spreadsheets",
+#     ],
+# )
 
 """
 
@@ -21,7 +21,7 @@ that it is used on the hosting side (Streamlit Cloud) to establish communication
 without disclosing critical information.
 
 """
-# connection = connect(":memory:", adapter_kwargs={
+# CONNECTION = connect(":memory:", adapter_kwargs={
 #     "gsheetsapi" : { 
 #     "service_account_info" : {
 #         "type" : st.secrets["gcp_service_account"]["type"], 
@@ -38,6 +38,7 @@ without disclosing critical information.
 #     },
 # })
 
+CONNECTION = connection = connect(":memory:")
 
 # URL of private Google Sheet
 SHEET_URL = st.secrets["public_gsheets_url"]
@@ -64,8 +65,7 @@ I convert the tuples to a dataframe.
 @st.cache_data(ttl=150)
 def get_db():
     # Establishing the connection
-    connection = connect()
-    cursor = connection.cursor()
+    cursor = CONNECTION.cursor()
 
     query = f'SELECT * FROM "{SHEET_URL}"'
     rows = cursor.execute(query)
@@ -121,8 +121,7 @@ def post_db(auction_id, auction_summary, auction_items, auction_history):
                                                 "{Winning_Bids}",\
                                                 "{Auction_Lot_Summary}")'
     # Establishing the connection
-    connection = connect()
-    cursor = connection.cursor()
+    cursor = CONNECTION.cursor()
     cursor.execute(query)
     st.sucess("Auction successfully added to data set!")
 
