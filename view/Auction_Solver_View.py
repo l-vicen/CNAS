@@ -45,7 +45,7 @@ def solve_auction():
 
         # Getting list of auction lots
         list_auction_lots = sl.get_cell_as_list_of_dict(text_input, dataframe)
-        # st.write(list_auction_lots)
+        st.write(list_auction_lots)
 
         # Building list of participating suppliers
         auction_lots = len(list_auction_lots)
@@ -55,8 +55,13 @@ def solve_auction():
         # st.write(Participating_Supplier)
 
         # Building DICT: {TUPLE, Capacity}
-        Supplier_Capacity = [(list_auction_lots[i]["Participating_Suppliers"][j], auction_lots[i]["Lot_Item"]) for i in range(auction_lots) for j in range(len(list_auction_lots[i]["Participating_Suppliers"]))]
-        st.markdown("##### Item Demand")
+        Supplier_Capacity = []
+        for i in range(auction_lots):
+            pair = (auction_lots[i]["Lot_Item"], "")
+            for j in range(len(auction_lots[i]["Participating_Suppliers"])):
+                pair = (auction_lots[i]["Lot_Item"], auction_lots[i]["Participating_Suppliers"][j])
+                Supplier_Capacity.append(pair)
+
         st.write(Supplier_Capacity)
 
         # Building list of tuples [(Supplier, Item)]
