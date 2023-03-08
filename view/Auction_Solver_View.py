@@ -67,7 +67,7 @@ def solve_auction():
 
         # Building DICT: {(Supp, Item), Supply_Capacity}
         length_supp_items = len(Supplies_Item_Pair_List)
-        Suppliers_Capacity = {str(Supplies_Item_Pair_List[i]) : (Demand.get(Supplies_Item_Pair_List[i][1]) if Supplies_Item_Pair_List[i][1] in Demand else -1) for i in range(length_supp_items)}
+        Suppliers_Capacity = {(Supplies_Item_Pair_List[i][0], Supplies_Item_Pair_List[i][1]) : (Demand.get(Supplies_Item_Pair_List[i][1]) if Supplies_Item_Pair_List[i][1] in Demand else -1) for i in range(length_supp_items)}
         st.markdown("##### Suppliers' Capacity")
         st.write(Suppliers_Capacity)
         st.markdown("---")
@@ -98,7 +98,7 @@ def solve_auction():
                         if (key[0] == lot_supplier[k] and key[1] == lot_item):
 
                             value = percentage_cost_multiplier * float(list_auction_lots[j]["History_Bids_Lot"][k][0])
-                            Suppliers_Production_Cost[str(key)] = value
+                            Suppliers_Production_Cost[(key[0], key[1])] = value
 
                         else:
                             value = -1
@@ -119,7 +119,7 @@ def solve_auction():
                 st.markdown("---")
 
                 btn_apply_bilevel = st.button("Apply Bilevel Solver")
-                
+
                 if (btn_apply_bilevel):
                     bls.build_model(list_auction_items, Participating_Supplier, Demand, Utility, Suppliers_Capacity, Budget, Suppliers_Production_Cost)
 
