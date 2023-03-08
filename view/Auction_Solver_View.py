@@ -18,11 +18,6 @@ def solve_auction():
 
     if (btn_clicked):
 
-        # TODO: Dictionary of Item Utility {Item, Demand}
-        # TODO: Dictionary of Item Expected Cost {Item, ExpectedCost}
-        # TODO: LIST of Participating Suppliers
-        # TODO: Dictionary {Tuple, Integer} of Supplier Capacity 
-
         # Getting list of auctioned items
         list_auction_items = sl.get_cell_as_list(text_input, dataframe, "Items_Auctioned")
         # st.write("#### List Items")
@@ -68,13 +63,11 @@ def solve_auction():
         st.markdown("##### Item Demand")
         st.write(Demand)
 
+        # TODO: Dictionary {Tuple, Integer} of Supplier Capacity 
         # Building DICT: {(Supp, Item), Supply_Capacity}
         lenght_supp_items = len(Supplies_Item_Pair_List)
-        Supplies_Capacity = {
-            (str(Supplies_Item_Pair_List[i])) : (value if Supplies_Item_Pair_List[i][1] == key else -1) 
-            for i in range(lenght_supp_items) 
-            for key, value in Demand.items()
-        }
+
+        Supplies_Capacity = {(str(Supplies_Item_Pair_List[i])) : (Demand.get(Supplies_Item_Pair_List[i][1]) if Supplies_Item_Pair_List[i][1] in Demand else -1) for i in range(lenght_supp_items)}
         
         st.markdown("##### Supplier Capacity")
         st.write(Supplies_Capacity)
@@ -84,8 +77,7 @@ def solve_auction():
         # st.markdown("##### Item Budget")
         # st.write(Budget)
 
-
-
+        # TODO: Dictionary of Item Utility {Item, Demand}
         # Building DICT: {Item, Demand}
         # utility_input = get_utility_from_user()
         # utility = sl.parse_to_dictionary_format(list_auction_items, 0)
