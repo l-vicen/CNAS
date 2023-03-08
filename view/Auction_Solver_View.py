@@ -14,11 +14,8 @@ def solve_auction():
 
     # Insert Target 
     text_input = st.text_input("Enter the auctionID: ", key="auction_id", help= "The actionID is the identifier of the Pregao.")
-    btn_clicked = st.button("Insert")
-    st.markdown("---")
 
-    list_auction_items = []
-    if (btn_clicked):
+    if (text_input):
 
         # Getting list of auctioned items
         list_auction_items = sl.get_cell_as_list(text_input, dataframe, "Items_Auctioned")
@@ -84,18 +81,20 @@ def solve_auction():
         # bls.build_model()
         st.markdown("---")  
         btn_user_input = st.button("Add Utility & Cost")
-        
-        # Building DICT: {Item, Utility}
-        collect_numbers = lambda x : [int(i) for i in re.split("[^0-9]", x) if i != ""]
-        utility_input_list  = st.text_input("Please enter numbers")
-        utility_list = collect_numbers(utility_input_list)
-        Utility = sl.parse_to_dictionary_format(list_auction_items, utility_list)
-        st.markdown("#### Utility per Item")
-        st.write(Utility)
 
-        # Building DICT: {Item, Utility}
-        cost_input_list  = st.text_input("Please enter numbers")
-        cost_list = collect_numbers(cost_input_list)
-        Production_Cost = sl.parse_to_dictionary_format(list_auction_items, cost_list)
-        st.markdown("#### Production Cost per Item")
-        st.write(Production_Cost)
+        if (btn_user_input):
+        
+            # Building DICT: {Item, Utility}
+            collect_numbers = lambda x : [int(i) for i in re.split("[^0-9]", x) if i != ""]
+            utility_input_list  = st.text_input("Please enter numbers")
+            utility_list = collect_numbers(utility_input_list)
+            Utility = sl.parse_to_dictionary_format(list_auction_items, utility_list)
+            st.markdown("#### Utility per Item")
+            st.write(Utility)
+
+            # Building DICT: {Item, Utility}
+            cost_input_list  = st.text_input("Please enter numbers")
+            cost_list = collect_numbers(cost_input_list)
+            Production_Cost = sl.parse_to_dictionary_format(list_auction_items, cost_list)
+            st.markdown("#### Production Cost per Item")
+            st.write(Production_Cost)
