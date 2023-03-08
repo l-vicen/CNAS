@@ -71,7 +71,7 @@ def solve_auction():
         # Building DICT: {(Supp, Item), Supply_Capacity}
         lenght_supp_items = len(Supplies_Item_Pair_List)
         Supplies_Capacity = {
-            (Supplies_Item_Pair_List[i]) : (value if Supplies_Item_Pair_List[i][1] == key else -1) 
+            (str(Supplies_Item_Pair_List[i])) : (value if Supplies_Item_Pair_List[i][1] == key else -1) 
             for i in range(lenght_supp_items) 
             for key, value in Demand.items()
         }
