@@ -84,17 +84,20 @@ def solve_auction():
 
         if (btn_user_input):
         
-            # Building DICT: {Item, Utility}
+            # Getting User Input
             collect_numbers = lambda x : [int(i) for i in re.split("[^0-9]", x) if i != ""]
             utility_input_list  = st.text_input("Please enter numbers")
-            utility_list = collect_numbers(utility_input_list)
-            Utility = sl.parse_to_dictionary_format(list_auction_items, utility_list)
-            st.markdown("#### Utility per Item")
-            st.write(Utility)
 
-            # Building DICT: {Item, Utility}
             cost_input_list  = st.text_input("Please enter numbers")
-            cost_list = collect_numbers(cost_input_list)
-            Production_Cost = sl.parse_to_dictionary_format(list_auction_items, cost_list)
-            st.markdown("#### Production Cost per Item")
-            st.write(Production_Cost)
+    
+            if (utility_input_list and cost_input_list):
+                utility_list = collect_numbers(utility_input_list)
+                cost_list = collect_numbers(cost_input_list)
+
+                Utility = sl.parse_to_dictionary_format(list_auction_items, utility_list)
+                st.markdown("#### Utility per Item")
+                st.write(Utility)
+        
+                Production_Cost = sl.parse_to_dictionary_format(list_auction_items, cost_list)
+                st.markdown("#### Production Cost per Item")
+                st.write(Production_Cost)
