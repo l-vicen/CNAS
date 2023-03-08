@@ -17,6 +17,7 @@ def solve_auction():
     btn_clicked = st.button("Insert")
     st.markdown("---")
 
+    list_auction_items = []
     if (btn_clicked):
 
         # Getting list of auctioned items
@@ -82,13 +83,21 @@ def solve_auction():
         # Build model & Solve
         # bls.build_model()
 
-    # Building DICT: {Item, Utility}
-    utility_input_list = get_utility()
-    Utility = sl.parse_to_dictionary_format(list_auction_items, utility_input_list)
-    st.markdown("#### Utility per Item")
-    st.write(Utility)
+    if (len(list_auction_items) != 0):
+        
+        # Building DICT: {Item, Utility}
+        utility_input_list = get_list_input_user()
+        Utility = sl.parse_to_dictionary_format(list_auction_items, utility_input_list)
+        st.markdown("#### Utility per Item")
+        st.write(Utility)
 
-def get_utility():
+        # Building DICT: {Item, Utility}
+        cost_input_list = get_list_input_user()
+        Production_Cost = sl.parse_to_dictionary_format(list_auction_items, cost_input_list)
+        st.markdown("#### Production Cost per Item")
+        st.write(Production_Cost)
+
+def get_list_input_user():
     collect_numbers = lambda x : [int(i) for i in re.split("[^0-9]", x) if i != ""]
     utility = st.text_input("Please enter numbers")
     st.write(collect_numbers(utility))
