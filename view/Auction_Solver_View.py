@@ -19,9 +19,9 @@ def solve_auction():
     if (text_input):
         # Getting list of auctioned items
         list_auction_items = sl.get_cell_as_list(text_input, dataframe, "Items_Auctioned")
-        st.markdown("#### Auctioned Items")
-        st.write(list_auction_items)
-        st.markdown("---")
+        # st.markdown("#### Auctioned Items")
+        # st.write(list_auction_items)
+        # st.markdown("---")
 
         # Getting list of demands for items
         list_demand_items = sl.get_cell_as_list(text_input, dataframe, "Demanded_Quantity_Items")
@@ -46,9 +46,9 @@ def solve_auction():
         auction_lots = len(list_auction_lots)
         Participating_Supplier = [str(supp) for i in range(auction_lots) for supp in list_auction_lots[i]["Participating_Suppliers"]]
         Participating_Supplier = list(OrderedDict.fromkeys(Participating_Supplier))
-        st.markdown("##### Auction Participating Suppliers")
-        st.write(Participating_Supplier)
-        st.markdown("---")
+        # st.markdown("##### Auction Participating Suppliers")
+        # st.write(Participating_Supplier)
+        # st.markdown("---")
 
         # Building DICT: {TUPLE, Capacity}
         Supplies_Item_Pair_List = [(str(list_auction_lots[i].get("Participating_Suppliers")[j]), list_auction_lots[i].get("Lot_Item")) for i in range(auction_lots) for j in range(len(list_auction_lots[i].get("Participating_Suppliers")))]
@@ -62,9 +62,9 @@ def solve_auction():
 
         # Building DICT: {Item, Demand}
         Demand = sl.parse_to_dictionary_format(list_auction_items, list_demand_items)
-        st.markdown("##### Auctioneer's Demand per Item")
-        st.write(Demand)
-        st.markdown("---")
+        # st.markdown("##### Auctioneer's Demand per Item")
+        # st.write(Demand)
+        # st.markdown("---")
 
         # Building DICT: {(Supp, Item), Supply_Capacity}
         length_supp_items = len(Supplies_Item_Pair_List)
@@ -78,9 +78,9 @@ def solve_auction():
 
         # Building DICT: {Item, Budget}
         Budget = sl.parse_to_dictionary_format(list_auction_items, list_budget_items)
-        st.markdown("##### Auctioneer's Budget per Item")
-        st.write(Budget)
-        st.markdown("---")
+        # st.markdown("##### Auctioneer's Budget per Item")
+        # st.write(Budget)
+        # st.markdown("---")
     
         # Building DICT: {(Supp, Item), Production_Cost}
         percentage_cost_multiplier = st.number_input("Enter COGS Multiplier")
@@ -120,12 +120,12 @@ def solve_auction():
 
             if (utility_input_list):
                 Utility = sl.parse_to_dictionary_format(list_auction_items, utility_list)
-                st.markdown("#### Auctioneer's perceived Utility per Item")
-                st.write(Utility)
-                st.markdown("---")
+                # st.markdown("#### Auctioneer's perceived Utility per Item")
+                # st.write(Utility)
+                # st.markdown("---")
 
+                # building Bilevel Program
                 btn_apply_bilevel = st.button("Apply Bilevel Solver")
-
                 if (btn_apply_bilevel):
                     bls.build_model(list_auction_items, Participating_Supplier, Demand, Utility, Suppliers_Capacity, Budget, Suppliers_Production_Cost)
 
