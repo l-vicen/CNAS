@@ -72,24 +72,6 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
     model.supply_capacity := the quantity of item i that supplier j can procure.
     model.production_costs := the production cost of item i if produced by supplier j.
     '''
-    # supplier_capacity = {
-    #     ('Christina_GmbH', 'Apples'): 15,
-    #     ('Lucas_GmbH', 'Apples'): 15,
-    #     ('Christina_GmbH', 'Bananas'): 25,
-    #     ('Lucas_GmbH', 'Bananas'): 15,
-    #     ('Christina_GmbH', 'Tomatos'):40,
-    #     ('Lucas_GmbH', 'Tomatos'): 50,
-    # }
-
-    # production_costs = {
-    #     ('Christina_GmbH', 'Apples'): 9.75,
-    #     ('Lucas_GmbH', 'Apples'): 7.5,
-    #     ('Christina_GmbH', 'Bananas'): 12.5,
-    #     ('Lucas_GmbH', 'Bananas'): 15,
-    #     ('Christina_GmbH', 'Tomatos'): 37.5,
-    #     ('Lucas_GmbH', 'Tomatos'): 50,
-    # }
-
     model.Demand = Param(model.i, initialize= demand_dictionary, doc='Auctioneer\'s_Demand_per_Item')
     print_into_streamlit("Auctioneer's Demand per Item", model.Demand)
 
@@ -102,7 +84,7 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
     model.L.Budget = Param(model.i, initialize= budget_dictionary, doc='Auctioneer\'s_expected_Expense_per_Items')
     print_into_streamlit("Auctioneer's expected Expense per Items",  model.L.Budget)
 
-    model.L.Production_Costs = Param(model.j, model.i, initialize= production_costs_dictionary , doc='Suppliers\'_individual_Production_Cost_per_Item')
+    model.L.Production_Costs = Param(model.j, model.i, initialize = production_costs_dictionary , doc='Suppliers\'_individual_Production_Cost_per_Item')
     print_into_streamlit("Suppliers\' individual Production Cost per Item",  model.L.Production_Costs)
 
     # Objective function assignments
@@ -158,7 +140,7 @@ def st_stdout(dst):
 
 """ Helper method to print model components into streamlit """
 def print_into_streamlit(title, model_component):
+    msg = "###### {}".format(title)
+    st.markdown(msg)
     with st_stdout("code"):
-        msg = "###### {}".format(title)
-        st.markdown(msg)
         model_component.display()

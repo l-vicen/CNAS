@@ -130,9 +130,3 @@ def solve_auction():
                 st.markdown("---")
                 if (btn_apply_bilevel):
                     bls.build_model(list_auction_items, Participating_Supplier, Demand, Utility, Suppliers_Capacity, Budget, Suppliers_Production_Cost)
-
-
-            
-        
-
-
