@@ -79,11 +79,11 @@ def solve_auction():
         # TODO: Dictionary of Item Utility {Item, Demand}
         # Building DICT: {Item, Utility}
 
-        utility = get_utility()
-        st.write(utility)
-
         # Build model & Solve
         # bls.build_model()
+
+    utility = get_utility()
+    st.write(utility)
 
 def get_utility():
     collect_numbers = lambda x : [int(i) for i in re.split("[^0-9]", x) if i != ""]
