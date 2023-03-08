@@ -49,10 +49,15 @@ def solve_auction():
 
         # Building list of participating suppliers
         auction_lots = len(list_auction_lots)
-        Participating_Supplier = [supp for i in range(auction_lots) for supp in list_auction_lots[i]["Participating_Suppliers"]]
+        Participating_Supplier = [str(supp) for i in range(auction_lots) for supp in list_auction_lots[i]["Participating_Suppliers"]]
         Participating_Supplier = list(OrderedDict.fromkeys(Participating_Supplier))
         st.write("Participating Suppliers")
         st.write(Participating_Supplier)
+
+        # Building list of tuples [(Supplier, Item)]
+        tuple_supp_item_list = sl.parse_two_lists_into_one_tuple_list(Participating_Supplier, list_auction_items)
+        st.write("Tuple List")
+        st.write(tuple_supp_item_list)
 
         # Building DICT: {Item, Demand}
         Demand = sl.parse_to_dictionary_format(list_auction_items, list_demand_items)
@@ -63,6 +68,7 @@ def solve_auction():
         Budget = sl.parse_to_dictionary_format(list_auction_items, list_budget_items)
         st.markdown("##### Item Budget")
         st.write(Budget)
+
 
 
         # Building DICT: {Item, Demand}
