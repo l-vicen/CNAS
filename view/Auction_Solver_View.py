@@ -85,19 +85,17 @@ def solve_auction():
         st.markdown("---")  
         btn_user_input = st.button("Add Utility & Cost")
         
-        if (btn_user_input and btn_clicked):
+        # Building DICT: {Item, Utility}
+        collect_numbers = lambda x : [int(i) for i in re.split("[^0-9]", x) if i != ""]
+        utility_input_list  = st.text_input("Please enter numbers")
+        utility_list = collect_numbers(utility_input_list)
+        Utility = sl.parse_to_dictionary_format(list_auction_items, utility_list)
+        st.markdown("#### Utility per Item")
+        st.write(Utility)
 
-            # Building DICT: {Item, Utility}
-            collect_numbers = lambda x : [int(i) for i in re.split("[^0-9]", x) if i != ""]
-            utility_input_list  = st.text_input("Please enter numbers")
-            utility_list = collect_numbers(utility_input_list)
-            Utility = sl.parse_to_dictionary_format(list_auction_items, utility_list)
-            st.markdown("#### Utility per Item")
-            st.write(Utility)
-
-            # Building DICT: {Item, Utility}
-            cost_input_list  = st.text_input("Please enter numbers")
-            cost_list = collect_numbers(cost_input_list)
-            Production_Cost = sl.parse_to_dictionary_format(list_auction_items, cost_list)
-            st.markdown("#### Production Cost per Item")
-            st.write(Production_Cost)
+        # Building DICT: {Item, Utility}
+        cost_input_list  = st.text_input("Please enter numbers")
+        cost_list = collect_numbers(cost_input_list)
+        Production_Cost = sl.parse_to_dictionary_format(list_auction_items, cost_list)
+        st.markdown("#### Production Cost per Item")
+        st.write(Production_Cost)
