@@ -37,7 +37,7 @@ def demand_requirement_constraint(model, i):
 def lower_and_upper_bound_constraint(submodel, j, i):
     return (submodel.production_costs[j,i], submodel.P[j,i], submodel.Budget[i])
 
-def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary, supplier_capacity_dictionary, budget_dictionary, production_costs_dictionary,  ):
+def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary, supplier_capacity_dictionary, budget_dictionary, production_costs_dictionary):
     
     # Upper-level definition: Auction Problem
     model = ConcreteModel("Upper-level: Auction Problem")

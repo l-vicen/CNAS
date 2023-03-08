@@ -118,8 +118,10 @@ def solve_auction():
                 st.write(Utility)
                 st.markdown("---")
 
-
-                bls.build_model(list_auction_items, Participating_Supplier, Demand, Utility, Suppliers_Capacity, Budget, Suppliers_Production_Cost)
+                btn_apply_bilevel = st.button("Apply Bilevel Solver")
+                
+                if (btn_apply_bilevel):
+                    bls.build_model(list_auction_items, Participating_Supplier, Demand, Utility, Suppliers_Capacity, Budget, Suppliers_Production_Cost)
 
 
             
