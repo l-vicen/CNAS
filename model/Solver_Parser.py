@@ -2,25 +2,16 @@ import pandas as pd
 import ast
 import re
 
+""" Returns the cell value as a list in a targeted column based on the auction id."""
 def get_cell_as_list(auction_id, dataframe, column):
     string_items = dataframe.loc[dataframe["Auction_Id"] == auction_id, column][0]
     return ast.literal_eval(string_items)
 
-    # # Parsing cell's string
-    # string_items = dataframe.loc[dataframe["Auction_Id"] == auction_id, column][0]
-    # string_items = string_items.replace("\'",'').replace("]","").replace("[","")
-
-    # # Getting list
-    # list_target = string_items.split(',')
-    # list_target = [s.lstrip() for s in list_target]
-
-    # return list_target if (column == "Items_Auctioned") else [float(i) for i in list_target]
-
-def get_lot_summary_as_list_of_dictionaries(auction_id, dataframe):
+""" Returns the cell value as a list of dictionaries in the column {"Auction_Lot_Summary"} based on the auction id."""
+def get_cell_as_list_of_dict(auction_id, dataframe):
     string_items = dataframe.loc[dataframe["Auction_Id"] == auction_id, "Auction_Lot_Summary"][0].replace("[{", "{").replace("}]", "}")
     string_items = string_items.replace(", {", "**&** {")
     return [ast.literal_eval(x) for x in string_items.split("**&** ")]
-
 
 """ Parser helper method to construct dictionary """
 def parse_to_dictionary_format(auctioned_items, numeric_value_list):

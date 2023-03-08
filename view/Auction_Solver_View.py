@@ -43,6 +43,16 @@ def solve_auction():
         st.write("#### Winner Items")
         st.write(list_winner_bids)
 
+        # Getting list of auction lots
+        list_auction_lots = sl.get_cell_as_list_of_dict(text_input, dataframe)
+        st.write(list_auction_lots)
+
+        # Building list of participating suppliers
+        auction_lots = len(list_auction_lots)
+        Participating_Supplier = [[supp for supp in list_auction_lots[i]["Participating_Suppliers"]] for i in range(auction_lots)]
+        st.write("Participating Suppliers")
+        st.write(Participating_Supplier)
+
         # Building DICT: {Item, Demand}
         Demand = sl.parse_to_dictionary_format(list_auction_items, list_demand_items)
         st.markdown("##### Item Demand")
@@ -53,9 +63,6 @@ def solve_auction():
         st.markdown("##### Item Budget")
         st.write(Budget)
 
-        # Getting list of auction lots
-        list_auction_lots = sl.get_lot_summary_as_list_of_dictionaries(text_input, dataframe)
-        st.write(list_auction_lots)
 
         # Building DICT: {Item, Demand}
         # utility_input = get_utility_from_user()
