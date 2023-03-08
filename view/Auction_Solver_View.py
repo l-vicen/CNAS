@@ -80,25 +80,22 @@ def solve_auction():
         # Build model & Solve
         # bls.build_model()
         st.markdown("---")  
-        btn_user_input = st.button("Add Utility & Cost")
-
-        if (btn_user_input):
         
-            # Getting User Input
-            collect_numbers = lambda x : [int(i) for i in re.split("[^0-9]", x) if i != ""]
+        # Getting User Input
+        collect_numbers = lambda x : [int(i) for i in re.split("[^0-9]", x) if i != ""]
 
-            utility_input_list  = st.text_input("Please enter numbers", key = "Utility_Input")
-            cost_input_list  = st.text_input("Please enter numbers", key = "Cost_Input")
+        utility_input_list  = st.text_input("Please enter numbers", key = "Utility_Input")
+        cost_input_list  = st.text_input("Please enter numbers", key = "Cost_Input")
 
-            utility_list = collect_numbers(utility_input_list)
-            cost_list = collect_numbers(cost_input_list)
+        utility_list = collect_numbers(utility_input_list)
+        cost_list = collect_numbers(cost_input_list)
+
+        if (utility_input_list and cost_input_list):
+
+            Utility = sl.parse_to_dictionary_format(list_auction_items, utility_list)
+            st.markdown("#### Utility per Item")
+            st.write(Utility)
     
-            if (utility_input_list and cost_input_list):
-
-                Utility = sl.parse_to_dictionary_format(list_auction_items, utility_list)
-                st.markdown("#### Utility per Item")
-                st.write(Utility)
-        
-                Production_Cost = sl.parse_to_dictionary_format(list_auction_items, cost_list)
-                st.markdown("#### Production Cost per Item")
-                st.write(Production_Cost)
+            Production_Cost = sl.parse_to_dictionary_format(list_auction_items, cost_list)
+            st.markdown("#### Production Cost per Item")
+            st.write(Production_Cost)
