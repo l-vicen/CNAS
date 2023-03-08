@@ -47,14 +47,10 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
     model.j := Set of auction participating suppliers.
     '''
     model.i = Set(initialize=set_items, doc='Auctioned Items')
-    with st_stdout("code"):
-        st.markdown("###### Auctioned Items")
-        model.i.display()
+    print_into_streamlit("Auctioned Items", model.i)
 
     model.j = Set(initialize=set_suppliers, doc='Auction Participating Suppliers')
-    with st_stdout("code"):
-        st.markdown("###### Participating Suppliers")
-        model.j.display()
+    print_into_streamlit("Participating Suppliers", model.j)
 
     ''' Upper-level decision variable 
     model.X := Binary variable, equal to 1 if quotation for item i is allocated to supplier j ; 0
@@ -95,19 +91,13 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
     # }
 
     model.Demand = Param(model.i, initialize= demand_dictionary, doc='Budget Items')
-    with st_stdout("code"):
-        st.markdown("###### Auctioneer's Demand per Item")
-        model.Demand.display()
+    print_into_streamlit("Auctioneer's Demand per Item", model.Demand)
 
     model.Utility = Param(model.i, initialize= utility_dictionary, doc='Expected Utility')
-    with st_stdout("code"):
-        st.markdown("###### Auctioneer's perceived Utility per Item")
-        model.Utility.display()
+    print_into_streamlit("Auctioneer's perceived Utility per Item",  model.Utility)
 
     model.supply_capacity = Param(model.j, model.i, initialize= supplier_capacity_dictionary, doc='Supply Capacity of Suppliers')
-    with st_stdout("code"):
-        st.markdown("###### Suppliers\' Individual Supply Capacity per Item")
-        model.supply_capacity.display()
+    print_into_streamlit(" Suppliers\' Individual Supply Capacity per Item",   model.supply_capacity)
 
     model.L.Budget = Param(model.i, initialize= budget_dictionary, doc='Demand Items')
     model.L.production_costs = Param(model.j, model.i, initialize= production_costs_dictionary , doc='Production Cost per Supplier')
@@ -162,3 +152,10 @@ def st_stdout(dst):
     "this will show the prints"
     with st_redirect(sys.stdout, dst):
         yield
+
+""" Helper method to print model components into streamlit """
+def print_into_streamlit(title, model_component):
+    with st_stdout("code"):
+        msg = "###### {}".format(title)
+        st.markdown(msg)
+        model_component.display()
