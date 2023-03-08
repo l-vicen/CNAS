@@ -49,7 +49,7 @@ def solve_auction():
 
         # Building list of participating suppliers
         auction_lots = len(list_auction_lots)
-        Participating_Supplier = [[supp for supp in list_auction_lots[i]["Participating_Suppliers"]] for i in range(auction_lots)]
+        Participating_Supplier = [supp for i in range(auction_lots) for supp in list_auction_lots[i]["Participating_Suppliers"]]
         st.write("Participating Suppliers")
         st.write(Participating_Supplier)
 
