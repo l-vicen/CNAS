@@ -32,10 +32,10 @@ def single_sourcing_constraint(model, i):
     return sum(model.X[j,i] for j in model.j) == 1
 
 def demand_requirement_constraint(model, i):
-    return sum(model.supply_capacity[j,i] * model.X[j,i] for j in model.j) == model.Demand[i]
+    return sum(model.Supply_capacity[j,i] * model.X[j,i] for j in model.j) == model.Demand[i]
 
 def lower_and_upper_bound_constraint(submodel, j, i):
-    return (submodel.production_costs[j,i], submodel.P[j,i], submodel.Budget[i])
+    return (submodel.Production_Costs[j,i], submodel.P[j,i], submodel.Budget[i])
 
 def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary, supplier_capacity_dictionary, budget_dictionary, production_costs_dictionary):
     
@@ -46,17 +46,17 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
     model.i := Set of auctioned items.
     model.j := Set of auction participating suppliers.
     '''
-    model.i = Set(initialize=set_items, doc='Auctioned Items')
+    model.i = Set(initialize=set_items, doc='Auctioned_Items')
     print_into_streamlit("Auctioned Items", model.i)
 
-    model.j = Set(initialize=set_suppliers, doc='Auction Participating Suppliers')
-    print_into_streamlit("Participating Suppliers", model.j)
+    model.j = Set(initialize=set_suppliers, doc='Auction_Participating_Suppliers')
+    print_into_streamlit("Participating Suppliers in Auction", model.j)
 
     ''' Upper-level decision variable 
     model.X := Binary variable, equal to 1 if quotation for item i is allocated to supplier j ; 0
     otherwise.
     '''
-    model.X = Var(model.j, model.i, domain=Binary, doc='Decision Variable X') 
+    model.X = Var(model.j, model.i, domain=Binary, doc='Decision_Variable_X') 
 
     # Lower-level definition: Pricing Problem 
     model.L = SubModel(fixed=model.X)
@@ -64,7 +64,7 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
     ''' Lower-level decision variable 
     model.L.P := Real variable, represents the supplier bid price.
     '''
-    model.L.P = Var(model.j, model.i, domain=Reals, doc='Decision Variable P') 
+    model.L.P = Var(model.j, model.i, domain=Reals, doc='Decision_Variable_P') 
 
     ''' Model Parameters 
     model.Demand := the total demand for item i submitted by auctioneer.
@@ -90,20 +90,20 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
     #     ('Lucas_GmbH', 'Tomatos'): 50,
     # }
 
-    model.Demand = Param(model.i, initialize= demand_dictionary, doc='Demand per Items')
+    model.Demand = Param(model.i, initialize= demand_dictionary, doc='Auctioneer\'s_Demand_per_Item')
     print_into_streamlit("Auctioneer's Demand per Item", model.Demand)
 
-    model.Utility = Param(model.i, initialize= utility_dictionary, doc='Expected Utility per Item')
-    print_into_streamlit("Auctioneer's perceived Utility per Item",  model.Utility)
+    model.Utility = Param(model.i, initialize= utility_dictionary, doc='Auctioneer\'s_Perceived_Utility_per_Item')
+    print_into_streamlit("Auctioneer's Perceived Utility per Item",  model.Utility)
 
-    model.supply_capacity = Param(model.j, model.i, initialize= supplier_capacity_dictionary, doc='Supply Capacity of Suppliers')
-    print_into_streamlit(" Suppliers\' Individual Supply Capacity per Item",   model.supply_capacity)
+    model.Supply_capacity = Param(model.j, model.i, initialize= supplier_capacity_dictionary, doc='Suppliers\'_individual_Supply_Capacity_per_Item')
+    print_into_streamlit("Suppliers\' individual Supply Capacity per Item",   model.Supply_capacity)
 
-    model.L.Budget = Param(model.i, initialize= budget_dictionary, doc='Expected Expense for Items')
-    print_into_streamlit(" Auctioneer's Expected Expense for Items",  model.L.Budget)
+    model.L.Budget = Param(model.i, initialize= budget_dictionary, doc='Auctioneer\'s_expected_Expense_per_Items')
+    print_into_streamlit("Auctioneer's expected Expense per Items",  model.L.Budget)
 
-    model.L.production_costs = Param(model.j, model.i, initialize= production_costs_dictionary , doc='Supplier Production Cost')
-    print_into_streamlit(" Suppliers\' Individual Production Cost per Item",  model.L.production_costs)
+    model.L.Production_Costs = Param(model.j, model.i, initialize= production_costs_dictionary , doc='Suppliers\'_individual_Production_Cost_per_Item')
+    print_into_streamlit("Suppliers\' individual Production Cost per Item",  model.L.Production_Costs)
 
     # Objective function assignments
     model.o = Objective(rule=auction_objective_function(model), sense=maximize, doc='Auction Problem') # Upper-level 
