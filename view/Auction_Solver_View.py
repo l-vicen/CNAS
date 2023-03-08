@@ -79,16 +79,14 @@ def solve_auction():
         # TODO: Dictionary of Item Utility {Item, Demand}
         # Building DICT: {Item, Utility}
 
-
-        collect_numbers = lambda x : [int(i) for i in re.split("[^0-9]", x) if i != ""]
-
-        numbers = st.text_input("PLease enter numbers")
-        st.write(collect_numbers(numbers))
-
-        fixed_numbers = st.multiselect("Please select numbers", [1, 2, 3, 4, 5])
-        st.write(fixed_numbers)
-
-        # st.write({'Lot_Item': 'RODO', 'Participating_Suppliers': ['41205907000174', '06910908000119'], 'History_Bids_Lot': [['1804'], ['4800']], 'History_Bid_Dates_Lot': [['2006-06-07T00:00:00'], ['2006-06-08T00:00:00']], 'Winning_Bid': 1804.0, 'Winner_Supplier': None})
+        utility = get_utility()
+        st.write(utility)
 
         # Build model & Solve
         # bls.build_model()
+
+def get_utility():
+    collect_numbers = lambda x : [int(i) for i in re.split("[^0-9]", x) if i != ""]
+    utility = st.text_input("PLease enter numbers")
+    st.write(collect_numbers(utility))
+    return utility
