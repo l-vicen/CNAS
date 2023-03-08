@@ -39,7 +39,7 @@ def solve_auction():
 
         # Getting list of auction lots
         list_auction_lots = sl.get_cell_as_list_of_dict(text_input, dataframe)
-        # st.write(list_auction_lots)
+        st.write(list_auction_lots)
 
         # Building list of participating suppliers
         auction_lots = len(list_auction_lots)
@@ -65,37 +65,36 @@ def solve_auction():
 
         # Building DICT: {(Supp, Item), Supply_Capacity}
         lenght_supp_items = len(Supplies_Item_Pair_List)
-        Supplies_Capacity = {str(Supplies_Item_Pair_List[i]) : (Demand.get(Supplies_Item_Pair_List[i][1]) if Supplies_Item_Pair_List[i][1] in Demand else -1) for i in range(lenght_supp_items)}
+        Suppliers_Capacity = {str(Supplies_Item_Pair_List[i]) : (Demand.get(Supplies_Item_Pair_List[i][1]) if Supplies_Item_Pair_List[i][1] in Demand else -1) for i in range(lenght_supp_items)}
         st.markdown("##### Supplier Capacity")
-        st.write(Supplies_Capacity)
+        st.write(Suppliers_Capacity)
+
+        Suppliers_Production_Cost = {str(Supplies_Item_Pair_List[i]) : (Demand.get(Supplies_Item_Pair_List[i][1]) if Supplies_Item_Pair_List[i][1] in Demand else -1) for i in range(lenght_supp_items)}
+        st.markdown("##### Supplier Capacity")
+        st.write(Suppliers_Capacity)
 
         # Building DICT: {Item, Budget}
         Budget = sl.parse_to_dictionary_format(list_auction_items, list_budget_items)
         st.markdown("##### Item Budget")
         st.write(Budget)
 
-        # TODO: Dictionary of Item Utility {Item, Demand}
-        # Building DICT: {Item, Utility}
-
-        # Build model & Solve
-        # bls.build_model()
         st.markdown("---")  
         
         # Getting User Input
         collect_numbers = lambda x : [int(i) for i in re.split("[^0-9]", x) if i != ""]
 
         utility_input_list  = st.text_input("Please enter numbers", key = "Utility_Input")
-        cost_input_list  = st.text_input("Please enter numbers", key = "Cost_Input")
+        # cost_input_list  = st.text_input("Please enter numbers", key = "Cost_Input")
 
         utility_list = collect_numbers(utility_input_list)
-        cost_list = collect_numbers(cost_input_list)
+        # cost_list = collect_numbers(cost_input_list)
 
-        if (utility_input_list and cost_input_list):
+        if (utility_input_list):
 
             Utility = sl.parse_to_dictionary_format(list_auction_items, utility_list)
             st.markdown("#### Utility per Item")
             st.write(Utility)
     
-            Production_Cost = sl.parse_to_dictionary_format(list_auction_items, cost_list)
-            st.markdown("#### Production Cost per Item")
-            st.write(Production_Cost)
+            # Production_Cost = sl.parse_to_dictionary_format(list_auction_items, cost_list)
+            # st.markdown("#### Production Cost per Item")
+            # st.write(Production_Cost)

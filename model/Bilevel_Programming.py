@@ -7,8 +7,6 @@ from threading import current_thread
 from contextlib import contextmanager
 from io import StringIO
 import sys
-import logging
-import time
 
 ''' Model Objective Functions
 1) Upper-level: 
