@@ -84,19 +84,19 @@ def solve_auction():
         # bls.build_model()
 
    # Building DICT: {Item, Utility}
-    utility_input_list = get_list_input_user()
-    Utility = sl.parse_to_dictionary_format(list_auction_items, utility_input_list)
     st.markdown("#### Utility per Item")
+    collect_numbers = lambda x : [int(i) for i in re.split("[^0-9]", x) if i != ""]
+    utility_input_list  = st.text_input("Please enter numbers")
+    st.write(collect_numbers(utility_input_list))
+
+    Utility = sl.parse_to_dictionary_format(list_auction_items, utility_input_list)
     st.write(Utility)
 
     # Building DICT: {Item, Utility}
-    cost_input_list = get_list_input_user()
-    Production_Cost = sl.parse_to_dictionary_format(list_auction_items, cost_input_list)
     st.markdown("#### Production Cost per Item")
-    st.write(Production_Cost)
-
-def get_list_input_user():
     collect_numbers = lambda x : [int(i) for i in re.split("[^0-9]", x) if i != ""]
-    utility = st.text_input("Please enter numbers")
-    st.write(collect_numbers(utility))
-    return utility
+    cost_input_list  = st.text_input("Please enter numbers")
+    st.write(collect_numbers(cost_input_list))
+
+    Production_Cost = sl.parse_to_dictionary_format(list_auction_items, cost_input_list)
+    st.write(Production_Cost)
