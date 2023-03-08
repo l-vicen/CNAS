@@ -82,11 +82,14 @@ def solve_auction():
         # Build model & Solve
         # bls.build_model()
 
-    utility = get_utility()
-    st.write(utility)
+    # Building DICT: {Item, Utility}
+    utility_input_list = get_utility()
+    Utility = sl.parse_to_dictionary_format(list_auction_items, utility_input_list)
+    st.markdown("#### Utility per Item")
+    st.write(Utility)
 
 def get_utility():
     collect_numbers = lambda x : [int(i) for i in re.split("[^0-9]", x) if i != ""]
-    utility = st.text_input("PLease enter numbers")
+    utility = st.text_input("Please enter numbers")
     st.write(collect_numbers(utility))
     return utility
