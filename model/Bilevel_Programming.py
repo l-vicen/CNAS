@@ -37,7 +37,7 @@ def demand_requirement_constraint(model, i):
 def lower_and_upper_bound_constraint(submodel, j, i):
     return (submodel.production_costs[j,i], submodel.P[j,i], submodel.Budget[i])
 
-def build_model():
+def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary, supplier_capacity_dictionary, budget_dictionary, production_costs_dictionary,  ):
     
     # Upper-level definition: Auction Problem
     model = ConcreteModel("Upper-level: Auction Problem")
@@ -46,8 +46,8 @@ def build_model():
     model.i := Set of auctioned items.
     model.j := Set of auction participating suppliers.
     '''
-    model.i = Set(initialize=['Apples', 'Bananas', 'Tomatos'], doc='Auctioned Items')
-    model.j = Set(initialize=['Christina_GmbH', 'Lucas_GmbH'], doc='Auction Participating Suppliers')
+    model.i = Set(initialize=set_items, doc='Auctioned Items')
+    model.j = Set(initialize=set_suppliers, doc='Auction Participating Suppliers')
 
     ''' Upper-level decision variable 
     model.X := Binary variable, equal to 1 if quotation for item i is allocated to supplier j ; 0
@@ -69,30 +69,30 @@ def build_model():
     model.supply_capacity := the quantity of item i that supplier j can procure.
     model.production_costs := the production cost of item i if produced by supplier j.
     '''
-    supplier_capacity = {
-        ('Christina_GmbH', 'Apples'): 15,
-        ('Lucas_GmbH', 'Apples'): 15,
-        ('Christina_GmbH', 'Bananas'): 25,
-        ('Lucas_GmbH', 'Bananas'): 15,
-        ('Christina_GmbH', 'Tomatos'):40,
-        ('Lucas_GmbH', 'Tomatos'): 50,
-    }
+    # supplier_capacity = {
+    #     ('Christina_GmbH', 'Apples'): 15,
+    #     ('Lucas_GmbH', 'Apples'): 15,
+    #     ('Christina_GmbH', 'Bananas'): 25,
+    #     ('Lucas_GmbH', 'Bananas'): 15,
+    #     ('Christina_GmbH', 'Tomatos'):40,
+    #     ('Lucas_GmbH', 'Tomatos'): 50,
+    # }
 
-    production_costs = {
-        ('Christina_GmbH', 'Apples'): 9.75,
-        ('Lucas_GmbH', 'Apples'): 7.5,
-        ('Christina_GmbH', 'Bananas'): 12.5,
-        ('Lucas_GmbH', 'Bananas'): 15,
-        ('Christina_GmbH', 'Tomatos'): 37.5,
-        ('Lucas_GmbH', 'Tomatos'): 50,
-    }
+    # production_costs = {
+    #     ('Christina_GmbH', 'Apples'): 9.75,
+    #     ('Lucas_GmbH', 'Apples'): 7.5,
+    #     ('Christina_GmbH', 'Bananas'): 12.5,
+    #     ('Lucas_GmbH', 'Bananas'): 15,
+    #     ('Christina_GmbH', 'Tomatos'): 37.5,
+    #     ('Lucas_GmbH', 'Tomatos'): 50,
+    # }
 
-    model.Demand = Param(model.i, initialize={'Apples':15, 'Bananas':25, 'Tomatos':50}, doc='Budget Items')
-    model.Utility = Param(model.i, initialize={'Apples':20, 'Bananas':30, 'Tomatos':50}, doc='Expected Utility')
-    model.supply_capacity = Param(model.j, model.i, initialize=supplier_capacity, doc='Supply Capacity of Suppliers')
+    model.Demand = Param(model.i, initialize= demand_dictionary, doc='Budget Items')
+    model.Utility = Param(model.i, initialize= utility_dictionary, doc='Expected Utility')
+    model.supply_capacity = Param(model.j, model.i, initialize= supplier_capacity_dictionary, doc='Supply Capacity of Suppliers')
 
-    model.L.Budget = Param(model.i, initialize={'Apples':10, 'Bananas':20, 'Tomatos':50}, doc='Demand Items')
-    model.L.production_costs = Param(model.j, model.i, initialize=production_costs, doc='Production Cost per Supplier')
+    model.L.Budget = Param(model.i, initialize= budget_dictionary, doc='Demand Items')
+    model.L.production_costs = Param(model.j, model.i, initialize= production_costs_dictionary , doc='Production Cost per Supplier')
 
     # Objective function assignments
     model.o = Objective(rule=auction_objective_function(model), sense=maximize, doc='Auction Problem') # Upper-level 
