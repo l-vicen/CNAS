@@ -19,8 +19,9 @@ def solve_auction():
 
         # Getting list of auctioned items
         list_auction_items = sl.get_cell_as_list(text_input, dataframe, "Items_Auctioned")
-        st.write("#### List Items")
+        st.markdown("#### Auctioned Items")
         st.write(list_auction_items)
+        st.markdown("---")
 
         # Getting list of demands for items
         list_demand_items = sl.get_cell_as_list(text_input, dataframe, "Demanded_Quantity_Items")
@@ -45,8 +46,9 @@ def solve_auction():
         auction_lots = len(list_auction_lots)
         Participating_Supplier = [str(supp) for i in range(auction_lots) for supp in list_auction_lots[i]["Participating_Suppliers"]]
         Participating_Supplier = list(OrderedDict.fromkeys(Participating_Supplier))
-        # st.markdown("##### Participating Suppliers")
-        # st.write(Participating_Supplier)
+        st.markdown("##### Auction Participating Suppliers")
+        st.write(Participating_Supplier)
+        st.markdown("---")
 
         # Building DICT: {TUPLE, Capacity}
         Supplies_Item_Pair_List = [(str(list_auction_lots[i].get("Participating_Suppliers")[j]), list_auction_lots[i].get("Lot_Item")) for i in range(auction_lots) for j in range(len(list_auction_lots[i].get("Participating_Suppliers")))]
@@ -58,25 +60,27 @@ def solve_auction():
         # st.markdown("##### Tuple List")
         # st.write(tuple_supp_item_list)
 
-        # Building DICT: {Item, Demand}
-        Demand = sl.parse_to_dictionary_format(list_auction_items, list_demand_items)
-        # st.markdown("##### Item Demand")
-        # st.write(Demand)
-
         # Building DICT: {(Supp, Item), Supply_Capacity}
         length_supp_items = len(Supplies_Item_Pair_List)
         Suppliers_Capacity = {str(Supplies_Item_Pair_List[i]) : (Demand.get(Supplies_Item_Pair_List[i][1]) if Supplies_Item_Pair_List[i][1] in Demand else -1) for i in range(length_supp_items)}
-        # st.markdown("##### Supplier Capacity")
-        # st.write(Suppliers_Capacity)
+        st.markdown("##### Suppliers' Capacity")
+        st.write(Suppliers_Capacity)
+        st.markdown("---")
+
+        # Building DICT: {Item, Demand}
+        Demand = sl.parse_to_dictionary_format(list_auction_items, list_demand_items)
+        st.markdown("##### Auctioneer's Demand per Item")
+        st.write(Demand)
+        st.markdown("---")
 
         # Building DICT: {Item, Budget}
         Budget = sl.parse_to_dictionary_format(list_auction_items, list_budget_items)
-        # st.markdown("##### Budget per Item")
-        # st.write(Budget)
-
+        st.markdown("##### Auctioneer's Budget per Item")
+        st.write(Budget)
+        st.markdown("---")
+    
         # Building DICT: {(Supp, Item), Production_Cost}
         percentage_cost_multiplier = st.number_input("Enter COGS Multiplier")
-
         if (percentage_cost_multiplier):
 
             Suppliers_Production_Cost = {}
@@ -95,15 +99,14 @@ def solve_auction():
                         if (key[0] == lot_supplier[k] and key[1] == lot_item):
 
                             value = percentage_cost_multiplier * float(list_auction_lots[j]["History_Bids_Lot"][k][0])
-                            Suppliers_Production_Cost[key] = value
+                            Suppliers_Production_Cost[str(key)] = value
 
                         else:
                             value = -1
 
-            st.markdown("##### Supplier Production Cost Per Item")
+            st.markdown("##### Suppliers' Production Costs per Item")
             st.write(Suppliers_Production_Cost)
-
-            st.markdown("---")  
+            st.markdown("---") 
             
             # Getting User Input
             collect_numbers = lambda x : [int(i) for i in re.split("[^0-9]", x) if i != ""]
@@ -112,8 +115,10 @@ def solve_auction():
 
             if (utility_input_list):
                 Utility = sl.parse_to_dictionary_format(list_auction_items, utility_list)
-                st.markdown("#### Utility per Item")
+                st.markdown("#### Auctioneer's perceived Utility per Item")
                 st.write(Utility)
+                st.markdown("---")
+
 
             
         
