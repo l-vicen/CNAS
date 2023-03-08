@@ -3,6 +3,7 @@ import model.Bilevel_Programming as bls
 import model.Solver_Parser as sl
 import data.DataBase as db
 from collections import OrderedDict
+import pandas as pd
 
 def solve_auction():
     st.title("SOLVER: Bilevel Programming")
@@ -20,8 +21,8 @@ def solve_auction():
 
         # Getting list of auctioned items
         list_auction_items = sl.get_cell_as_list(text_input, dataframe, "Items_Auctioned")
-        # st.write("#### List Items")
-        # st.write(list_auction_items)
+        st.write("#### List Items")
+        st.write(list_auction_items)
 
         # Getting list of demands for items
         list_demand_items = sl.get_cell_as_list(text_input, dataframe, "Demanded_Quantity_Items")
@@ -46,8 +47,8 @@ def solve_auction():
         auction_lots = len(list_auction_lots)
         Participating_Supplier = [str(supp) for i in range(auction_lots) for supp in list_auction_lots[i]["Participating_Suppliers"]]
         Participating_Supplier = list(OrderedDict.fromkeys(Participating_Supplier))
-        # st.markdown("##### Participating Suppliers")
-        # st.write(Participating_Supplier)
+        st.markdown("##### Participating Suppliers")
+        st.write(Participating_Supplier)
 
         # Building DICT: {TUPLE, Capacity}
         Supplies_Item_Pair_List = [(str(list_auction_lots[i].get("Participating_Suppliers")[j]), list_auction_lots[i].get("Lot_Item")) for i in range(auction_lots) for j in range(len(list_auction_lots[i].get("Participating_Suppliers")))]
@@ -61,8 +62,8 @@ def solve_auction():
 
         # Building DICT: {Item, Demand}
         Demand = sl.parse_to_dictionary_format(list_auction_items, list_demand_items)
-        # st.markdown("##### Item Demand")
-        # st.write(Demand)
+        st.markdown("##### Item Demand")
+        st.write(Demand)
 
         # Building DICT: {(Supp, Item), Supply_Capacity}
         lenght_supp_items = len(Supplies_Item_Pair_List)
@@ -72,16 +73,31 @@ def solve_auction():
 
         # Building DICT: {Item, Budget}
         Budget = sl.parse_to_dictionary_format(list_auction_items, list_budget_items)
-        # st.markdown("##### Item Budget")
-        # st.write(Budget)
+        st.markdown("##### Item Budget")
+        st.write(Budget)
 
         # TODO: Dictionary of Item Utility {Item, Demand}
         # Building DICT: {Item, Demand}
         # utility_input = get_utility_from_user()
         # utility = sl.parse_to_dictionary_format(list_auction_items, 0)
         # st.write(utility)
+        get_data()
 
         # st.write({'Lot_Item': 'RODO', 'Participating_Suppliers': ['41205907000174', '06910908000119'], 'History_Bids_Lot': [['1804'], ['4800']], 'History_Bid_Dates_Lot': [['2006-06-07T00:00:00'], ['2006-06-08T00:00:00']], 'Winning_Bid': 1804.0, 'Winner_Supplier': None})
 
         # Build model & Solve
         # bls.build_model()
+
+
+@st.cache(allow_output_mutation=True)
+def get_data():
+    return []
+
+user_id = st.text_input("User ID")
+foo = st.slider("foo", 0, 100)
+bar = st.slider("bar", 0, 100)
+
+if st.button("Add row"):
+    get_data().append({"UserID": user_id, "foo": foo, "bar": bar})
+
+st.write(pd.DataFrame(get_data()))
