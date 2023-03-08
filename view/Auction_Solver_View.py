@@ -2,7 +2,7 @@ import streamlit as st
 import model.Bilevel_Programming as bls
 import model.Solver_Parser as sl
 import data.DataBase as db
-import re
+from collections import OrderedDict
 
 def solve_auction():
     st.title("SOLVER: Bilevel Programming")
@@ -50,6 +50,7 @@ def solve_auction():
         # Building list of participating suppliers
         auction_lots = len(list_auction_lots)
         Participating_Supplier = [supp for i in range(auction_lots) for supp in list_auction_lots[i]["Participating_Suppliers"]]
+        Participating_Supplier = list(OrderedDict.fromkeys(Participating_Supplier))
         st.write("Participating Suppliers")
         st.write(Participating_Supplier)
 
