@@ -99,7 +99,9 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
     model.supply_capacity = Param(model.j, model.i, initialize= supplier_capacity_dictionary, doc='Supply Capacity of Suppliers')
     print_into_streamlit(" Suppliers\' Individual Supply Capacity per Item",   model.supply_capacity)
 
-    model.L.Budget = Param(model.i, initialize= budget_dictionary, doc='Demand Items')
+    model.L.Budget = Param(model.i, initialize= budget_dictionary, doc='Expected Expense for Items')
+    print_into_streamlit(" Auctioneer's Expected Expense for Items",  model.L.Budget)
+
     model.L.production_costs = Param(model.j, model.i, initialize= production_costs_dictionary , doc='Production Cost per Supplier')
 
     # Objective function assignments
