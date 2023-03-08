@@ -69,12 +69,10 @@ def solve_auction():
         # Building DICT: {(Supp, Item), Supply_Capacity}
         length_supp_items = len(Supplies_Item_Pair_List)
         Suppliers_Capacity = {(Supplies_Item_Pair_List[i][0], Supplies_Item_Pair_List[i][1]) : (Demand.get(Supplies_Item_Pair_List[i][1]) if Supplies_Item_Pair_List[i][1] in Demand else -1) for i in range(length_supp_items)}
+        
         st.markdown("##### Suppliers' Capacity")
-
         for key, value in Suppliers_Capacity.items():
-            st.write(key)
-            st.write(value)
-
+            st.write(key + " : " + value)
         st.markdown("---")
 
         # Building DICT: {Item, Budget}
@@ -109,7 +107,9 @@ def solve_auction():
                             value = -1
 
             st.markdown("##### Suppliers' Production Costs per Item")
-            st.write(Suppliers_Production_Cost)
+            for key, value in Suppliers_Production_Cost.items():
+                st.write(key + " : " + value)
+            # st.write(Suppliers_Production_Cost)
             st.markdown("---") 
             
             # Getting User Input
