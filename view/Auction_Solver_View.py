@@ -55,7 +55,7 @@ def solve_auction():
         # st.write(Participating_Supplier)
 
         # Building DICT: {TUPLE, Capacity}
-        Supplier_Capacity = [("X", auction_lots[i].get("Lot_Item")) for i in range(auction_lots)]
+        Supplier_Capacity = [("X", list_auction_lots[i].get("Lot_Item")) for i in range(auction_lots)]
         st.write(Supplier_Capacity)
 
         # Building list of tuples [(Supplier, Item)]
