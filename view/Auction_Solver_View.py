@@ -15,6 +15,7 @@ def solve_auction():
 
     # Insert Target 
     text_input = st.text_input("Enter the auctionID: ", key="auction_id", help= "The actionID is the identifier of the Pregao.")
+    st.markdown("---")
 
     if (text_input):
         # Getting list of auctioned items
@@ -126,6 +127,7 @@ def solve_auction():
 
                 # building Bilevel Program
                 btn_apply_bilevel = st.button("Apply Bilevel Solver")
+                st.markdown("---")
                 if (btn_apply_bilevel):
                     bls.build_model(list_auction_items, Participating_Supplier, Demand, Utility, Suppliers_Capacity, Budget, Suppliers_Production_Cost)
 
