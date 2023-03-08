@@ -3,7 +3,7 @@ import model.Bilevel_Programming as bls
 import model.Solver_Parser as sl
 import data.DataBase as db
 from collections import OrderedDict
-import pandas as pd
+import re
 
 def solve_auction():
     st.title("SOLVER: Bilevel Programming")
@@ -77,27 +77,18 @@ def solve_auction():
         st.write(Budget)
 
         # TODO: Dictionary of Item Utility {Item, Demand}
-        # Building DICT: {Item, Demand}
-        # utility_input = get_utility_from_user()
-        # utility = sl.parse_to_dictionary_format(list_auction_items, 0)
-        # st.write(utility)
-        get_data()
+        # Building DICT: {Item, Utility}
+
+
+        collect_numbers = lambda x : [int(i) for i in re.split("[^0-9]", x) if i != ""]
+
+        numbers = st.text_input("PLease enter numbers")
+        st.write(collect_numbers(numbers))
+
+        fixed_numbers = st.multiselect("Please select numbers", [1, 2, 3, 4, 5])
+        st.write(fixed_numbers)
 
         # st.write({'Lot_Item': 'RODO', 'Participating_Suppliers': ['41205907000174', '06910908000119'], 'History_Bids_Lot': [['1804'], ['4800']], 'History_Bid_Dates_Lot': [['2006-06-07T00:00:00'], ['2006-06-08T00:00:00']], 'Winning_Bid': 1804.0, 'Winner_Supplier': None})
 
         # Build model & Solve
         # bls.build_model()
-
-
-@st.cache(allow_output_mutation=True)
-def get_data():
-    return []
-
-user_id = st.text_input("User ID")
-foo = st.slider("foo", 0, 100)
-bar = st.slider("bar", 0, 100)
-
-if st.button("Add row"):
-    get_data().append({"UserID": user_id, "foo": foo, "bar": bar})
-
-st.write(pd.DataFrame(get_data()))
