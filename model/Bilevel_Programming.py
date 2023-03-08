@@ -107,12 +107,9 @@ def build_model():
     # Lower-level constraint assignment
     model.L.DemandConstraint = Constraint(model.j, model.i, rule=lower_and_upper_bound_constraint, doc='Bid Price is non-negative')
 
-    # Display built model in streamlit
-    # display_model_built(model, 0)
-
     # Calling the Big-M Relaxation Solver
     solver = Solver('pao.pyomo.FA')
-    results = solver.solve(model)   
+    solver.solve(model)   
 
     with st_stdout("code"):
         model.pprint()

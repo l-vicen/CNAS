@@ -25,39 +25,44 @@ def solve_auction():
 
         # Getting list of auctioned items
         list_auction_items = sl.get_cell_as_list(text_input, dataframe, "Items_Auctioned")
-        st.write("#### List Items")
-        st.write(list_auction_items)
+        # st.write("#### List Items")
+        # st.write(list_auction_items)
 
         # Getting list of demands for items
         list_demand_items = sl.get_cell_as_list(text_input, dataframe, "Demanded_Quantity_Items")
-        st.write("#### Demand Items")
-        st.write(list_demand_items)
+        # st.write("#### Demand Items")
+        # st.write(list_demand_items)
 
         # Getting list of expected prices per item
         list_budget_items = sl.get_cell_as_list(text_input, dataframe, "Estimated_Price_Items")
-        st.write("#### Budget Items")
-        st.write(list_budget_items)
+        # st.write("#### Budget Items")
+        # st.write(list_budget_items)
 
         # Getting list of winner bids per item
         list_winner_bids = sl.get_cell_as_list(text_input, dataframe, "Winning_Bids")
-        st.write("#### Winner Items")
-        st.write(list_winner_bids)
+        # st.write("#### Winner Items")
+        # st.write(list_winner_bids)
 
         # Getting list of auction lots
         list_auction_lots = sl.get_cell_as_list_of_dict(text_input, dataframe)
-        st.write(list_auction_lots)
+        # st.write(list_auction_lots)
 
         # Building list of participating suppliers
         auction_lots = len(list_auction_lots)
         Participating_Supplier = [str(supp) for i in range(auction_lots) for supp in list_auction_lots[i]["Participating_Suppliers"]]
         Participating_Supplier = list(OrderedDict.fromkeys(Participating_Supplier))
-        st.markdown("##### Participating Suppliers")
-        st.write(Participating_Supplier)
+        # st.markdown("##### Participating Suppliers")
+        # st.write(Participating_Supplier)
+
+        # Building DICT: {TUPLE, Capacity}
+        Supplier_Capacity = {(str(supp), auction_lots[i]["Lot_Item"]) for i in range(auction_lots) for supp in list_auction_lots[i]["Participating_Suppliers"]}
+        st.markdown("##### Item Demand")
+        st.write(Supplier_Capacity)
 
         # Building list of tuples [(Supplier, Item)]
         tuple_supp_item_list = sl.parse_two_lists_into_one_tuple_list(Participating_Supplier, list_auction_items)
-        st.markdown("##### Tuple List")
-        st.write(tuple_supp_item_list)
+        # st.markdown("##### Tuple List")
+        # st.write(tuple_supp_item_list)
 
         # Building DICT: {Item, Demand}
         Demand = sl.parse_to_dictionary_format(list_auction_items, list_demand_items)
