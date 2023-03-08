@@ -49,12 +49,12 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
     model.i = Set(initialize=set_items, doc='Auctioned Items')
     with st_stdout("code"):
         st.markdown("###### Auctioned Items")
-        model.pprint()
+        model.i.display()
 
     model.j = Set(initialize=set_suppliers, doc='Auction Participating Suppliers')
     with st_stdout("code"):
         st.markdown("###### Participating Suppliers")
-        model.pprint()
+        model.j.display()
 
     ''' Upper-level decision variable 
     model.X := Binary variable, equal to 1 if quotation for item i is allocated to supplier j ; 0
@@ -95,8 +95,19 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
     # }
 
     model.Demand = Param(model.i, initialize= demand_dictionary, doc='Budget Items')
+    with st_stdout("code"):
+        st.markdown("###### Participating Suppliers")
+        model.Demand.display()
+
     model.Utility = Param(model.i, initialize= utility_dictionary, doc='Expected Utility')
+    with st_stdout("code"):
+        st.markdown("###### Participating Suppliers")
+        model.Utility.display()
+
     model.supply_capacity = Param(model.j, model.i, initialize= supplier_capacity_dictionary, doc='Supply Capacity of Suppliers')
+    with st_stdout("code"):
+        st.markdown("###### Participating Suppliers")
+        model.supply_capacity.display()
 
     model.L.Budget = Param(model.i, initialize= budget_dictionary, doc='Demand Items')
     model.L.production_costs = Param(model.j, model.i, initialize= production_costs_dictionary , doc='Production Cost per Supplier')

@@ -70,11 +70,11 @@ def solve_auction():
         length_supp_items = len(Supplies_Item_Pair_List)
         Suppliers_Capacity = {(Supplies_Item_Pair_List[i][0], Supplies_Item_Pair_List[i][1]) : (Demand.get(Supplies_Item_Pair_List[i][1]) if Supplies_Item_Pair_List[i][1] in Demand else -1) for i in range(length_supp_items)}
         
-        st.markdown("##### Suppliers' Capacity")
-        for key, value in Suppliers_Capacity.items():
-            st.write(key)
-            st.write(value)
-        st.markdown("---")
+        # st.markdown("##### Suppliers' Capacity")
+        # for key, value in Suppliers_Capacity.items():
+        #     st.write(key)
+        #     st.write(value)
+        # st.markdown("---")
 
         # Building DICT: {Item, Budget}
         Budget = sl.parse_to_dictionary_format(list_auction_items, list_budget_items)
@@ -107,11 +107,11 @@ def solve_auction():
                         else:
                             value = -1
 
-            st.markdown("##### Suppliers' Production Costs per Item")
-            for key, value in Suppliers_Production_Cost.items():
-                st.write(key)
-                st.write(value)
-            st.markdown("---") 
+            # st.markdown("##### Suppliers' Production Costs per Item")
+            # # for key, value in Suppliers_Production_Cost.items():
+            # #     st.write(key)
+            # #     st.write(value)
+            # st.markdown("---") 
             
             # Getting User Input
             collect_numbers = lambda x : [int(i) for i in re.split("[^0-9]", x) if i != ""]
