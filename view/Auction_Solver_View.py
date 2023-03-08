@@ -84,6 +84,7 @@ def solve_auction():
         # st.markdown("---")
     
         # Building DICT: {(Supp, Item), Production_Cost}
+        st.markdown("### Input Section")
         percentage_cost_multiplier = st.number_input("Enter COGS Multiplier")
         if (percentage_cost_multiplier):
 
