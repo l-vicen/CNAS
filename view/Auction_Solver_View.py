@@ -85,7 +85,7 @@ def solve_auction():
         st.markdown("---")  
         btn_user_input = st.button("Add Utility & Cost")
         
-        if (btn_user_input):
+        if (btn_user_input and btn_clicked):
 
             # Building DICT: {Item, Utility}
             collect_numbers = lambda x : [int(i) for i in re.split("[^0-9]", x) if i != ""]
