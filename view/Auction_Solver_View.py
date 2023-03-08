@@ -79,36 +79,26 @@ def solve_auction():
 
         if (percentage_cost_multiplier):
 
-            # Suppliers_Production_Cost = {}
-            # for i in range(length_supp_items):
+            Suppliers_Production_Cost = {}
+            for i in range(length_supp_items):
 
-            #     key = Supplies_Item_Pair_List[i]
+                key = Supplies_Item_Pair_List[i]
 
-            #     for j in range(auction_lots):
+                for j in range(auction_lots):
 
-            #         number_of_supplier_in_this_lot = len(list_auction_lots[j]["Participating_Suppliers"])
-            #         lot_supplier = list_auction_lots[j]["Participating_Suppliers"]
-            #         lot_item = list_auction_lots[j]["Lot_Item"]
+                    number_of_supplier_in_this_lot = len(list_auction_lots[j]["Participating_Suppliers"])
+                    lot_supplier = list_auction_lots[j]["Participating_Suppliers"]
+                    lot_item = list_auction_lots[j]["Lot_Item"]
 
-            #         for k in range(number_of_supplier_in_this_lot):
+                    for k in range(number_of_supplier_in_this_lot):
 
-            #             if (key[0] == lot_supplier[k] and key[1] == lot_item):
+                        if (key[0] == lot_supplier[k] and key[1] == lot_item):
 
-            #                 value = percentage_cost_multiplier * float(list_auction_lots[j]["History_Bids_Lot"][k][0])
-            #                 Suppliers_Production_Cost[str(key)] = value
+                            value = percentage_cost_multiplier * float(list_auction_lots[j]["History_Bids_Lot"][k][0])
+                            Suppliers_Production_Cost[str(key)] = value
 
-            #             else:
-            #                 value = -1
-            # st.write(Suppliers_Production_Cost)
-
-            Suppliers_Production_Cost = {
-                str(Supplies_Item_Pair_List[i]): percentage_cost_multiplier * float(list_auction_lots[j]["History_Bids_Lot"][k][0])
-                if Supplies_Item_Pair_List[i][0] == list_auction_lots[j]["Participating_Suppliers"][k] and Supplies_Item_Pair_List[i][1] == list_auction_lots[j]["Lot_Item"] else -1
-                for i in range(length_supp_items)
-                for j in range(auction_lots)
-                for k in range(len(list_auction_lots[j]["Participating_Suppliers"]))
-            }
-            
+                        else:
+                            value = -1
 
             st.markdown("##### Supplier Production Cost Per Item")
             st.write(Suppliers_Production_Cost)
