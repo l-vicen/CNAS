@@ -69,6 +69,11 @@ def solve_auction():
         st.markdown("##### Supplier Capacity")
         st.write(Suppliers_Capacity)
 
+        # Building DICT: {Item, Budget}
+        Budget = sl.parse_to_dictionary_format(list_auction_items, list_budget_items)
+        st.markdown("##### Budget per Item")
+        st.write(Budget)
+
         # Building DICT: {(Supp, Item), Production_Cost}
         percentage_cost_multiplier = st.number_input("Enter COGS Multiplier")
 
@@ -77,7 +82,7 @@ def solve_auction():
             Suppliers_Production_Cost = {
                 str(Supplies_Item_Pair_List[i]) : ((percentage_cost_multiplier *  list_auction_lots[j]["History_Bids_Lot"][0]) 
                                                 if (Supplies_Item_Pair_List[i][0] == list_auction_lots[j]["Participating_Suppliers"][k] and  
-                                                    Supplies_Item_Pair_List[i][1] == list_auction_lots[j]["Lot_Item"][k]) else -1)
+                                                    Supplies_Item_Pair_List[i][1] == list_auction_lots[j]["Lot_Item"]) else -1)
                 for i in range(lenght_supp_items) 
                 for j in range(auction_lots)
                 for k in range(len(list_auction_lots[j]["Participating_Suppliers"]))
@@ -86,11 +91,6 @@ def solve_auction():
             
             st.markdown("##### Supplier Production Cost Per Item")
             st.write(Suppliers_Production_Cost)
-
-            # Building DICT: {Item, Budget}
-            Budget = sl.parse_to_dictionary_format(list_auction_items, list_budget_items)
-            st.markdown("##### Item Budget")
-            st.write(Budget)
 
             st.markdown("---")  
             
