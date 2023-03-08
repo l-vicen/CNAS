@@ -72,7 +72,7 @@ def solve_auction():
         
         st.markdown("##### Suppliers' Capacity")
         for key, value in Suppliers_Capacity.items():
-            st.write(key + " : " + value)
+            st.write("{} : {}".format(key, value))
         st.markdown("---")
 
         # Building DICT: {Item, Budget}
@@ -108,7 +108,7 @@ def solve_auction():
 
             st.markdown("##### Suppliers' Production Costs per Item")
             for key, value in Suppliers_Production_Cost.items():
-                st.write(key + " : " + value)
+                st.write("{} : {}".format(key, value))
             # st.write(Suppliers_Production_Cost)
             st.markdown("---") 
             
