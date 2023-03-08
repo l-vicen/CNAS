@@ -47,7 +47,14 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
     model.j := Set of auction participating suppliers.
     '''
     model.i = Set(initialize=set_items, doc='Auctioned Items')
+    with st_stdout("code"):
+        st.markdown("###### Auctioned Items")
+        model.pprint()
+
     model.j = Set(initialize=set_suppliers, doc='Auction Participating Suppliers')
+    with st_stdout("code"):
+        st.markdown("###### Participating Suppliers")
+        model.pprint()
 
     ''' Upper-level decision variable 
     model.X := Binary variable, equal to 1 if quotation for item i is allocated to supplier j ; 0
