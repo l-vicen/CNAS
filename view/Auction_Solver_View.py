@@ -69,7 +69,13 @@ def solve_auction():
         st.write(Demand)
 
         # Building DICT: {(Supp, Item), Supply_Capacity}
-        Supplies_Capacity = {k:[Supplies_Item_Pair_List[i] for i in v if i in Supplies_Item_Pair_List] for k, v in Demand.items()}
+        lenght_supp_items = len(Supplies_Item_Pair_List)
+        Supplies_Capacity = {
+            (Supplies_Item_Pair_List[i]) : (value if Supplies_Item_Pair_List[i][1] == key else -1) 
+            for i in range(lenght_supp_items) 
+            for key, value in Demand.item()
+        }
+        
         st.markdown("##### Supplier Capacity")
         st.write(Supplies_Capacity)
 
