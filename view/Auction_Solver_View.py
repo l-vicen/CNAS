@@ -73,7 +73,7 @@ def solve_auction():
         Supplies_Capacity = {
             (Supplies_Item_Pair_List[i]) : (value if Supplies_Item_Pair_List[i][1] == key else -1) 
             for i in range(lenght_supp_items) 
-            for key, value in Demand.item()
+            for key, value in Demand.items()
         }
         
         st.markdown("##### Supplier Capacity")
