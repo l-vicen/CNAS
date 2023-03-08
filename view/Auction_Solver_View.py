@@ -67,7 +67,7 @@ def solve_auction():
 
         # Building DICT: {(Supp, Item), Supply_Capacity}
         length_supp_items = len(Supplies_Item_Pair_List)
-        Suppliers_Capacity = {(Supplies_Item_Pair_List[i][0], Supplies_Item_Pair_List[i][1]) : (Demand.get(Supplies_Item_Pair_List[i][1]) if Supplies_Item_Pair_List[i][1] in Demand else -1) for i in range(length_supp_items)}
+        Suppliers_Capacity = {(Supplies_Item_Pair_List[i][0]) : (Demand.get(Supplies_Item_Pair_List[i][1]) if Supplies_Item_Pair_List[i][1] in Demand else -1) for i in range(length_supp_items)}
         st.markdown("##### Suppliers' Capacity")
         st.write(Suppliers_Capacity)
         st.markdown("---")
@@ -98,7 +98,7 @@ def solve_auction():
                         if (key[0] == lot_supplier[k] and key[1] == lot_item):
 
                             value = percentage_cost_multiplier * float(list_auction_lots[j]["History_Bids_Lot"][k][0])
-                            Suppliers_Production_Cost[(key[0], key[1])] = value
+                            Suppliers_Production_Cost[key] = value
 
                         else:
                             value = -1
