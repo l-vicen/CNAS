@@ -95,7 +95,7 @@ def solve_auction():
                         if (key[0] == lot_supplier[k] and key[1] == lot_item):
 
                             value = percentage_cost_multiplier * float(list_auction_lots[j]["History_Bids_Lot"][k][0])
-                            Suppliers_Production_Cost[str(key)] = value
+                            Suppliers_Production_Cost[key] = value
 
                         else:
                             value = -1
@@ -114,7 +114,8 @@ def solve_auction():
                 Utility = sl.parse_to_dictionary_format(list_auction_items, utility_list)
                 st.markdown("#### Utility per Item")
                 st.write(Utility)
+
+            
         
-                # Production_Cost = sl.parse_to_dictionary_format(list_auction_items, cost_list)
-                # st.markdown("#### Production Cost per Item")
-                # st.write(Production_Cost)
+
+
