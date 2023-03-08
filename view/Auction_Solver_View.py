@@ -16,7 +16,6 @@ def solve_auction():
     text_input = st.text_input("Enter the auctionID: ", key="auction_id", help= "The actionID is the identifier of the Pregao.")
 
     if (text_input):
-
         # Getting list of auctioned items
         list_auction_items = sl.get_cell_as_list(text_input, dataframe, "Items_Auctioned")
         st.markdown("#### Auctioned Items")
