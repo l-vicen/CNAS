@@ -17,6 +17,7 @@ def solve_auction():
     btn_clicked = st.button("Insert")
     st.markdown("---")
 
+    list_auction_items = []
     if (btn_clicked):
 
         # Getting list of auctioned items
