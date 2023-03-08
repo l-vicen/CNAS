@@ -76,7 +76,7 @@ def solve_auction():
 
             Suppliers_Production_Cost = {
                 str(Supplies_Item_Pair_List[i]) : ((percentage_cost_multiplier *  list_auction_lots[j]["History_Bids_Lot"][0]) 
-                                                if int(Supplies_Item_Pair_List[i][1]) == list_auction_lots[j]["Participating_Suppliers"][k] else -1)
+                                                if Supplies_Item_Pair_List[i][1] == str(list_auction_lots[j]["Participating_Suppliers"][k]) else -1)
                 for i in range(lenght_supp_items) 
                 for j in range(auction_lots)
                 for k in range(len(list_auction_lots[j]["Participating_Suppliers"]))
