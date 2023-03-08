@@ -64,8 +64,8 @@ def solve_auction():
         # st.write(Demand)
 
         # Building DICT: {(Supp, Item), Supply_Capacity}
-        lenght_supp_items = len(Supplies_Item_Pair_List)
-        Suppliers_Capacity = {str(Supplies_Item_Pair_List[i]) : (Demand.get(Supplies_Item_Pair_List[i][1]) if Supplies_Item_Pair_List[i][1] in Demand else -1) for i in range(lenght_supp_items)}
+        length_supp_items = len(Supplies_Item_Pair_List)
+        Suppliers_Capacity = {str(Supplies_Item_Pair_List[i]) : (Demand.get(Supplies_Item_Pair_List[i][1]) if Supplies_Item_Pair_List[i][1] in Demand else -1) for i in range(length_supp_items)}
         # st.markdown("##### Supplier Capacity")
         # st.write(Suppliers_Capacity)
 
@@ -79,17 +79,40 @@ def solve_auction():
 
         if (percentage_cost_multiplier):
 
-            Suppliers_Production_Cost = {
-                str(Supplies_Item_Pair_List[i]) : ((percentage_cost_multiplier *  float(list_auction_lots[j]["History_Bids_Lot"][k][0])) 
-                                                if (Supplies_Item_Pair_List[i][0] == list_auction_lots[j]["Participating_Suppliers"][k] 
-                                                    and  
-                                                    Supplies_Item_Pair_List[i][1] == list_auction_lots[j]["Lot_Item"])
-                                                else
-                                                    -1)
-                for j in range(auction_lots)
-                for k in range(len(list_auction_lots[j]["Participating_Suppliers"]))
-                for i in range(lenght_supp_items) 
-            }
+            Suppliers_Production_Cost = {}
+            for i in range(length_supp_items):
+
+                key = Supplies_Item_Pair_List[i]
+
+                for j in range(auction_lots):
+
+                    number_of_supplier_in_this_lot = len(list_auction_lots[j]["Participating_Suppliers"])
+                    lot_supplier = list_auction_lots[j]["Participating_Suppliers"]
+                    lot_item = list_auction_lots[j]["Lot_Item"]
+
+                    for k in range(number_of_supplier_in_this_lot):
+
+                        if (key[0] == lot_supplier[k] and key[1] == lot_item):
+
+                            value = percentage_cost_multiplier * float(list_auction_lots[j]["History_Bids_Lot"][k][0])
+                            Suppliers_Production_Cost[str(key)] = value
+
+                        else:
+                            value = -1
+
+            st.write(Suppliers_Production_Cost)
+
+            # Suppliers_Production_Cost = {
+            #     str(Supplies_Item_Pair_List[i]) : ((percentage_cost_multiplier *  float(list_auction_lots[j]["History_Bids_Lot"][k][0])) 
+            #                                     if (Supplies_Item_Pair_List[i][0] == list_auction_lots[j]["Participating_Suppliers"][k] 
+            #                                         and  
+            #                                         Supplies_Item_Pair_List[i][1] == list_auction_lots[j]["Lot_Item"])
+            #                                     else
+            #                                         -1)
+            #     for k in range(len(list_auction_lots[j]["Participating_Suppliers"]))
+            #     for j in range(auction_lots)
+            #     for i in range(length_supp_items) 
+            # }
             
             
             st.markdown("##### Supplier Production Cost Per Item")
