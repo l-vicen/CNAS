@@ -86,9 +86,9 @@ def solve_auction():
         
             # Getting User Input
             collect_numbers = lambda x : [int(i) for i in re.split("[^0-9]", x) if i != ""]
-            utility_input_list  = st.text_input("Please enter numbers")
-
-            cost_input_list  = st.text_input("Please enter numbers")
+            
+            utility_input_list  = st.text_input("Please enter numbers", key = "Utility_Input")
+            cost_input_list  = st.text_input("Please enter numbers", key = "Cost_Input")
     
             if (utility_input_list and cost_input_list):
                 utility_list = collect_numbers(utility_input_list)
