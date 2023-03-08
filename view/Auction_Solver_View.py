@@ -45,8 +45,8 @@ def solve_auction():
         auction_lots = len(list_auction_lots)
         Participating_Supplier = [str(supp) for i in range(auction_lots) for supp in list_auction_lots[i]["Participating_Suppliers"]]
         Participating_Supplier = list(OrderedDict.fromkeys(Participating_Supplier))
-        st.markdown("##### Participating Suppliers")
-        st.write(Participating_Supplier)
+        # st.markdown("##### Participating Suppliers")
+        # st.write(Participating_Supplier)
 
         # Building DICT: {TUPLE, Capacity}
         Supplies_Item_Pair_List = [(str(list_auction_lots[i].get("Participating_Suppliers")[j]), list_auction_lots[i].get("Lot_Item")) for i in range(auction_lots) for j in range(len(list_auction_lots[i].get("Participating_Suppliers")))]
@@ -60,19 +60,19 @@ def solve_auction():
 
         # Building DICT: {Item, Demand}
         Demand = sl.parse_to_dictionary_format(list_auction_items, list_demand_items)
-        st.markdown("##### Item Demand")
-        st.write(Demand)
+        # st.markdown("##### Item Demand")
+        # st.write(Demand)
 
         # Building DICT: {(Supp, Item), Supply_Capacity}
         lenght_supp_items = len(Supplies_Item_Pair_List)
         Suppliers_Capacity = {str(Supplies_Item_Pair_List[i]) : (Demand.get(Supplies_Item_Pair_List[i][1]) if Supplies_Item_Pair_List[i][1] in Demand else -1) for i in range(lenght_supp_items)}
-        st.markdown("##### Supplier Capacity")
-        st.write(Suppliers_Capacity)
+        # st.markdown("##### Supplier Capacity")
+        # st.write(Suppliers_Capacity)
 
         # Building DICT: {Item, Budget}
         Budget = sl.parse_to_dictionary_format(list_auction_items, list_budget_items)
-        st.markdown("##### Budget per Item")
-        st.write(Budget)
+        # st.markdown("##### Budget per Item")
+        # st.write(Budget)
 
         # Building DICT: {(Supp, Item), Production_Cost}
         percentage_cost_multiplier = st.number_input("Enter COGS Multiplier")
@@ -89,7 +89,7 @@ def solve_auction():
                 for j in range(auction_lots)
                 for k in range(len(list_auction_lots[j]["Participating_Suppliers"]))
                 for i in range(lenght_supp_items) 
-                }
+            }
             
             
             st.markdown("##### Supplier Production Cost Per Item")
