@@ -80,7 +80,7 @@ def solve_auction():
         if (percentage_cost_multiplier):
 
             Suppliers_Production_Cost = {
-                str(Supplies_Item_Pair_List[i]) : ((percentage_cost_multiplier *  float(list_auction_lots[j]["History_Bids_Lot"][0])) 
+                str(Supplies_Item_Pair_List[i]) : ((percentage_cost_multiplier *  float(list_auction_lots[j]["History_Bids_Lot"][k][0])) 
                                                 if (Supplies_Item_Pair_List[i][0] == list_auction_lots[j]["Participating_Suppliers"][k] and  
                                                     Supplies_Item_Pair_List[i][1] == list_auction_lots[j]["Lot_Item"]) else -1)
                 for i in range(lenght_supp_items) 
