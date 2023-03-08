@@ -87,8 +87,8 @@ def solve_auction():
                                                 else
                                                     -1)
                 for j in range(auction_lots)
-                for i in range(lenght_supp_items) 
                 for k in range(len(list_auction_lots[j]["Participating_Suppliers"]))
+                for i in range(lenght_supp_items) 
                 }
             
             
