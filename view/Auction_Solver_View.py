@@ -69,9 +69,18 @@ def solve_auction():
         st.markdown("##### Supplier Capacity")
         st.write(Suppliers_Capacity)
 
-        Suppliers_Production_Cost = {str(Supplies_Item_Pair_List[i]) : (Demand.get(Supplies_Item_Pair_List[i][1]) if Supplies_Item_Pair_List[i][1] in Demand else -1) for i in range(lenght_supp_items)}
-        st.markdown("##### Supplier Capacity")
-        st.write(Suppliers_Capacity)
+        # Building DICT: {(Supp, Item), Production_Cost}
+        percentage_cost_multiplier = st.number_input("Enter COGS Multiplier")
+
+        Suppliers_Production_Cost = {
+            str(Supplies_Item_Pair_List[i]) : ((percentage_cost_multiplier *  list_auction_lots[j]["History_Bids_Lot"][0]) 
+                                               if Supplies_Item_Pair_List[i][1] == list_auction_lots[j]["Participating_Suppliers"][i] else -1)
+            for i in range(lenght_supp_items) 
+            for j in range(auction_lots)}
+        
+        
+        st.markdown("##### Supplier Production Cost Per Item")
+        st.write(Suppliers_Production_Cost)
 
         # Building DICT: {Item, Budget}
         Budget = sl.parse_to_dictionary_format(list_auction_items, list_budget_items)
@@ -82,15 +91,10 @@ def solve_auction():
         
         # Getting User Input
         collect_numbers = lambda x : [int(i) for i in re.split("[^0-9]", x) if i != ""]
-
         utility_input_list  = st.text_input("Please enter numbers", key = "Utility_Input")
-        # cost_input_list  = st.text_input("Please enter numbers", key = "Cost_Input")
-
         utility_list = collect_numbers(utility_input_list)
-        # cost_list = collect_numbers(cost_input_list)
 
         if (utility_input_list):
-
             Utility = sl.parse_to_dictionary_format(list_auction_items, utility_list)
             st.markdown("#### Utility per Item")
             st.write(Utility)
