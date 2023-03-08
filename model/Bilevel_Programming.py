@@ -90,10 +90,10 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
     #     ('Lucas_GmbH', 'Tomatos'): 50,
     # }
 
-    model.Demand = Param(model.i, initialize= demand_dictionary, doc='Budget Items')
+    model.Demand = Param(model.i, initialize= demand_dictionary, doc='Demand per Items')
     print_into_streamlit("Auctioneer's Demand per Item", model.Demand)
 
-    model.Utility = Param(model.i, initialize= utility_dictionary, doc='Expected Utility')
+    model.Utility = Param(model.i, initialize= utility_dictionary, doc='Expected Utility per Item')
     print_into_streamlit("Auctioneer's perceived Utility per Item",  model.Utility)
 
     model.supply_capacity = Param(model.j, model.i, initialize= supplier_capacity_dictionary, doc='Supply Capacity of Suppliers')
@@ -103,6 +103,7 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
     print_into_streamlit(" Auctioneer's Expected Expense for Items",  model.L.Budget)
 
     model.L.production_costs = Param(model.j, model.i, initialize= production_costs_dictionary , doc='Production Cost per Supplier')
+    print_into_streamlit(" Suppliers\' Individual Production Cost per Item",  model.L.production_costs)
 
     # Objective function assignments
     model.o = Objective(rule=auction_objective_function(model), sense=maximize, doc='Auction Problem') # Upper-level 
