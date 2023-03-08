@@ -102,15 +102,14 @@ def solve_auction():
             # st.write(Suppliers_Production_Cost)
 
             Suppliers_Production_Cost = {
-                str(Supplies_Item_Pair_List[i]) : ((percentage_cost_multiplier *  float(list_auction_lots[j]["History_Bids_Lot"][k][0]))   
-                                                 if (Supplies_Item_Pair_List[i][0] == list_auction_lots[j]["Participating_Suppliers"][k]
-                                                    and  
-                                                    Supplies_Item_Pair_List[i][1] == list_auction_lots[j]["Lot_Item"])
-                                                 else
-                                                    -1 for k in range(len(list_auction_lots[j]["Participating_Suppliers"])) for j in range(auction_lots)) for i in range(length_supp_items)  
+                str(Supplies_Item_Pair_List[i]): percentage_cost_multiplier * float(list_auction_lots[j]["History_Bids_Lot"][k][0])
+                if Supplies_Item_Pair_List[i][0] == list_auction_lots[j]["Participating_Suppliers"][k] and Supplies_Item_Pair_List[i][1] == list_auction_lots[j]["Lot_Item"] else -1
+                for i in range(length_supp_items)
+                for j in range(auction_lots)
+                for k in range(len(list_auction_lots[j]["Participating_Suppliers"]))
             }
             
-            
+
             st.markdown("##### Supplier Production Cost Per Item")
             st.write(Suppliers_Production_Cost)
 
