@@ -84,11 +84,12 @@ def solve_auction():
                     for k in range(number_of_supplier_in_this_lot):
 
                         if (key[0] == lot_supplier[k] and key[1] == lot_item):
+
                             value = percentage_cost_multiplier * float(list_auction_lots[j]["History_Bids_Lot"][k][0])
+                            Suppliers_Production_Cost[key] = value
+
                         else:
-                            value = 0
-                        
-                        Suppliers_Production_Cost[key] = value
+                            value = -1
 
             # st.markdown("##### Suppliers' Production Costs per Item")
             for key, value in Suppliers_Production_Cost.items():
