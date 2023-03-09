@@ -4,7 +4,7 @@ import ast
 def get_cell_as_list(auction_id, dataframe, column):
     cell_value = dataframe.loc[dataframe["Auction_Id"] == auction_id, column].iloc[0]
     cell_value = cell_value.lower()
-    cell_value = cell_value.replace(' +', ' ')
+    cell_value = " ".join(cell_value.split())
     return ast.literal_eval(cell_value)
 
 """ Returns the cell value as a list of dictionaries in the column {"Auction_Lot_Summary"} based on the auction id."""
