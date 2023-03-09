@@ -15,6 +15,7 @@ def get_cell_as_list_of_dict(auction_id, dataframe):
     cell_value = cell_value.replace("[{", "{")
     cell_value = cell_value.replace("}]", "}")
     cell_value = cell_value.replace(", {", "**&** {")
+    st.markdown("#### List of Dictionary")
     st.write(cell_value)
     # string_items = dataframe.loc[dataframe["Auction_Id"] == auction_id, "Auction_Lot_Summary"][0].replace("[{", "{").replace("}]", "}")
     # string_items = string_items.replace(", {", "**&** {")
