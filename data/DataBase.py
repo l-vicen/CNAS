@@ -104,8 +104,8 @@ def post_db(auction_id, auction_summary, auction_items, auction_history):
     Auction_Lot_Summary= [parse_auction_lot(auction_history[i], Items_Auctioned[i], Winning_Bids[i]) for i in range(number_auction_lots)]
 
     # Removing Auctions whose outcomes are not determined (No winners) <The cause can be different>.
-    lots = len(Winning_Bids)
-    Invalid_Auction_Lot_Index = [i for i in range(lots) if Winning_Bids[i] == -1]
+    lots = len(Auction_Lot_Summary)
+    Invalid_Auction_Lot_Index = [i for i in range(lots) if Auction_Lot_Summary[i] != "homologado"]
     number_of_bad_auctions = len(Invalid_Auction_Lot_Index)
 
     Items_Auctioned = remove_bad_auctions(Items_Auctioned, Invalid_Auction_Lot_Index, number_of_bad_auctions)
