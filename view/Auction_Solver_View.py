@@ -73,12 +73,10 @@ def solve_auction():
 
         Suppliers_Capacity = {Supplies_Item_Pair_List[i] : (Demand.get(Supplies_Item_Pair_List[i][1]) if Supplies_Item_Pair_List[i][1] in Demand else 0) for i in range(length_supp_with_capacity_list)}
 
-        Suppliers_Capacity = {(pair_cross_products[i]) : (0) for i in range(length_cross_product) if pair_cross_products[i] not in Suppliers_Capacity}
-        # for i in range(length_cross_product):
-        #     key = pair_cross_products[i]
-
-        #     if key not in Suppliers_Capacity:
-        #         Suppliers_Capacity[key] = 0
+        for i in range(length_cross_product):
+            key = pair_cross_products[i]
+            if key not in Suppliers_Capacity:
+                Suppliers_Capacity[key] = 0
                 
         st.markdown("##### Suppliers' Capacity")
         for key, value in Suppliers_Capacity.items():
