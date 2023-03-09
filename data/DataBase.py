@@ -93,7 +93,7 @@ def post_db(auction_id, auction_summary, auction_items, auction_history):
 
     # Creating a list with all auction situations (homologated, canceled, etc ....)
     Auction_Situation = [str(pregoes[i]["situacao_item"]) for i in range(length_pregoes)]
-    st.write(Auction_Situation)
+    # st.write(Auction_Situation)
     
     """ 2nd Part: Getting data from auction_items query """
 
@@ -102,7 +102,7 @@ def post_db(auction_id, auction_summary, auction_items, auction_history):
 
     # List with a summary of the auction lot. It calls the helper method: def parse_auction_lot(...)
     Auction_Lot_Summary= [parse_auction_lot(auction_history[i], Items_Auctioned[i], Winning_Bids[i]) for i in range(number_auction_lots)]
-    st.write(Auction_Lot_Summary)
+    # st.write(Auction_Lot_Summary)
 
     # Removing Auctions whose outcomes are not determined (No winners) <The cause can be different>.
     lots = len(Auction_Lot_Summary)
