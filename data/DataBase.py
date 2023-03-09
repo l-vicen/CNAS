@@ -89,7 +89,7 @@ def post_db(auction_id, auction_summary, auction_items, auction_history):
 
     # Creating a list with all winning bids (smallest) prices
     Winning_Bids = [float(pregoes[i]["menor_lance"]) if pregoes[i]["menor_lance"] != None else -1 for i in range(length_pregoes)]
-
+    
     """ 2nd Part: Getting data from auction_items query """
 
     # Variable to avoid re-accessing the inside of the auction_history json multiple times
@@ -97,6 +97,16 @@ def post_db(auction_id, auction_summary, auction_items, auction_history):
 
     # List with a summary of the auction lot. It calls the helper method: def parse_auction_lot(...)
     Auction_Lot_Summary= [parse_auction_lot(auction_history[i], Items_Auctioned[i], Winning_Bids[i]) for i in range(number_auction_lots)]
+
+    # Removing Auctions whose outcomes are not determined (No winners) <The cause can be different>.
+    lots = len(Winning_Bids)
+    Invalid_Auction_Lot_Index = [i for i in range(lots) if Winning_Bids[i] == -1]
+
+    for i in range(len(Invalid_Auction_Lot_Index)):
+        Items_Auctioned.pop(Invalid_Auction_Lot_Index[i])
+        Demanded_Quantity_Items.pop(Invalid_Auction_Lot_Index[i])
+        Estimated_Price_Items.pop(Invalid_Auction_Lot_Index[i])
+        Auction_Lot_Summary.pop(Invalid_Auction_Lot_Index[i])
 
     query = f'INSERT INTO "{SHEET_URL}" VALUES ("{auction_id}",\
                                                 "{auction_summary["dtInicioProposta"]}",\

@@ -1,12 +1,8 @@
 import ast
-import streamlit as st
 
 """ Returns the cell value as a list in a targeted column based on the auction id."""
 def get_cell_as_list(auction_id, dataframe, column):
     cell_value = dataframe.loc[dataframe["Auction_Id"] == auction_id, column].iloc[0]
-    msg = "#### {}".format(column)
-    st.markdown(msg)
-    st.write(cell_value)
     return ast.literal_eval(cell_value)
 
 """ Returns the cell value as a list of dictionaries in the column {"Auction_Lot_Summary"} based on the auction id."""
@@ -15,11 +11,6 @@ def get_cell_as_list_of_dict(auction_id, dataframe):
     cell_value = cell_value.replace("[{", "{")
     cell_value = cell_value.replace("}]", "}")
     cell_value = cell_value.replace(", {", "**&** {")
-    st.markdown("#### List of Dictionary")
-    st.write(cell_value)
-    # string_items = dataframe.loc[dataframe["Auction_Id"] == auction_id, "Auction_Lot_Summary"][0].replace("[{", "{").replace("}]", "}")
-    # string_items = string_items.replace(", {", "**&** {")
-    # return [ast.literal_eval(x) for x in string_items.split("**&** ")]
     return [ast.literal_eval(x) for x in cell_value.split("**&** ")]
 
 """ Parser helper method to construct dictionary """
