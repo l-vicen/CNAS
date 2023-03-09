@@ -54,13 +54,13 @@ def solve_auction():
         # st.markdown("---")
 
         pair_cross_products = list(itertools.product(Participating_Supplier, list_auction_items))
-        st.markdown("#### Cross Product Supplier | Item")
-        st.write(pair_cross_products)
+        # st.markdown("#### Cross Product Supplier | Item")
+        # st.write(pair_cross_products)
 
         # Building DICT: {TUPLE, Capacity}
         Supplies_Item_Pair_List = [(str(list_auction_lots[i].get("Participating_Suppliers")[j]), list_auction_lots[i].get("Lot_Item")) for i in range(auction_lots) for j in range(len(list_auction_lots[i].get("Participating_Suppliers")))]
-        st.write("##### Pair of (Supplier, Item)")
-        st.write(Supplies_Item_Pair_List)
+        # st.write("##### Pair of (Supplier, Item)")
+        # st.write(Supplies_Item_Pair_List)
 
         # Building list of tuples [(Supplier, Item)]
         tuple_supp_item_list = sl.parse_two_lists_into_one_tuple_list(Participating_Supplier, list_auction_items)
@@ -74,14 +74,14 @@ def solve_auction():
         # st.markdown("---")
 
         # Building DICT: {(Supp, Item), Supply_Capacity}
-        length_supp_items = len(Supplies_Item_Pair_List)
-        Suppliers_Capacity = {(str(Supplies_Item_Pair_List[i][0]), str(Supplies_Item_Pair_List[i][1])) : (Demand.get(Supplies_Item_Pair_List[i][1]) if Supplies_Item_Pair_List[i][1] in Demand else -1) for i in range(length_supp_items)}
+        length_supp_items = len(pair_cross_products)
+        Suppliers_Capacity = {(str(pair_cross_products[i][0]), str(pair_cross_products[i][1])) : (Demand.get(Supplies_Item_Pair_List[i][1]) if Supplies_Item_Pair_List[i][1] in Demand else 0) for i in range(length_supp_items)}
         
-        # st.markdown("##### Suppliers' Capacity")
-        # for key, value in Suppliers_Capacity.items():
-        #     st.write(key)
-        #     st.write(value)
-        # st.markdown("---")
+        st.markdown("##### Suppliers' Capacity")
+        for key, value in Suppliers_Capacity.items():
+            st.write(key)
+            st.write(value)
+        st.markdown("---")
 
         # Building DICT: {Item, Budget}
         Budget = sl.parse_to_dictionary_format(list_auction_items, list_budget_items)
