@@ -105,7 +105,6 @@ def post_db(auction_id, auction_summary, auction_items, auction_history):
     # Removing Auctions whose outcomes are not determined (No winners) <The cause can be different>.
     lots = len(Auction_Lot_Summary)
     Invalid_Auction_Lot_Index = [i for i in range(lots) if Auction_Situation[i] != "homologado"]
-    st.write(Invalid_Auction_Lot_Index)
     number_of_bad_auctions = len(Invalid_Auction_Lot_Index)
 
     Items_Auctioned = remove_bad_auctions(Items_Auctioned, Invalid_Auction_Lot_Index, number_of_bad_auctions)
@@ -114,6 +113,7 @@ def post_db(auction_id, auction_summary, auction_items, auction_history):
     Auction_Lot_Summary = remove_bad_auctions(Auction_Lot_Summary, Invalid_Auction_Lot_Index, number_of_bad_auctions)
     Winning_Bids = remove_bad_auctions(Winning_Bids, Invalid_Auction_Lot_Index, number_of_bad_auctions)
 
+    # Number of actual valid auctions lot
     number_valid_auction_lots = len(Items_Auctioned)
 
     # Query: Inserting values into data set
