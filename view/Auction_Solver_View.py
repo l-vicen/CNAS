@@ -48,7 +48,7 @@ def solve_auction():
  
         # Observed Combinations (Supplier & Items)
         Supplies_Item_Pair_List = [(str(list_auction_lots[i].get("Participating_Suppliers")[j]), str(list_auction_lots[i].get("Lot_Item"))) for i in range(auction_lots) for j in range(len(list_auction_lots[i].get("Participating_Suppliers")))]
-        
+
         # Building DICT: {(Supp, Item), Supply_Capacity}
         length_cross_product = len(pair_cross_products)
         length_supp_with_capacity_list = len(Supplies_Item_Pair_List)
