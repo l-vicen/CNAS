@@ -47,10 +47,10 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
     model.j := Set of auction participating suppliers.
     '''
     model.i = Set(initialize=set_items, doc='Auctioned_Items')
-    # print_into_streamlit("Auctioned Items", model.i)
+    print_into_streamlit("Auctioned Items", model.i)
 
     model.j = Set(initialize=set_suppliers, doc='Auction_Participating_Suppliers')
-    # print_into_streamlit("Participating Suppliers in Auction", model.j)
+    print_into_streamlit("Participating Suppliers in Auction", model.j)
 
     ''' Upper-level decision variable 
     model.X := Binary variable, equal to 1 if quotation for item i is allocated to supplier j ; 0
@@ -89,13 +89,15 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
 
     # Objective function assignments
     model.o = Objective(rule=auction_objective_function(model), sense=maximize, doc='Auction_Problem') # Upper-level 
-    # print_into_streamlit("Upper-level Objective Function",  model.o)
+    print_into_streamlit("Upper-level Objective Function",  model.o)
 
     model.L.o = Objective(rule= pricing_objective_function(model.L, model), sense=maximize, doc='Pricing_Problem') # Lower-level
-    # print_into_streamlit("Lower-level Objective Function",  model.L.o)
+    print_into_streamlit("Lower-level Objective Function",  model.L.o)
 
     # Upper-level constraint assignments
     model.SingleSourcingConstraint = Constraint(model.i, rule=single_sourcing_constraint, doc='There is at most 1 winner')
+    print_into_streamlit("Single Sourcing Constraint",  model.SingleSourcingConstraint)
+
     model.DemandConstraint = Constraint(model.i, rule=demand_requirement_constraint, doc='Auctioneer demand is fulfilled')
 
     # Lower-level constraint assignment
@@ -104,6 +106,8 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
     # Calling the Big-M Relaxation Solver
     solver = Solver('pao.pyomo.FA')
     solver.solve(model)   
+
+
 
     with st_stdout("code"):
         model.pprint()
