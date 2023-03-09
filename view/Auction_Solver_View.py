@@ -59,7 +59,10 @@ def solve_auction():
         length_cross_product = len(pair_cross_products)
         length_supp_with_capacity_list = len(Supplies_Item_Pair_List)
         Suppliers_Capacity = {(Supplies_Item_Pair_List[i][0], Supplies_Item_Pair_List[i][1]) : (Demand.get(Supplies_Item_Pair_List[i][1]) if Supplies_Item_Pair_List[i][1] in Demand else 0) for i in range(length_supp_with_capacity_list)}
-        st.write(Suppliers_Capacity)
+        for key, value in Suppliers_Capacity.items():
+            st.write(key)
+            st.write(value)
+
 
         # Adding missing pairs from cross product
         for i in range(length_cross_product):
