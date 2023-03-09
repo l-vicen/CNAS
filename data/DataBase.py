@@ -117,8 +117,10 @@ def post_db(auction_id, auction_summary, auction_items, auction_history):
     remove_bad_auctions(Auction_Lot_Summary, Invalid_Auction_Lot_Index, number_of_bad_auctions)
     remove_bad_auctions(Winning_Bids, Invalid_Auction_Lot_Index, number_of_bad_auctions)
 
+    new_number_auction_lots = len(Auction_Lot_Summary)
+
     # Cleaning up all lists 
-    Auction_Lots_With_No_Participating_Suppliers = [i for i in range(number_auction_lots) if len(Auction_Lot_Summary[i]["Participating_Suppliers"]) == 0]
+    Auction_Lots_With_No_Participating_Suppliers = [i for i in range(new_number_auction_lots) if len(Auction_Lot_Summary[i]["Participating_Suppliers"]) == 0]
     Auction_Lots_With_No_Participating_Suppliers.reverse() # Trick to don't mess up the dynamic size of the list
     number_of_auctions_with_no_supplier = len(Auction_Lots_With_No_Participating_Suppliers)
     remove_bad_auctions(Items_Auctioned, Auction_Lots_With_No_Participating_Suppliers, number_of_auctions_with_no_supplier)
