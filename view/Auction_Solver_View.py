@@ -22,7 +22,6 @@ def solve_auction():
 
         # Getting list of auctioned items
         list_auction_items = sl.get_cell_as_list(text_input, dataframe, "Items_Auctioned")
-        st.write(list_auction_items)
 
         # Getting list of demands for items
         list_demand_items = sl.get_cell_as_list(text_input, dataframe, "Demanded_Quantity_Items")
@@ -41,13 +40,11 @@ def solve_auction():
 
         # Building list of participating suppliers
         auction_lots = len(list_auction_lots)
-        Participating_Supplier = [supp for i in range(auction_lots) for supp in list_auction_lots[i]["Participating_Suppliers"]]
+        Participating_Supplier = [str(supp) for i in range(auction_lots) for supp in list_auction_lots[i]["Participating_Suppliers"]]
         Participating_Supplier = list(OrderedDict.fromkeys(Participating_Supplier))
-        st.write(Participating_Supplier)
 
         # Cross Product (all combinations (Supplier & Items))
         pair_cross_products = list(itertools.product(Participating_Supplier, list_auction_items))
-        st.write(pair_cross_products)
  
         # Observed Combinations (Supplier & Items)
         Supplies_Item_Pair_List = [(list_auction_lots[i].get("Participating_Suppliers")[j], list_auction_lots[i].get("Lot_Item")) for i in range(auction_lots) for j in range(len(list_auction_lots[i].get("Participating_Suppliers")))]
