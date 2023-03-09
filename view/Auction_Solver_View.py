@@ -20,85 +20,57 @@ def solve_auction():
     st.markdown("---")
 
     if (text_input):
+
         # Getting list of auctioned items
         list_auction_items = sl.get_cell_as_list(text_input, dataframe, "Items_Auctioned")
-        # st.markdown("#### Auctioned Items")
-        # st.write(list_auction_items)
-        # st.markdown("---")
 
         # Getting list of demands for items
         list_demand_items = sl.get_cell_as_list(text_input, dataframe, "Demanded_Quantity_Items")
-        # st.write("#### Demand Items")
-        # st.write(list_demand_items)
+
+        # Building DICT: {Item, Demand}
+        Demand = sl.parse_to_dictionary_format(list_auction_items, list_demand_items)
 
         # Getting list of expected prices per item
         list_budget_items = sl.get_cell_as_list(text_input, dataframe, "Estimated_Price_Items")
-        # st.write("#### Budget Items")
-        # st.write(list_budget_items)
 
-        # Getting list of winner bids per item
-        list_winner_bids = sl.get_cell_as_list(text_input, dataframe, "Winning_Bids")
-        # st.write("#### Winner Items")
-        # st.write(list_winner_bids)
+        # Building DICT: {Item, Budget}
+        Budget = sl.parse_to_dictionary_format(list_auction_items, list_budget_items)
 
         # Getting list of auction lots
         list_auction_lots = sl.get_cell_as_list_of_dict(text_input, dataframe)
-        # st.write(list_auction_lots)
 
         # Building list of participating suppliers
         auction_lots = len(list_auction_lots)
         Participating_Supplier = [str(supp) for i in range(auction_lots) for supp in list_auction_lots[i]["Participating_Suppliers"]]
         Participating_Supplier = list(OrderedDict.fromkeys(Participating_Supplier))
-        # st.markdown("##### Auction Participating Suppliers")
-        # st.write(Participating_Supplier)
-        # st.markdown("---")
 
-        # Building DICT: {Item, Demand}
-        Demand = sl.parse_to_dictionary_format(list_auction_items, list_demand_items)
-        st.markdown("##### Auctioneer's Demand per Item")
-        st.write(Demand)
-        st.markdown("---")
-
-        # Building DICT: {TUPLE, Capacity}
-
-        # Cross Product (all combinations)
+        # Cross Product (all combinations (Supplier & Items))
         pair_cross_products = list(itertools.product(Participating_Supplier, list_auction_items))
  
-        # Observed Combinations
+        # Observed Combinations (Supplier & Items)
         Supplies_Item_Pair_List = [(str(list_auction_lots[i].get("Participating_Suppliers")[j]), list_auction_lots[i].get("Lot_Item")) for i in range(auction_lots) for j in range(len(list_auction_lots[i].get("Participating_Suppliers")))]
         
         # Building DICT: {(Supp, Item), Supply_Capacity}
         length_cross_product = len(pair_cross_products)
         length_supp_with_capacity_list = len(Supplies_Item_Pair_List)
-
         Suppliers_Capacity = {Supplies_Item_Pair_List[i] : (Demand.get(Supplies_Item_Pair_List[i][1]) if Supplies_Item_Pair_List[i][1] in Demand else 0) for i in range(length_supp_with_capacity_list)}
 
+        # Adding missing pairs from cross product
         for i in range(length_cross_product):
             key = pair_cross_products[i]
             if key not in Suppliers_Capacity:
                 Suppliers_Capacity[key] = 0
                 
-        st.markdown("##### Suppliers' Capacity")
-        for key, value in Suppliers_Capacity.items():
-            st.write(key)
-            st.write(value)
-        st.markdown("---")
-
-        # Building DICT: {Item, Budget}
-        Budget = sl.parse_to_dictionary_format(list_auction_items, list_budget_items)
-        # st.markdown("##### Auctioneer's Budget per Item")
-        # st.write(Budget)
-        # st.markdown("---")
-    
-        # Building DICT: {(Supp, Item), Production_Cost}
         st.markdown("### Input Section")
         percentage_cost_multiplier = st.number_input("Enter COGS Multiplier")
-        if (percentage_cost_multiplier):
 
+        if (percentage_cost_multiplier):
+            
+            # Building DICT: {(Supp, Item), Production_Cost}
             Suppliers_Production_Cost = {}
             for i in range(length_cross_product):
 
-                key = Supplies_Item_Pair_List[i]
+                key = pair_cross_products[i]
 
                 for j in range(auction_lots):
 
@@ -116,13 +88,13 @@ def solve_auction():
                         Suppliers_Production_Cost[key] = value
 
             # st.markdown("##### Suppliers' Production Costs per Item")
-            # # for key, value in Suppliers_Production_Cost.items():
-            # #     st.write(key)
-            # #     st.write(value)
-            # st.markdown("---") 
+            for key, value in Suppliers_Production_Cost.items():
+                st.write(key)
+                st.write(value)
+            st.markdown("---") 
 
 
-            # building Bilevel Program
+            # Building Bilevel Program
             number_auctioned_items = len(list_auction_items)
             utility_list = []
             for i in range(number_auctioned_items):
