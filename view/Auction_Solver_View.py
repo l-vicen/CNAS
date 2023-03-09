@@ -53,15 +53,15 @@ def solve_auction():
         # st.write(Participating_Supplier)
         # st.markdown("---")
 
-        pair_cross_products = list(itertools.product(Participating_Supplier, list_auction_items))
-        st.markdown("#### Cross Product Supplier | Item")
-        st.write(pair_cross_products)
-
         # Building DICT: {Item, Demand}
         Demand = sl.parse_to_dictionary_format(list_auction_items, list_demand_items)
         st.markdown("##### Auctioneer's Demand per Item")
         st.write(Demand)
         st.markdown("---")
+
+        pair_cross_products = list(itertools.product(Participating_Supplier, list_auction_items))
+        st.markdown("#### Cross Product Supplier | Item")
+        st.write(pair_cross_products)
 
         # Building DICT: {TUPLE, Capacity}
         Supplies_Item_Pair_List = [(str(list_auction_lots[i].get("Participating_Suppliers")[j]), list_auction_lots[i].get("Lot_Item")) for i in range(auction_lots) for j in range(len(list_auction_lots[i].get("Participating_Suppliers")))]
