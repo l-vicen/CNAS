@@ -59,11 +59,11 @@ def solve_auction():
         # Building DICT: {(Supp, Item), Supply_Capacity}
         length_cross_product = len(pair_cross_products)
         length_supp_with_capacity_list = len(Supplies_Item_Pair_List)
-        Suppliers_Capacity = {(Supplies_Item_Pair_List[i][0], Supplies_Item_Pair_List[i][1]) : (Demand.get(Supplies_Item_Pair_List[i][1]) if Supplies_Item_Pair_List[i][1] in Demand else 0) for i in range(length_supp_with_capacity_list)}
+        Suppliers_Capacity = {(str(Supplies_Item_Pair_List[i][0]), str(Supplies_Item_Pair_List[i][1])) : (Demand.get(Supplies_Item_Pair_List[i][1]) if Supplies_Item_Pair_List[i][1] in Demand else 0) for i in range(length_supp_with_capacity_list)}
 
         # Adding missing pairs from cross product
         for i in range(length_cross_product):
-            key = pair_cross_products[i]
+            key = (str(pair_cross_products[i][0]), str(pair_cross_products[i][1]))
             if key not in Suppliers_Capacity:
                 Suppliers_Capacity[key] = 0
 
@@ -75,7 +75,7 @@ def solve_auction():
             Suppliers_Production_Cost = {}
             for i in range(length_supp_with_capacity_list):
 
-                key = Supplies_Item_Pair_List[i]
+                key = (str(Supplies_Item_Pair_List[i][0]), str(Supplies_Item_Pair_List[i][1]))
 
                 for j in range(auction_lots):
 
@@ -85,13 +85,13 @@ def solve_auction():
 
                     for k in range(number_of_supplier_in_this_lot):
 
-                        if (key[0] == lot_supplier[k] and key[1] == lot_item):
+                        if (key[0] == str(lot_supplier[k]) and key[1] == str(lot_item)):
                             value = percentage_cost_multiplier * float(list_auction_lots[j]["History_Bids_Lot"][k][0])
                             Suppliers_Production_Cost[key] = value
             
             # Adding missing pairs from cross product
             for i in range(length_cross_product):
-                key = pair_cross_products[i]
+                key = (str(pair_cross_products[i][0]), str(pair_cross_products[i][1]))
                 if key not in Suppliers_Production_Cost:
                     Suppliers_Production_Cost[key] = 0
                     
