@@ -68,7 +68,7 @@ def solve_auction():
             Suppliers_Production_Cost = {}
             for i in range(length_supp_with_capacity_list):
 
-                key = (str(Supplies_Item_Pair_List[i][0]), str(Supplies_Item_Pair_List[i][1]))
+                key = Supplies_Item_Pair_List[i]
 
                 for j in range(auction_lots):
 
@@ -84,7 +84,7 @@ def solve_auction():
             
             # Adding missing pairs from cross product
             for i in range(length_cross_product):
-                key = (str(pair_cross_products[i][0]), str(pair_cross_products[i][1]))
+                key = pair_cross_products[i]
                 if key not in Suppliers_Production_Cost:
                     Suppliers_Production_Cost[key] = 0
 
