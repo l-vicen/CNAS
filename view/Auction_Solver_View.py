@@ -85,10 +85,13 @@ def solve_auction():
 
                         if (key[0] == lot_supplier[k] and key[1] == lot_item):
                             value = percentage_cost_multiplier * float(list_auction_lots[j]["History_Bids_Lot"][k][0])
-                        else:
-                            value = 0
-                            
-                        Suppliers_Production_Cost[key] = value
+                            Suppliers_Production_Cost[key] = value
+            
+            # Adding missing pairs from cross product
+            for i in range(length_cross_product):
+                key = pair_cross_products[i]
+                if key not in Suppliers_Production_Cost:
+                    Suppliers_Capacity[key] = 0
 
             # st.markdown("##### Suppliers' Production Costs per Item")
             for key, value in Suppliers_Production_Cost.items():
