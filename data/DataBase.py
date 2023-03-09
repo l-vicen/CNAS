@@ -101,7 +101,9 @@ def post_db(auction_id, auction_summary, auction_items, auction_history):
     # Removing Auctions whose outcomes are not determined (No winners) <The cause can be different>.
     lots = len(Winning_Bids)
     Invalid_Auction_Lot_Index = [i for i in range(lots) if Winning_Bids[i] == -1]
+    st.write(Invalid_Auction_Lot_Index)
     number_of_bad_auctions = len(Invalid_Auction_Lot_Index)
+    st.write(number_of_bad_auctions)
 
     Items_Auctioned = remove_bad_auctions(Items_Auctioned, Invalid_Auction_Lot_Index, number_of_bad_auctions)
     Demanded_Quantity_Items = remove_bad_auctions(Demanded_Quantity_Items, Invalid_Auction_Lot_Index, number_of_bad_auctions)
