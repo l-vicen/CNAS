@@ -91,7 +91,7 @@ def solve_auction():
             for i in range(length_cross_product):
                 key = pair_cross_products[i]
                 if key not in Suppliers_Production_Cost:
-                    Suppliers_Capacity[key] = 0
+                    Suppliers_Production_Cost[key] = 0
 
             # st.markdown("##### Suppliers' Production Costs per Item")
             for key, value in Suppliers_Production_Cost.items():
