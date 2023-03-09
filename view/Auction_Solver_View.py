@@ -119,8 +119,10 @@ def solve_auction():
 
             # building Bilevel Program
             number_auctioned_items = len(list_auction_items)
-            Utility = [random.uniform(100, 200)[i] for i in range(number_auctioned_items)]
-
+            Utility = []
+            for i in range(number_auctioned_items):
+                Utility.append(random.uniform(100, 200))
+    
             btn_apply_bilevel = st.button("Apply Bilevel Solver")
             st.markdown("---")
             if (btn_apply_bilevel):
