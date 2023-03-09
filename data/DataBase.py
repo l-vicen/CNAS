@@ -106,8 +106,12 @@ def post_db(auction_id, auction_summary, auction_items, auction_history):
     lots = len(Auction_Lot_Summary)
     Invalid_Auction_Lot_Index = [i for i in range(lots) if Auction_Situation[i] != "homologado"]
     number_of_bad_auctions = len(Invalid_Auction_Lot_Index)
+    st.write(number_of_bad_auctions)
 
+    st.write(Items_Auctioned)
     Items_Auctioned = remove_bad_auctions(Items_Auctioned, Invalid_Auction_Lot_Index, number_of_bad_auctions)
+    st.write(Items_Auctioned)
+
     Demanded_Quantity_Items = remove_bad_auctions(Demanded_Quantity_Items, Invalid_Auction_Lot_Index, number_of_bad_auctions)
     Estimated_Price_Items = remove_bad_auctions(Estimated_Price_Items, Invalid_Auction_Lot_Index, number_of_bad_auctions)
     Auction_Lot_Summary = remove_bad_auctions(Auction_Lot_Summary, Invalid_Auction_Lot_Index, number_of_bad_auctions)
@@ -183,4 +187,5 @@ def parse_auction_lot(auction_lot, auction_lot_item, smallest_bid):
 def remove_bad_auctions(original_list, bad_elements_list, number_bad_elements):
     for i in range(number_bad_elements):
         original_list.pop(bad_elements_list[i])
+
     return original_list
