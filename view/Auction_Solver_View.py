@@ -49,7 +49,8 @@ def solve_auction():
         # Observed Combinations (Supplier & Items)
         Supplies_Item_Pair_List = [(str(list_auction_lots[i].get("Participating_Suppliers")[j]), str(list_auction_lots[i].get("Lot_Item"))) for i in range(auction_lots) for j in range(len(list_auction_lots[i].get("Participating_Suppliers")))]
         
-        # Building DICT: {(Supp, Item), Supply_Capacity}
+        ''' PART: Building DICTIONARY {(Supp, Item), Supply_Capacity} for Model '''
+
         length_cross_product = len(pair_cross_products)
         length_supp_with_capacity_list = len(Supplies_Item_Pair_List)
         Suppliers_Capacity = {Supplies_Item_Pair_List[i] : (Demand.get(Supplies_Item_Pair_List[i][1]) if Supplies_Item_Pair_List[i][1] in Demand else 0) for i in range(length_supp_with_capacity_list)}
@@ -59,16 +60,18 @@ def solve_auction():
             key = pair_cross_products[i]
             if key not in Suppliers_Capacity:
                 Suppliers_Capacity[key] = 0
-                
+
+        ''' PART: Building DICTIONARY {(Supp, Item), Production_Cost_per_Supplier_per_Item} for Model '''
         st.markdown("### Input Section")
         percentage_cost_multiplier = st.number_input("Enter COGS Multiplier")
+
         if (percentage_cost_multiplier):
             
             # Building DICT: {(Supp, Item), Production_Cost}
             Suppliers_Production_Cost = {}
             for i in range(length_supp_with_capacity_list):
 
-                key = str(Supplies_Item_Pair_List[i])
+                key = Supplies_Item_Pair_List[i]
 
                 for j in range(auction_lots):
 
@@ -77,7 +80,6 @@ def solve_auction():
                     lot_item = list_auction_lots[j]["Lot_Item"]
 
                     for k in range(number_of_supplier_in_this_lot):
-
                         if (key[0] == str(lot_supplier[k]) and key[1] == str(lot_item)):
                             value = percentage_cost_multiplier * float(list_auction_lots[j]["History_Bids_Lot"][k][0])
                             Suppliers_Production_Cost[key] = value
@@ -87,6 +89,7 @@ def solve_auction():
                 key = pair_cross_products[i]
                 if key not in Suppliers_Production_Cost:
                     Suppliers_Production_Cost[key] = 0
+            ''' ---------------------------------------------------------------------------------------- '''
 
             # Building Bilevel Program
             number_auctioned_items = len(list_auction_items)
