@@ -147,18 +147,12 @@ def parse_auction_lot(auction_lot, auction_lot_item, smallest_bid):
     #  Creating a list with all participating suppliers
     Participating_Suppliers = [auction_lot_history[i]["nu_cpfcnpj_fornecedor"] for i in range(number_bids_in_lot)]
     number_suppliers = len(Participating_Suppliers)
-    # st.write("Participating Suppliers")
-    # st.write(Participating_Suppliers)
 
     # Creates a list with the history bids of the respective supplier
     item_bid_history_2D_list = [[auction_lot_history[i]["vl_global"] for i in range(number_bids_in_lot) if (auction_lot_history[i]["nu_cpfcnpj_fornecedor"] == Participating_Suppliers[j])] for j in range(number_suppliers)]
-    # st.write("Bid History of Every Supplier")
-    # st.write(item_bid_history_2D_list)
 
     # Creates a list with the history dates of the bids of the respective supplier
     item_date_history_2D_list = [[auction_lot_history[i]["dtRegistro"] for i in range(number_bids_in_lot) if (auction_lot_history[i]["nu_cpfcnpj_fornecedor"] == Participating_Suppliers[j])] for j in range(number_suppliers)]
-    # st.write("Dates of bids of every Supplier")
-    # st.write(item_date_history_2D_list)
 
     # TODO: Review this part
     winner_supplier = None
@@ -178,10 +172,10 @@ def parse_auction_lot(auction_lot, auction_lot_item, smallest_bid):
         "Winning_Bid": smallest_bid,
         "Winner_Supplier": winner_supplier
     }
-    # st.write(dictionary_lot_summary)
 
     return dictionary_lot_summary
 
+""" Helper method to clear elements that are invalid from list """
 def remove_bad_auctions(original_list, bad_elements_list, number_bad_elements):
     for i in range(number_bad_elements):
         original_list.pop(bad_elements_list[i])
