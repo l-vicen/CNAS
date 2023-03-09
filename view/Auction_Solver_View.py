@@ -52,7 +52,6 @@ def solve_auction():
 
         # Cross Product (all combinations (Supplier & Items))
         pair_cross_products = list(itertools.product(Participating_Supplier, list_auction_items))
-        st.write(pair_cross_products)
  
         # Observed Combinations (Supplier & Items)
         Supplies_Item_Pair_List = [(str(list_auction_lots[i].get("Participating_Suppliers")[j]), str(list_auction_lots[i].get("Lot_Item"))) for i in range(auction_lots) for j in range(len(list_auction_lots[i].get("Participating_Suppliers")))]
@@ -68,11 +67,9 @@ def solve_auction():
             if key not in Suppliers_Capacity:
                 Suppliers_Capacity[key] = 0
 
-        # for key, value in Suppli  ers_Capacity.items():
-        #     st.write(key)
-        #     st.write(value)
-
-        # Adding missing pairs from cross product
+        for key, value in Suppliers_Capacity.items():
+            st.write(key)
+            st.write(value)
                 
         st.markdown("### Input Section")
         percentage_cost_multiplier = st.number_input("Enter COGS Multiplier")
