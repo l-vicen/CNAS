@@ -62,11 +62,6 @@ def solve_auction():
         # st.write("##### Pair of (Supplier, Item)")
         # st.write(Supplies_Item_Pair_List)
 
-        # Building list of tuples [(Supplier, Item)]
-        tuple_supp_item_list = sl.parse_two_lists_into_one_tuple_list(Participating_Supplier, list_auction_items)
-        # st.markdown("##### Tuple List")
-        # st.write(tuple_supp_item_list)
-
         # Building DICT: {Item, Demand}
         Demand = sl.parse_to_dictionary_format(list_auction_items, list_demand_items)
         # st.markdown("##### Auctioneer's Demand per Item")
@@ -75,7 +70,11 @@ def solve_auction():
 
         # Building DICT: {(Supp, Item), Supply_Capacity}
         length_supp_items = len(pair_cross_products)
-        Suppliers_Capacity = {(str(pair_cross_products[i][0]), str(pair_cross_products[i][1])) : (Demand.get(Supplies_Item_Pair_List[i][1]) if Supplies_Item_Pair_List[i][1] in Demand else 0) for i in range(length_supp_items)}
+        length_supp_with_capacity_list = len(Supplies_Item_Pair_List)
+        # Suppliers_Capacity = {}
+        # for i in 
+
+        Suppliers_Capacity = {(pair_cross_products[i][0], pair_cross_products[i][1]) : (Demand.get(Supplies_Item_Pair_List[j][1]) if Supplies_Item_Pair_List[j][1] in Demand else 0) for i in range(pair_cross_products) for j in range(length_supp_with_capacity_list)}
         
         st.markdown("##### Suppliers' Capacity")
         for key, value in Suppliers_Capacity.items():
