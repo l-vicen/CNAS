@@ -14,6 +14,7 @@ GOOGLE_SHEET_COLUMNS = ['Auction_Id',
                         'Total_Estimated_Price',
                         'Total_Homologated_Price',
                         'Number_Items_Auctioned',
+                        'Number_Valid_Items_Auctioned',
                         'Items_Auctioned',
                         'Demanded_Quantity_Items',
                         'Estimated_Price_Items',
@@ -101,26 +102,24 @@ def post_db(auction_id, auction_summary, auction_items, auction_history):
     # Removing Auctions whose outcomes are not determined (No winners) <The cause can be different>.
     lots = len(Winning_Bids)
     Invalid_Auction_Lot_Index = [i for i in range(lots) if Winning_Bids[i] == -1]
-    st.write(Invalid_Auction_Lot_Index)
     number_of_bad_auctions = len(Invalid_Auction_Lot_Index)
-    st.write(number_of_bad_auctions)
 
-    st.write(Winning_Bids)
-    st.write(Items_Auctioned)
     Items_Auctioned = remove_bad_auctions(Items_Auctioned, Invalid_Auction_Lot_Index, number_of_bad_auctions)
-    st.write(Items_Auctioned)
-
     Demanded_Quantity_Items = remove_bad_auctions(Demanded_Quantity_Items, Invalid_Auction_Lot_Index, number_of_bad_auctions)
     Estimated_Price_Items = remove_bad_auctions(Estimated_Price_Items, Invalid_Auction_Lot_Index, number_of_bad_auctions)
     Auction_Lot_Summary = remove_bad_auctions(Auction_Lot_Summary, Invalid_Auction_Lot_Index, number_of_bad_auctions)
     Winning_Bids = remove_bad_auctions(Winning_Bids, Invalid_Auction_Lot_Index, number_of_bad_auctions)
 
+    number_valid_auction_lots = len(Items_Auctioned)
+
+    # Query: Inserting values into data set
     query = f'INSERT INTO "{SHEET_URL}" VALUES ("{auction_id}",\
                                                 "{auction_summary["dtInicioProposta"]}",\
                                                 "{auction_summary["dtFimProposta"]}",\
                                                 "{auction_summary["valorEstimadoTotal"]}",\
                                                 "{auction_summary["valorHomologadoTotal"]}",\
                                                 "{auction_items["count"]}",\
+                                                "{number_valid_auction_lots}",\
                                                 "{Items_Auctioned}",\
                                                 "{Demanded_Quantity_Items}",\
                                                 "{Estimated_Price_Items}",\
