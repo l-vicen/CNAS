@@ -34,11 +34,11 @@ def solve_auction():
 
         # Getting list of expected prices per item  [NUMERIC LIST: float]
         list_budget_items = sl.get_cell_as_list(text_input, dataframe, "Estimated_Price_Items", 0)
-        st.write(list_budget_items)
+        # st.write(list_budget_items)
 
         # Building DICT: {Item, Budget}
         Budget = sl.parse_to_dictionary_format(list_auction_items, list_budget_items)
-        st.write(Budget)
+        # st.write(Budget)
 
         # Getting list of auction lots
         list_auction_lots = sl.get_cell_as_list_of_dict(text_input, dataframe)
@@ -47,16 +47,14 @@ def solve_auction():
         auction_lots = len(list_auction_lots)
         Participating_Supplier = [str(supp) for i in range(auction_lots) for supp in list_auction_lots[i]["Participating_Suppliers"]]
         Participating_Supplier = list(OrderedDict.fromkeys(Participating_Supplier))
+        st.write(Participating_Supplier)
 
         # Cross Product (all combinations (Supplier & Items))
         pair_cross_products = list(itertools.product(Participating_Supplier, list_auction_items))
  
         # Observed Combinations (Supplier & Items)
         Supplies_Item_Pair_List = [(str(list_auction_lots[i].get("Participating_Suppliers")[j]), str(list_auction_lots[i].get("Lot_Item"))) for i in range(auction_lots) for j in range(len(list_auction_lots[i].get("Participating_Suppliers")))]
-        for i in range(len(Supplies_Item_Pair_List)):
-            st.write(Supplies_Item_Pair_List[i][0])
-            st.write(Supplies_Item_Pair_List[i][1])
-
+    
         # Building DICT: {(Supp, Item), Supply_Capacity}
         length_cross_product = len(pair_cross_products)
         length_supp_with_capacity_list = len(Supplies_Item_Pair_List)
