@@ -20,53 +20,46 @@ def solve_auction():
 
     if (text_input):
 
-        # Getting list of auctioned items [TEXTUAL LIST: str]
-        list_auction_items = sl.get_cell_as_list(text_input, dataframe, "Items_Auctioned", 1)
-        # st.write(list_auction_items)
+        # Getting list of auctioned items
+        list_auction_items = sl.get_cell_as_list(text_input, dataframe, "Items_Auctioned")
 
-        # Getting list of demands for items [NUMERIC LIST: int]
-        list_demand_items = sl.get_cell_as_list(text_input, dataframe, "Demanded_Quantity_Items", 0)
-        # st.write(list_demand_items)
+        # Getting list of demands for items
+        list_demand_items = sl.get_cell_as_list(text_input, dataframe, "Demanded_Quantity_Items")
 
         # Building DICT: {Item, Demand}
         Demand = sl.parse_to_dictionary_format(list_auction_items, list_demand_items)
-        # st.write(Demand)
 
-        # Getting list of expected prices per item  [NUMERIC LIST: float]
-        list_budget_items = sl.get_cell_as_list(text_input, dataframe, "Estimated_Price_Items", 0)
-        # st.write(list_budget_items)
+        # Getting list of expected prices per item
+        list_budget_items = sl.get_cell_as_list(text_input, dataframe, "Estimated_Price_Items")
 
-        # Building DICT: {Item, Budget} [str : float]
+        # Building DICT: {Item, Budget}
         Budget = sl.parse_to_dictionary_format(list_auction_items, list_budget_items)
-        # st.write(Budget)
 
-        # Getting list of auction lots 
+        # Getting list of auction lots
         list_auction_lots = sl.get_cell_as_list_of_dict(text_input, dataframe)
-        # st.write(list_auction_lots)
 
         # Building list of participating suppliers
         auction_lots = len(list_auction_lots)
         Participating_Supplier = [str(supp) for i in range(auction_lots) for supp in list_auction_lots[i]["Participating_Suppliers"]]
         Participating_Supplier = list(OrderedDict.fromkeys(Participating_Supplier))
-        # st.write(Participating_Supplier)
 
         # Cross Product (all combinations (Supplier & Items))
-        pair_cross_products = list(itertools.product(Participating_Supplier, [str(i) for i in list_auction_items]))
+        pair_cross_products = list(itertools.product(Participating_Supplier, list_auction_items))
  
         # Observed Combinations (Supplier & Items)
         Supplies_Item_Pair_List = [(str(list_auction_lots[i].get("Participating_Suppliers")[j]), str(list_auction_lots[i].get("Lot_Item"))) for i in range(auction_lots) for j in range(len(list_auction_lots[i].get("Participating_Suppliers")))]
-    
+        
         # Building DICT: {(Supp, Item), Supply_Capacity}
         length_cross_product = len(pair_cross_products)
         length_supp_with_capacity_list = len(Supplies_Item_Pair_List)
-        Suppliers_Capacity = {(str(Supplies_Item_Pair_List[i][0]), str(Supplies_Item_Pair_List[i][1])) : (Demand.get(Supplies_Item_Pair_List[i][1]) if Supplies_Item_Pair_List[i][1] in Demand else 0) for i in range(length_supp_with_capacity_list)}
+        Suppliers_Capacity = {Supplies_Item_Pair_List[i] : (Demand.get(Supplies_Item_Pair_List[i][1]) if Supplies_Item_Pair_List[i][1] in Demand else 0) for i in range(length_supp_with_capacity_list)}
 
         # Adding missing pairs from cross product
         for i in range(length_cross_product):
-            key = (str(pair_cross_products[i][0]), str(pair_cross_products[i][1]))
+            key = pair_cross_products[i]
             if key not in Suppliers_Capacity:
                 Suppliers_Capacity[key] = 0
-
+                
         st.markdown("### Input Section")
         percentage_cost_multiplier = st.number_input("Enter COGS Multiplier")
         if (percentage_cost_multiplier):
@@ -75,7 +68,7 @@ def solve_auction():
             Suppliers_Production_Cost = {}
             for i in range(length_supp_with_capacity_list):
 
-                key = (str(Supplies_Item_Pair_List[i][0]), str(Supplies_Item_Pair_List[i][1]))
+                key = str(Supplies_Item_Pair_List[i])
 
                 for j in range(auction_lots):
 
@@ -85,17 +78,15 @@ def solve_auction():
 
                     for k in range(number_of_supplier_in_this_lot):
 
-                        if (key[0] == str(lot_supplier[k]) and key[1] == str(lot_item)):
+                        if (key[0] == lot_supplier[k] and key[1] == lot_item):
                             value = percentage_cost_multiplier * float(list_auction_lots[j]["History_Bids_Lot"][k][0])
                             Suppliers_Production_Cost[key] = value
             
             # Adding missing pairs from cross product
             for i in range(length_cross_product):
-                key = (str(pair_cross_products[i][0]), str(pair_cross_products[i][1]))
+                key = pair_cross_products[i]
                 if key not in Suppliers_Production_Cost:
                     Suppliers_Production_Cost[key] = 0
-                    
-            st.write(len(Suppliers_Production_Cost))
 
             # Building Bilevel Program
             number_auctioned_items = len(list_auction_items)
