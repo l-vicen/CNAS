@@ -119,15 +119,16 @@ def solve_auction():
 
             # building Bilevel Program
             number_auctioned_items = len(list_auction_items)
-            Utility = []
+            utility_list = []
             for i in range(number_auctioned_items):
-                Utility.append(random.uniform(100, 200))
+                utility_list.append(random.uniform(100, 200))
+
+            Utility = sl.parse_to_dictionary_format(list_auction_items, utility_list)
     
             btn_apply_bilevel = st.button("Apply Bilevel Solver")
             st.markdown("---")
             if (btn_apply_bilevel):
                 bls.build_model(list_auction_items, Participating_Supplier, Demand, Utility, Suppliers_Capacity, Budget, Suppliers_Production_Cost)
-
             
             # Getting User Input
             # collect_numbers = lambda x : [int(i) for i in re.split("[^0-9]", x) if i != ""]
