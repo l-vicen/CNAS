@@ -2,7 +2,7 @@ import ast
 
 """ Returns the cell value as a list in a targeted column based on the auction id."""
 def get_cell_as_list(auction_id, dataframe, column):
-    string_items = dataframe.loc[dataframe["Auction_Id"] == auction_id, column]
+    string_items = dataframe.loc[dataframe["Auction_Id"] == auction_id, column][0]
     return ast.literal_eval(string_items)
 
 """ Returns the cell value as a list of dictionaries in the column {"Auction_Lot_Summary"} based on the auction id."""
