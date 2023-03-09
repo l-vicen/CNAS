@@ -13,7 +13,10 @@ def get_cell_as_list_of_dict(auction_id, dataframe):
     cell_value = cell_value.replace("[{", "{")
     cell_value = cell_value.replace("}]", "}")
     cell_value = cell_value.replace(", {", "**&** {")
-    return [ast.literal_eval(x) for x in cell_value.split("**&** ")]
+    list_auction_lots = [ast.literal_eval(x) for x in cell_value.split("**&** ")]
+    for auction_lot in list_auction_lots:
+        auction_lot["Lot_Item"] = " ".join(auction_lot["Lot_Item"].split()).lower()
+    return list_auction_lots
 
 """ Parser helper method to construct dictionary """
 def parse_to_dictionary_format(auctioned_items, numeric_value_list):
