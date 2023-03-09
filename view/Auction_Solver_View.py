@@ -64,6 +64,8 @@ def solve_auction():
         st.markdown("### Input Section")
         percentage_cost_multiplier = st.number_input("Enter COGS Multiplier")
 
+        st.write(pair_cross_products)
+
         if (percentage_cost_multiplier):
             
             # Building DICT: {(Supp, Item), Production_Cost}
