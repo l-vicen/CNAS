@@ -101,12 +101,13 @@ def post_db(auction_id, auction_summary, auction_items, auction_history):
     # Removing Auctions whose outcomes are not determined (No winners) <The cause can be different>.
     lots = len(Winning_Bids)
     Invalid_Auction_Lot_Index = [i for i in range(lots) if Winning_Bids[i] == -1]
+    number_of_bad_auctions = len(Invalid_Auction_Lot_Index)
 
-    for i in range(len(Invalid_Auction_Lot_Index)):
-        Items_Auctioned.pop(Invalid_Auction_Lot_Index[i])
-        Demanded_Quantity_Items.pop(Invalid_Auction_Lot_Index[i])
-        Estimated_Price_Items.pop(Invalid_Auction_Lot_Index[i])
-        Auction_Lot_Summary.pop(Invalid_Auction_Lot_Index[i])
+    Items_Auctioned = remove_bad_auctions(Items_Auctioned, Invalid_Auction_Lot_Index, number_of_bad_auctions)
+    Demanded_Quantity_Items = remove_bad_auctions(Demanded_Quantity_Items, Invalid_Auction_Lot_Index, number_of_bad_auctions)
+    Estimated_Price_Items = remove_bad_auctions(Estimated_Price_Items, Invalid_Auction_Lot_Index, number_of_bad_auctions)
+    Auction_Lot_Summary = remove_bad_auctions(Auction_Lot_Summary, Invalid_Auction_Lot_Index, number_of_bad_auctions)
+    Winning_Bids = remove_bad_auctions(Winning_Bids, Invalid_Auction_Lot_Index, number_of_bad_auctions)
 
     query = f'INSERT INTO "{SHEET_URL}" VALUES ("{auction_id}",\
                                                 "{auction_summary["dtInicioProposta"]}",\
@@ -169,3 +170,6 @@ def parse_auction_lot(auction_lot, auction_lot_item, smallest_bid):
     # st.write(dictionary_lot_summary)
 
     return dictionary_lot_summary
+
+def remove_bad_auctions(original_list, bad_elements_list, number_bad_elements):
+    return [original_list.pop(bad_elements_list[i]) for i in range(number_bad_elements)]
