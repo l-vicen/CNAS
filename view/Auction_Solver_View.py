@@ -21,9 +21,9 @@ def solve_auction():
 
     if (text_input):
         # Getting list of auctioned items
-        items_auctioned = sl.get_cell_as_list(text_input, dataframe, "Items_Auctioned")
+        Items_auctioned = sl.get_cell_as_list(text_input, dataframe, "Items_auctioned")
         # st.markdown("#### Auctioned Items")
-        # st.write(items_auctioned)
+        # st.write(Items_auctioned)
         # st.markdown("---")
 
         # Getting list of demands for items
@@ -35,11 +35,6 @@ def solve_auction():
         list_budget_items = sl.get_cell_as_list(text_input, dataframe, "Estimated_Price_Items")
         # st.write("#### Budget Items")
         # st.write(list_budget_items)
-
-        # Getting list of winner bids per item
-        list_winner_bids = sl.get_cell_as_list(text_input, dataframe, "Winning_Bids")
-        # st.write("#### Winner Items")
-        # st.write(list_winner_bids)
 
         # Getting list of auction lots
         list_auction_lots = sl.get_cell_as_list_of_dict(text_input, dataframe)
@@ -53,22 +48,26 @@ def solve_auction():
         # st.write(Participating_Supplier)
         # st.markdown("---")
 
-        pair_cross_products = list(itertools.product(Participating_Supplier, items_auctioned))
-        st.markdown("#### Pairs Supplier | Item")
+        # Building Cross Product
+        pair_cross_products = list(itertools.product(Participating_Supplier, Items_auctioned))
+        st.markdown("#### Cross Product Supplier | Item")
         st.write(pair_cross_products)
+        st.markdown("---")
 
         # Building DICT: {TUPLE, Capacity}
         Supplies_Item_Pair_List = [(str(list_auction_lots[i].get("Participating_Suppliers")[j]), list_auction_lots[i].get("Lot_Item")) for i in range(auction_lots) for j in range(len(list_auction_lots[i].get("Participating_Suppliers")))]
-        # st.write(##### Pair of (Supplier, Item))
-        # st.write(Supplies_Item_Pair_List)
+        st.write("##### Pair of (Supplier, Item)")
+        st.write(Supplies_Item_Pair_List)
+        st.markdown("---")
 
+    
         # Building list of tuples [(Supplier, Item)]
-        tuple_supp_item_list = sl.parse_two_lists_into_one_tuple_list(Participating_Supplier, items_auctioned)
+        tuple_supp_item_list = sl.parse_two_lists_into_one_tuple_list(Participating_Supplier, Items_auctioned)
         # st.markdown("##### Tuple List")
         # st.write(tuple_supp_item_list)
 
         # Building DICT: {Item, Demand}
-        Demand = sl.parse_to_dictionary_format(items_auctioned, list_demand_items)
+        Demand = sl.parse_to_dictionary_format(Items_auctioned, list_demand_items)
         # st.markdown("##### Auctioneer's Demand per Item")
         # st.write(Demand)
         # st.markdown("---")
@@ -84,7 +83,7 @@ def solve_auction():
         # st.markdown("---")
 
         # Building DICT: {Item, Budget}
-        Budget = sl.parse_to_dictionary_format(items_auctioned, list_budget_items)
+        Budget = sl.parse_to_dictionary_format(Items_auctioned, list_budget_items)
         # st.markdown("##### Auctioneer's Budget per Item")
         # st.write(Budget)
         # st.markdown("---")
@@ -123,17 +122,17 @@ def solve_auction():
 
 
             # building Bilevel Program
-            number_auctioned_items = len(items_auctioned)
+            number_auctioned_items = len(Items_auctioned)
             utility_list = []
             for i in range(number_auctioned_items):
                 utility_list.append(random.uniform(100, 200))
 
-            Utility = sl.parse_to_dictionary_format(items_auctioned, utility_list)
+            Utility = sl.parse_to_dictionary_format(Items_auctioned, utility_list)
     
             btn_apply_bilevel = st.button("Apply Bilevel Solver")
             st.markdown("---")
             if (btn_apply_bilevel):
-                bls.build_model(items_auctioned, Participating_Supplier, Demand, Utility, Suppliers_Capacity, Budget, Suppliers_Production_Cost)
+                bls.build_model(Items_auctioned, Participating_Supplier, Demand, Utility, Suppliers_Capacity, Budget, Suppliers_Production_Cost)
             
             # Getting User Input
             # collect_numbers = lambda x : [int(i) for i in re.split("[^0-9]", x) if i != ""]
@@ -141,7 +140,7 @@ def solve_auction():
             # utility_list = collect_numbers(utility_input_list)
 
             # if (utility_input_list):
-            #     Utility = sl.parse_to_dictionary_format(items_auctioned, utility_list)
+            #     Utility = sl.parse_to_dictionary_format(Items_auctioned, utility_list)
                 # st.markdown("#### Auctioneer's perceived Utility per Item")
                 # st.write(Utility)
                 # st.markdown("---")
@@ -150,4 +149,4 @@ def solve_auction():
                 # btn_apply_bilevel = st.button("Apply Bilevel Solver")
                 # st.markdown("---")
                 # if (btn_apply_bilevel):
-                #     bls.build_model(items_auctioned, Participating_Supplier, Demand, Utility, Suppliers_Capacity, Budget, Suppliers_Production_Cost)
+                #     bls.build_model(Items_auctioned, Participating_Supplier, Demand, Utility, Suppliers_Capacity, Budget, Suppliers_Production_Cost)
