@@ -21,9 +21,9 @@ def solve_auction():
 
     if (text_input):
         # Getting list of auctioned items
-        list_auction_items = sl.get_cell_as_list(text_input, dataframe, "Items_Auctioned")
+        items_auctioned = sl.get_cell_as_list(text_input, dataframe, "Items_Auctioned")
         # st.markdown("#### Auctioned Items")
-        # st.write(list_auction_items)
+        # st.write(items_auctioned)
         # st.markdown("---")
 
         # Getting list of demands for items
@@ -53,7 +53,7 @@ def solve_auction():
         # st.write(Participating_Supplier)
         # st.markdown("---")
 
-        pair_cross_products = list(itertools.product(Participating_Supplier, list_auction_items))
+        pair_cross_products = list(itertools.product(Participating_Supplier, items_auctioned))
         st.markdown("#### Pairs Supplier | Item")
         st.write(pair_cross_products)
 
@@ -63,12 +63,12 @@ def solve_auction():
         # st.write(Supplies_Item_Pair_List)
 
         # Building list of tuples [(Supplier, Item)]
-        tuple_supp_item_list = sl.parse_two_lists_into_one_tuple_list(Participating_Supplier, list_auction_items)
+        tuple_supp_item_list = sl.parse_two_lists_into_one_tuple_list(Participating_Supplier, items_auctioned)
         # st.markdown("##### Tuple List")
         # st.write(tuple_supp_item_list)
 
         # Building DICT: {Item, Demand}
-        Demand = sl.parse_to_dictionary_format(list_auction_items, list_demand_items)
+        Demand = sl.parse_to_dictionary_format(items_auctioned, list_demand_items)
         # st.markdown("##### Auctioneer's Demand per Item")
         # st.write(Demand)
         # st.markdown("---")
@@ -84,7 +84,7 @@ def solve_auction():
         # st.markdown("---")
 
         # Building DICT: {Item, Budget}
-        Budget = sl.parse_to_dictionary_format(list_auction_items, list_budget_items)
+        Budget = sl.parse_to_dictionary_format(items_auctioned, list_budget_items)
         # st.markdown("##### Auctioneer's Budget per Item")
         # st.write(Budget)
         # st.markdown("---")
@@ -123,17 +123,17 @@ def solve_auction():
 
 
             # building Bilevel Program
-            number_auctioned_items = len(list_auction_items)
+            number_auctioned_items = len(items_auctioned)
             utility_list = []
             for i in range(number_auctioned_items):
                 utility_list.append(random.uniform(100, 200))
 
-            Utility = sl.parse_to_dictionary_format(list_auction_items, utility_list)
+            Utility = sl.parse_to_dictionary_format(items_auctioned, utility_list)
     
             btn_apply_bilevel = st.button("Apply Bilevel Solver")
             st.markdown("---")
             if (btn_apply_bilevel):
-                bls.build_model(list_auction_items, Participating_Supplier, Demand, Utility, Suppliers_Capacity, Budget, Suppliers_Production_Cost)
+                bls.build_model(items_auctioned, Participating_Supplier, Demand, Utility, Suppliers_Capacity, Budget, Suppliers_Production_Cost)
             
             # Getting User Input
             # collect_numbers = lambda x : [int(i) for i in re.split("[^0-9]", x) if i != ""]
@@ -141,7 +141,7 @@ def solve_auction():
             # utility_list = collect_numbers(utility_input_list)
 
             # if (utility_input_list):
-            #     Utility = sl.parse_to_dictionary_format(list_auction_items, utility_list)
+            #     Utility = sl.parse_to_dictionary_format(items_auctioned, utility_list)
                 # st.markdown("#### Auctioneer's perceived Utility per Item")
                 # st.write(Utility)
                 # st.markdown("---")
@@ -150,4 +150,4 @@ def solve_auction():
                 # btn_apply_bilevel = st.button("Apply Bilevel Solver")
                 # st.markdown("---")
                 # if (btn_apply_bilevel):
-                #     bls.build_model(list_auction_items, Participating_Supplier, Demand, Utility, Suppliers_Capacity, Budget, Suppliers_Production_Cost)
+                #     bls.build_model(items_auctioned, Participating_Supplier, Demand, Utility, Suppliers_Capacity, Budget, Suppliers_Production_Cost)
