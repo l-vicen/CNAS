@@ -47,10 +47,10 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
     model.j := Set of auction participating suppliers.
     '''
     model.i = Set(initialize=set_items, doc='Auctioned_Items')
-    # print_into_streamlit("Auctioned Items", model.i)
+    print_into_streamlit("Auctioned Items", model.i)
 
     model.j = Set(initialize=set_suppliers, doc='Auction_Participating_Suppliers')
-    # print_into_streamlit("Participating Suppliers in Auction", model.j)
+    print_into_streamlit("Participating Suppliers in Auction", model.j)
 
     ''' Upper-level decision variable 
     model.X := Binary variable, equal to 1 if quotation for item i is allocated to supplier j ; 0
@@ -73,44 +73,45 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
     model.production_costs := the production cost of item i if produced by supplier j.
     '''
     model.Demand = Param(model.i, initialize= demand_dictionary, doc='Auctioneer\'s_Demand_per_Item')
-    # print_into_streamlit("Auctioneer's Demand per Item", model.Demand)
+    print_into_streamlit("Auctioneer's Demand per Item", model.Demand)
 
     model.Utility = Param(model.i, initialize= utility_dictionary, doc='Auctioneer\'s_Perceived_Utility_per_Item')
-    # print_into_streamlit("Auctioneer's Perceived Utility per Item",  model.Utility)
+    print_into_streamlit("Auctioneer's Perceived Utility per Item",  model.Utility)
 
     model.Supply_capacity = Param(model.j, model.i, initialize= supplier_capacity_dictionary, doc='Suppliers\'_individual_Supply_Capacity_per_Item')
-    # print_into_streamlit("Suppliers\' individual Supply Capacity per Item",   model.Supply_capacity)
+    print_into_streamlit("Suppliers\' individual Supply Capacity per Item",   model.Supply_capacity)
 
     model.L.Budget = Param(model.i, initialize= budget_dictionary, doc='Auctioneer\'s_expected_Expense_per_Items')
-    # print_into_streamlit("Auctioneer's expected Expense per Items",  model.L.Budget)
+    print_into_streamlit("Auctioneer's expected Expense per Items",  model.L.Budget)
 
     model.L.Production_Costs = Param(model.j, model.i, initialize = production_costs_dictionary , doc='Suppliers\'_individual_Production_Cost_per_Item')
-    # print_into_streamlit("Suppliers\' individual Production Cost per Item",  model.L.Production_Costs)
+    print_into_streamlit("Suppliers\' individual Production Cost per Item",  model.L.Production_Costs)
 
     # Objective function assignments
     model.o = Objective(rule=auction_objective_function(model), sense=maximize, doc='Auction_Problem') # Upper-level 
-    # print_into_streamlit("Upper-level Objective Function",  model.o)
+    print_into_streamlit("Upper-level Objective Function",  model.o)
 
     model.L.o = Objective(rule= pricing_objective_function(model.L, model), sense=maximize, doc='Pricing_Problem') # Lower-level
-    # print_into_streamlit("Lower-level Objective Function",  model.L.o)
+    print_into_streamlit("Lower-level Objective Function",  model.L.o)
 
     # Upper-level constraint assignments
     model.SingleSourcingConstraint = Constraint(model.i, rule=single_sourcing_constraint, doc='There_is_at_most_1_winner')
-    # print_into_streamlit("Single Sourcing Constraint",  model.SingleSourcingConstraint)
+    print_into_streamlit("Single Sourcing Constraint",  model.SingleSourcingConstraint)
 
     model.DemandConstraint = Constraint(model.i, rule=demand_requirement_constraint, doc='Auctioneer\'s_Demand_is_fulfilled')
-    # print_into_streamlit("Demand Constraint",  model.DemandConstraint)
+    print_into_streamlit("Demand Constraint",  model.DemandConstraint)
 
     # Lower-level constraint assignment
     model.L.BidPriceBoundaryConstraint = Constraint(model.j, model.i, rule=lower_and_upper_bound_constraint, doc='Bid_Price_is_non-negative')
-    # print_into_streamlit("Bid Price Constraint",  model.L.BidPriceBoundaryConstraint)
+    print_into_streamlit("Bid Price Constraint",  model.L.BidPriceBoundaryConstraint)
 
     # Calling the Big-M Relaxation Solver
     solver = Solver('pao.pyomo.FA')
     solver.solve(model)   
 
-    with st_stdout("code"):
-        model.pprint()
+    print_into_streamlit("Auction Winners",  model.X)
+    print_into_streamlit("Price Setting Results",  model.L.P)
+    
 
 
 """ 
