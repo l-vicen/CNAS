@@ -20,4 +20,4 @@ def get_cell_as_list_of_dict(auction_id, dataframe):
 
 """ Parser helper method to construct dictionary """
 def parse_to_dictionary_format(auctioned_items, numeric_value_list):
-    return dict(zip(auctioned_items, numeric_value_list))
+    return dict(zip([str(x) for x in auctioned_items], numeric_value_list))
