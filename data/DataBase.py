@@ -105,6 +105,8 @@ def post_db(auction_id, auction_summary, auction_items, auction_history):
     number_of_bad_auctions = len(Invalid_Auction_Lot_Index)
     st.write(number_of_bad_auctions)
 
+    st.write(Winning_Bids)
+    st.write(Items_Auctioned)
     Items_Auctioned = remove_bad_auctions(Items_Auctioned, Invalid_Auction_Lot_Index, number_of_bad_auctions)
     st.write(Items_Auctioned)
 
