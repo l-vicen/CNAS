@@ -92,7 +92,7 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
     print_into_streamlit("Upper-level Objective Function",  model.o)
 
     model.L.o = Objective(rule= pricing_objective_function(model.L, model), sense=maximize, doc='Pricing_Problem') # Lower-level
-    print_into_streamlit("Lower-level Objective Function",  model.L.o )
+    print_into_streamlit("Lower-level Objective Function",  model.L.o)
 
     # Upper-level constraint assignments
     model.SingleSourcingConstraint = Constraint(model.i, rule=single_sourcing_constraint, doc='There is at most 1 winner')
@@ -146,4 +146,4 @@ def print_into_streamlit(title, model_component):
     msg = "###### {}".format(title)
     st.markdown(msg)
     with st_stdout("code"):
-        model_component.display()
+        model_component.pprint()
