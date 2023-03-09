@@ -73,26 +73,26 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
     model.production_costs := the production cost of item i if produced by supplier j.
     '''
     model.Demand = Param(model.i, initialize= demand_dictionary, doc='Auctioneer\'s_Demand_per_Item')
-    print_into_streamlit("Auctioneer's Demand per Item", model.Demand)
+    # print_into_streamlit("Auctioneer's Demand per Item", model.Demand)
 
     model.Utility = Param(model.i, initialize= utility_dictionary, doc='Auctioneer\'s_Perceived_Utility_per_Item')
-    print_into_streamlit("Auctioneer's Perceived Utility per Item",  model.Utility)
+    # print_into_streamlit("Auctioneer's Perceived Utility per Item",  model.Utility)
 
     model.Supply_capacity = Param(model.j, model.i, initialize= supplier_capacity_dictionary, doc='Suppliers\'_individual_Supply_Capacity_per_Item')
-    print_into_streamlit("Suppliers\' individual Supply Capacity per Item",   model.Supply_capacity)
+    # print_into_streamlit("Suppliers\' individual Supply Capacity per Item",   model.Supply_capacity)
 
     model.L.Budget = Param(model.i, initialize= budget_dictionary, doc='Auctioneer\'s_expected_Expense_per_Items')
-    print_into_streamlit("Auctioneer's expected Expense per Items",  model.L.Budget)
+    # print_into_streamlit("Auctioneer's expected Expense per Items",  model.L.Budget)
 
     model.L.Production_Costs = Param(model.j, model.i, initialize = production_costs_dictionary , doc='Suppliers\'_individual_Production_Cost_per_Item')
-    print_into_streamlit("Suppliers\' individual Production Cost per Item",  model.L.Production_Costs)
+    # print_into_streamlit("Suppliers\' individual Production Cost per Item",  model.L.Production_Costs)
 
     # Objective function assignments
     model.o = Objective(rule=auction_objective_function(model), sense=maximize, doc='Auction_Problem') # Upper-level 
-    print_into_streamlit("Upper-level Objective Function",  model.o)
+    # print_into_streamlit("Upper-level Objective Function",  model.o)
 
     model.L.o = Objective(rule= pricing_objective_function(model.L, model), sense=maximize, doc='Pricing_Problem') # Lower-level
-    print_into_streamlit("Lower-level Objective Function",  model.L.o)
+    # print_into_streamlit("Lower-level Objective Function",  model.L.o)
 
     # Upper-level constraint assignments
     model.SingleSourcingConstraint = Constraint(model.i, rule=single_sourcing_constraint, doc='There is at most 1 winner')

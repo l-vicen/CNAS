@@ -5,6 +5,7 @@ import data.DataBase as db
 from collections import OrderedDict
 import re
 import random
+import itertools
 
 def solve_auction():
 
@@ -52,6 +53,10 @@ def solve_auction():
         # st.write(Participating_Supplier)
         # st.markdown("---")
 
+        pair_cross_products = itertools.product(Participating_Supplier, list_auction_items)
+        st.markdown("#### Pairs Supplier | Item")
+        st.write(list_auction_items)
+
         # Building DICT: {TUPLE, Capacity}
         Supplies_Item_Pair_List = [(str(list_auction_lots[i].get("Participating_Suppliers")[j]), list_auction_lots[i].get("Lot_Item")) for i in range(auction_lots) for j in range(len(list_auction_lots[i].get("Participating_Suppliers")))]
         # st.write(##### Pair of (Supplier, Item))
@@ -70,7 +75,7 @@ def solve_auction():
 
         # Building DICT: {(Supp, Item), Supply_Capacity}
         length_supp_items = len(Supplies_Item_Pair_List)
-        Suppliers_Capacity = {(Supplies_Item_Pair_List[i][0], Supplies_Item_Pair_List[i][1]) : (Demand.get(Supplies_Item_Pair_List[i][1]) if Supplies_Item_Pair_List[i][1] in Demand else -1) for i in range(length_supp_items)}
+        Suppliers_Capacity = {(str(Supplies_Item_Pair_List[i][0]), str(Supplies_Item_Pair_List[i][1])) : (Demand.get(Supplies_Item_Pair_List[i][1]) if Supplies_Item_Pair_List[i][1] in Demand else -1) for i in range(length_supp_items)}
         
         # st.markdown("##### Suppliers' Capacity")
         # for key, value in Suppliers_Capacity.items():
