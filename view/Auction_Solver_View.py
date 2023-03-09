@@ -20,11 +20,11 @@ def solve_auction():
 
     if (text_input):
 
-        # Getting list of auctioned items
+        # Getting list of auctioned items [TEXTUAL LIST: str]
         list_auction_items = sl.get_cell_as_list(text_input, dataframe, "Items_Auctioned", 1)
         st.write(list_auction_items)
 
-        # Getting list of demands for items
+        # Getting list of demands for items [NUMERIC LIST: int]
         list_demand_items = sl.get_cell_as_list(text_input, dataframe, "Demanded_Quantity_Items", 0)
         st.write(list_demand_items)
 
@@ -32,12 +32,13 @@ def solve_auction():
         Demand = sl.parse_to_dictionary_format(list_auction_items, list_demand_items)
         st.write(Demand)
 
-        # Getting list of expected prices per item
+        # Getting list of expected prices per item  [NUMERIC LIST: float]
         list_budget_items = sl.get_cell_as_list(text_input, dataframe, "Estimated_Price_Items", 0)
         st.write(list_budget_items)
 
         # Building DICT: {Item, Budget}
         Budget = sl.parse_to_dictionary_format(list_auction_items, list_budget_items)
+        st.write(Budget)
 
         # Getting list of auction lots
         list_auction_lots = sl.get_cell_as_list_of_dict(text_input, dataframe)
