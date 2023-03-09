@@ -3,7 +3,6 @@ import model.Bilevel_Programming as bls
 import model.Solver_Parser as sl
 import data.DataBase as db
 from collections import OrderedDict
-import re
 import random
 import itertools
 

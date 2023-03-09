@@ -1,6 +1,4 @@
-import pandas as pd
 import ast
-import re
 
 """ Returns the cell value as a list in a targeted column based on the auction id."""
 def get_cell_as_list(auction_id, dataframe, column):
