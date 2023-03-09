@@ -93,7 +93,6 @@ def post_db(auction_id, auction_summary, auction_items, auction_history):
 
     # Creating a list with all auction situations (homologated, canceled, etc ....)
     Auction_Situation = [pregoes[i]["situacao_item"] for i in range(length_pregoes)]
-    st.write(Auction_Situation)
     
     """ 2nd Part: Getting data from auction_items query """
 
@@ -105,7 +104,8 @@ def post_db(auction_id, auction_summary, auction_items, auction_history):
 
     # Removing Auctions whose outcomes are not determined (No winners) <The cause can be different>.
     lots = len(Auction_Lot_Summary)
-    Invalid_Auction_Lot_Index = [i for i in range(lots) if Auction_Lot_Summary[i] != "homologado"]
+    Invalid_Auction_Lot_Index = [i for i in range(lots) if Auction_Situation[i] != "homologado"]
+    st.write(Invalid_Auction_Lot_Index)
     number_of_bad_auctions = len(Invalid_Auction_Lot_Index)
 
     Items_Auctioned = remove_bad_auctions(Items_Auctioned, Invalid_Auction_Lot_Index, number_of_bad_auctions)
