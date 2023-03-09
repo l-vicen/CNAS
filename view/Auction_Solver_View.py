@@ -67,10 +67,8 @@ def solve_auction():
             if key not in Suppliers_Capacity:
                 Suppliers_Capacity[key] = 0
 
-        for key, value in Suppliers_Capacity.items():
-            st.write(key)
-            st.write(value)
-                
+        st.write(len(Suppliers_Capacity))
+        
         st.markdown("### Input Section")
         percentage_cost_multiplier = st.number_input("Enter COGS Multiplier")
         if (percentage_cost_multiplier):
