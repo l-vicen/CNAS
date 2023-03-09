@@ -105,6 +105,7 @@ def post_db(auction_id, auction_summary, auction_items, auction_history):
     # Removing Auctions whose outcomes are not determined (No winners) <The cause can be different>.
     lots = len(Auction_Lot_Summary)
     Invalid_Auction_Lot_Index = [i for i in range(lots) if Auction_Situation[i] != "homologado"]
+    Invalid_Auction_Lot_Index = Invalid_Auction_Lot_Index.reverse()
     st.write(Invalid_Auction_Lot_Index)
 
     number_of_bad_auctions = len(Invalid_Auction_Lot_Index)
