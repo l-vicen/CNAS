@@ -51,7 +51,7 @@ def solve_auction():
         # st.write(Participating_Supplier)
 
         # Cross Product (all combinations (Supplier & Items))
-        pair_cross_products = list(itertools.product(Participating_Supplier, list_auction_items))
+        pair_cross_products = list(itertools.product(Participating_Supplier, [str(i) for i in list_auction_items]))
  
         # Observed Combinations (Supplier & Items)
         Supplies_Item_Pair_List = [(str(list_auction_lots[i].get("Participating_Suppliers")[j]), str(list_auction_lots[i].get("Lot_Item"))) for i in range(auction_lots) for j in range(len(list_auction_lots[i].get("Participating_Suppliers")))]
