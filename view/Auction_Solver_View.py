@@ -36,12 +36,13 @@ def solve_auction():
         list_budget_items = sl.get_cell_as_list(text_input, dataframe, "Estimated_Price_Items", 0)
         # st.write(list_budget_items)
 
-        # Building DICT: {Item, Budget}
+        # Building DICT: {Item, Budget} [str : float]
         Budget = sl.parse_to_dictionary_format(list_auction_items, list_budget_items)
         # st.write(Budget)
 
-        # Getting list of auction lots
+        # Getting list of auction lots 
         list_auction_lots = sl.get_cell_as_list_of_dict(text_input, dataframe)
+        list_auction_lots = [ " ".join(auction_lot["Lot_Item"].split()).lower() for auction_lot in list_auction_lots]
         st.write(list_auction_lots)
 
         # Building list of participating suppliers
