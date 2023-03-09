@@ -67,8 +67,6 @@ def solve_auction():
             if key not in Suppliers_Capacity:
                 Suppliers_Capacity[key] = 0
 
-        st.write(len(Suppliers_Capacity))
-        
         st.markdown("### Input Section")
         percentage_cost_multiplier = st.number_input("Enter COGS Multiplier")
         if (percentage_cost_multiplier):
@@ -96,6 +94,8 @@ def solve_auction():
                 key = pair_cross_products[i]
                 if key not in Suppliers_Production_Cost:
                     Suppliers_Production_Cost[key] = 0
+                    
+            st.write(len(Suppliers_Production_Cost))
 
             # Building Bilevel Program
             number_auctioned_items = len(list_auction_items)
