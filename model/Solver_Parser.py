@@ -17,10 +17,4 @@ def get_cell_as_list_of_dict(auction_id, dataframe):
 
 """ Parser helper method to construct dictionary """
 def parse_to_dictionary_format(auctioned_items, numeric_value_list):
-    auctioned_items = [str(x) for x in auctioned_items]
-    numeric_value_list = [float(x) for x in numeric_value_list]
     return dict(zip(auctioned_items, numeric_value_list))
-
-""" Parser helper method to construct a list of tuples from two lists"""
-def parse_two_lists_into_one_tuple_list(list_one, list_two):
-    return list(zip(list_one, list_two))
