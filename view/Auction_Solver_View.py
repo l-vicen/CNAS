@@ -42,7 +42,8 @@ def solve_auction():
 
         # Getting list of auction lots 
         list_auction_lots = sl.get_cell_as_list_of_dict(text_input, dataframe)
-        list_auction_lots = [ " ".join(auction_lot["Lot_Item"].split()).lower() for auction_lot in list_auction_lots]
+        for auction_lot in list_auction_lots:
+            auction_lot["Lot_Item"] = " ".join(auction_lot["Lot_Item"].split()).lower()
         st.write(list_auction_lots)
 
         # Building list of participating suppliers
