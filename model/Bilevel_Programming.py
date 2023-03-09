@@ -95,19 +95,19 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
     print_into_streamlit("Lower-level Objective Function",  model.L.o)
 
     # Upper-level constraint assignments
-    model.SingleSourcingConstraint = Constraint(model.i, rule=single_sourcing_constraint, doc='There is at most 1 winner')
+    model.SingleSourcingConstraint = Constraint(model.i, rule=single_sourcing_constraint, doc='There_is_at_most_1_winner')
     print_into_streamlit("Single Sourcing Constraint",  model.SingleSourcingConstraint)
 
-    model.DemandConstraint = Constraint(model.i, rule=demand_requirement_constraint, doc='Auctioneer demand is fulfilled')
+    model.DemandConstraint = Constraint(model.i, rule=demand_requirement_constraint, doc='Auctioneer\'s_Demand_is_fulfilled')
+    print_into_streamlit("Demand Constraint",  model.DemandConstraint)
 
     # Lower-level constraint assignment
-    model.L.DemandConstraint = Constraint(model.j, model.i, rule=lower_and_upper_bound_constraint, doc='Bid Price is non-negative')
+    model.L.BidPriceBoundaryConstraint = Constraint(model.j, model.i, rule=lower_and_upper_bound_constraint, doc='Bid_Price_is_non-negative')
+    print_into_streamlit("Bid Price Constraint",  model.L.BidPriceBoundaryConstraint)
 
     # Calling the Big-M Relaxation Solver
     solver = Solver('pao.pyomo.FA')
     solver.solve(model)   
-
-
 
     with st_stdout("code"):
         model.pprint()
