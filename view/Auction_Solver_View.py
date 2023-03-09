@@ -53,9 +53,9 @@ def solve_auction():
         # st.write(Participating_Supplier)
         # st.markdown("---")
 
-        pair_cross_products = itertools.product(Participating_Supplier, list_auction_items)
+        pair_cross_products = list(itertools.product(Participating_Supplier, list_auction_items))
         st.markdown("#### Pairs Supplier | Item")
-        st.write(list_auction_items)
+        st.write(pair_cross_products)
 
         # Building DICT: {TUPLE, Capacity}
         Supplies_Item_Pair_List = [(str(list_auction_lots[i].get("Participating_Suppliers")[j]), list_auction_lots[i].get("Lot_Item")) for i in range(auction_lots) for j in range(len(list_auction_lots[i].get("Participating_Suppliers")))]
