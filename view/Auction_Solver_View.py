@@ -83,7 +83,7 @@ def solve_auction():
                         if (key[0] == lot_supplier[k] and key[1] == lot_item):
                             value = percentage_cost_multiplier * float(list_auction_lots[j]["History_Bids_Lot"][k][0])
                         else:
-                            value = -1
+                            value = 0
 
                         Suppliers_Production_Cost[key] = value
 
