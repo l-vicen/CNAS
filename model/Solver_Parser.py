@@ -12,11 +12,14 @@ def get_cell_as_list(auction_id, dataframe, column):
 """ Returns the cell value as a list of dictionaries in the column {"Auction_Lot_Summary"} based on the auction id."""
 def get_cell_as_list_of_dict(auction_id, dataframe):
     cell_value = dataframe.loc[dataframe["Auction_Id"] == auction_id, "Auction_Lot_Summary"].iloc[0]
+    cell_value = cell_value.replace("[{", "{")
+    cell_value = cell_value.replace("}]", "}")
+    cell_value = cell_value.replace(", {", "**&** {")
     st.write(cell_value)
     # string_items = dataframe.loc[dataframe["Auction_Id"] == auction_id, "Auction_Lot_Summary"][0].replace("[{", "{").replace("}]", "}")
     # string_items = string_items.replace(", {", "**&** {")
     # return [ast.literal_eval(x) for x in string_items.split("**&** ")]
-    return None
+    return [ast.literal_eval(x) for x in cell_value.split("**&** ")]
 
 """ Parser helper method to construct dictionary """
 def parse_to_dictionary_format(auctioned_items, numeric_value_list):
