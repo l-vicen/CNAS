@@ -1,11 +1,11 @@
 import ast
 
 """ Returns the cell value as a list in a targeted column based on the auction id."""
-def get_cell_as_list(auction_id, dataframe, column):
+def get_cell_as_list(auction_id, dataframe, column, dtype):
     cell_value = dataframe.loc[dataframe["Auction_Id"] == auction_id, column].iloc[0]
     cell_value = " ".join(cell_value.split())
     cell_values_as_list = ast.literal_eval(cell_value)  
-    return [x.lower() if not x.isnumeric() else x for x in cell_values_as_list]
+    return [x.lower() for x in cell_values_as_list] if dtype == 1 else cell_values_as_list
 
 """ Returns the cell value as a list of dictionaries in the column {"Auction_Lot_Summary"} based on the auction id."""
 def get_cell_as_list_of_dict(auction_id, dataframe):
