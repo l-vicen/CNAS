@@ -115,10 +115,10 @@ def post_db(auction_id, auction_summary, auction_items, auction_history):
     remove_bad_auctions(Auction_Lot_Summary, Invalid_Auction_Lot_Index, number_of_bad_auctions)
     remove_bad_auctions(Winning_Bids, Invalid_Auction_Lot_Index, number_of_bad_auctions)
 
-    Auction_Lots_With_No_Participating_Suppliers = [i for i in range(number_auction_lots) if len(Auction_Lot_Summary[i]["Participating_Suppliers"]) == 0]
-    number_of_auctions_with_no_supplier = len(Auction_Lots_With_No_Participating_Suppliers)
-    st.write(Auction_Lots_With_No_Participating_Suppliers)
-    
+    # Auction_Lots_With_No_Participating_Suppliers = [i for i in range(number_auction_lots) if len(Auction_Lot_Summary[i]["Participating_Suppliers"]) == 0]
+    # number_of_auctions_with_no_supplier = len(Auction_Lots_With_No_Participating_Suppliers)
+    # st.write(Auction_Lots_With_No_Participating_Suppliers)
+
     # Number of actual valid auctions lot
     number_valid_auction_lots = len(Items_Auctioned)
 
