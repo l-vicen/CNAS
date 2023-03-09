@@ -79,7 +79,7 @@ def post_db(auction_id, auction_summary, auction_items, auction_history):
     length_pregoes = len(pregoes)
 
     # Creating a list with all auctioned items in the auction
-    Items_Auctioned = [pregoes[i]["descricao_item"].rstrip() for i in range(length_pregoes)]
+    Items_Auctioned = [pregoes[i]["descricao_detalhada_item"].rstrip() for i in range(length_pregoes)]
 
     # Creating a list with the demanded quantity for item
     Demanded_Quantity_Items = [int(pregoes[i]["quantidade_item"]) for i in range(length_pregoes)]
