@@ -72,7 +72,7 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
     model.supply_capacity := the quantity of item i that supplier j can procure.
     model.production_costs := the production cost of item i if produced by supplier j.
     '''
-    model.Demand = Param(model.i, initialize= demand_dictionary, doc='Auctioneer\'s_Demand_per_Item')
+    model.Demand = Param(model.i, initialize= demand_dictionary, mutable = True,doc='Auctioneer\'s_Demand_per_Item')
     print_into_streamlit("Auctioneer's Demand per Item", model.Demand)
 
     model.Utility = Param(model.i, initialize= utility_dictionary, doc='Auctioneer\'s_Perceived_Utility_per_Item')
