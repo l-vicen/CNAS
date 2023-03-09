@@ -38,9 +38,10 @@ def lower_and_upper_bound_constraint(submodel, j, i):
     return (submodel.Production_Costs[j,i], submodel.P[j,i], submodel.Budget[i])
 
 def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary, supplier_capacity_dictionary, budget_dictionary, production_costs_dictionary):
-    
-    st.write(set_items)
-    st.write(set_suppliers)
+
+    for key in production_costs_dictionary:
+        key = (str(key[0]), str(key[1]))
+        st.write(key[1])
 
     # Upper-level definition: Auction Problem
     model = ConcreteModel("Upper-level: Auction Problem")
