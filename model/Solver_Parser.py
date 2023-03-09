@@ -5,6 +5,9 @@ import streamlit as st
 def get_cell_as_list(auction_id, dataframe, column):
     # string_items = dataframe.loc[dataframe["Auction_Id"] == auction_id, column][0]
     cell_value = dataframe.loc[dataframe["Auction_Id"] == auction_id, column].iloc[0]
+    
+    msg = "#### {}".format(column)
+    st.markdown(msg)
     st.write(cell_value)
     return ast.literal_eval(cell_value)
 
