@@ -71,7 +71,7 @@ def solve_auction():
         length_cross_product = len(pair_cross_products)
         length_supp_with_capacity_list = len(Supplies_Item_Pair_List)
 
-        Suppliers_Capacity = {(pair_cross_products[i][0], pair_cross_products[i][1]) : (Demand.get(Supplies_Item_Pair_List[j][1]) if Supplies_Item_Pair_List[j][1] in Demand else 0) for j in range(length_supp_with_capacity_list) for i in range(length_cross_product)}
+        Suppliers_Capacity = {(Supplies_Item_Pair_List[i][0], Supplies_Item_Pair_List[i][1]) : (Demand.get(Supplies_Item_Pair_List[j][1]) if Supplies_Item_Pair_List[j][1] in Demand else 0) for i in range(length_supp_with_capacity_list)}
         
         st.markdown("##### Suppliers' Capacity")
         for key, value in Suppliers_Capacity.items():
