@@ -179,6 +179,5 @@ def parse_auction_lot(auction_lot, auction_lot_item, smallest_bid):
 
 def remove_bad_auctions(original_list, bad_elements_list, number_bad_elements):
     for i in range(number_bad_elements):
-        original_list = original_list.pop(bad_elements_list[i])
-
+        original_list.pop(bad_elements_list[i])
     return original_list
