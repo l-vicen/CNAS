@@ -68,7 +68,7 @@ def solve_auction():
             Suppliers_Production_Cost = {}
             for i in range(length_supp_with_capacity_list):
 
-                key = Supplies_Item_Pair_List[i]
+                key = str(Supplies_Item_Pair_List[i])
 
                 for j in range(auction_lots):
 

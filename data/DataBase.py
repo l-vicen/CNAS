@@ -80,7 +80,7 @@ def post_db(auction_id, auction_summary, auction_items, auction_history):
     length_pregoes = len(pregoes)
 
     # Creating a list with all auctioned items in the auction
-    Items_Auctioned = [pregoes[i]["descricao_detalhada_item"] for i in range(length_pregoes)]
+    Items_Auctioned = [str(pregoes[i]["descricao_detalhada_item"]) for i in range(length_pregoes)]
 
     # Creating a list with the demanded quantity for item
     Demanded_Quantity_Items = [int(pregoes[i]["quantidade_item"]) for i in range(length_pregoes)]
@@ -92,7 +92,7 @@ def post_db(auction_id, auction_summary, auction_items, auction_history):
     Winning_Bids = [float(pregoes[i]["menor_lance"]) if pregoes[i]["menor_lance"] != None else -1 for i in range(length_pregoes)]
 
     # Creating a list with all auction situations (homologated, canceled, etc ....)
-    Auction_Situation = [pregoes[i]["situacao_item"] for i in range(length_pregoes)]
+    Auction_Situation = [str(pregoes[i]["situacao_item"]) for i in range(length_pregoes)]
     
     """ 2nd Part: Getting data from auction_items query """
 
