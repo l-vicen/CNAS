@@ -54,8 +54,8 @@ def solve_auction():
         # st.markdown("---")
 
         pair_cross_products = list(itertools.product(Participating_Supplier, list_auction_items))
-        # st.markdown("#### Cross Product Supplier | Item")
-        # st.write(pair_cross_products)
+        st.markdown("#### Cross Product Supplier | Item")
+        st.write(pair_cross_products)
 
         # Building DICT: {Item, Demand}
         Demand = sl.parse_to_dictionary_format(list_auction_items, list_demand_items)
@@ -65,14 +65,27 @@ def solve_auction():
 
         # Building DICT: {TUPLE, Capacity}
         Supplies_Item_Pair_List = [(str(list_auction_lots[i].get("Participating_Suppliers")[j]), list_auction_lots[i].get("Lot_Item")) for i in range(auction_lots) for j in range(len(list_auction_lots[i].get("Participating_Suppliers")))]
-        # st.write("##### Pair of (Supplier, Item)")
-        # st.write(Supplies_Item_Pair_List)
+        st.write("##### Pair of (Supplier, Item)")
+        st.write(Supplies_Item_Pair_List)
 
         # Building DICT: {(Supp, Item), Supply_Capacity}
         length_cross_product = len(pair_cross_products)
         length_supp_with_capacity_list = len(Supplies_Item_Pair_List)
 
-        Suppliers_Capacity = {(pair_cross_products[i][0], pair_cross_products[i][1]) : (Demand.get(Supplies_Item_Pair_List[j][1]) if Supplies_Item_Pair_List[j][1] in Demand else 0) for i in range(length_cross_product) for j in range(length_supp_with_capacity_list)}
+        Suppliers_Capacity = {}
+        for i in range(length_cross_product):
+            key = (pair_cross_products[i][0], pair_cross_products[i][1])
+
+            for j in range(length_supp_with_capacity_list):
+
+                if Supplies_Item_Pair_List[j][1] in Demand:
+                    value = Demand.get(Supplies_Item_Pair_List[j][1])
+                else: 
+                    value = 0
+                
+                Suppliers_Capacity[key] = value
+
+        # Suppliers_Capacity = {(pair_cross_products[i][0], pair_cross_products[i][1]) : (Demand.get(Supplies_Item_Pair_List[j][1]) if Supplies_Item_Pair_List[j][1] in Demand else 0) for i in range(length_cross_product) for j in range(length_supp_with_capacity_list)}
         
         st.markdown("##### Suppliers' Capacity")
         for key, value in Suppliers_Capacity.items():
@@ -92,7 +105,7 @@ def solve_auction():
         if (percentage_cost_multiplier):
 
             Suppliers_Production_Cost = {}
-            for i in range(length_supp_items):
+            for i in range(length_cross_product):
 
                 key = Supplies_Item_Pair_List[i]
 
@@ -105,12 +118,11 @@ def solve_auction():
                     for k in range(number_of_supplier_in_this_lot):
 
                         if (key[0] == lot_supplier[k] and key[1] == lot_item):
-
                             value = percentage_cost_multiplier * float(list_auction_lots[j]["History_Bids_Lot"][k][0])
-                            Suppliers_Production_Cost[key] = value
-
                         else:
                             value = -1
+
+                        Suppliers_Production_Cost[key] = value
 
             # st.markdown("##### Suppliers' Production Costs per Item")
             # # for key, value in Suppliers_Production_Cost.items():
