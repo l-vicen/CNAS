@@ -57,24 +57,22 @@ def solve_auction():
         # st.markdown("#### Cross Product Supplier | Item")
         # st.write(pair_cross_products)
 
-        # Building DICT: {TUPLE, Capacity}
-        Supplies_Item_Pair_List = [(str(list_auction_lots[i].get("Participating_Suppliers")[j]), list_auction_lots[i].get("Lot_Item")) for i in range(auction_lots) for j in range(len(list_auction_lots[i].get("Participating_Suppliers")))]
-        # st.write("##### Pair of (Supplier, Item)")
-        # st.write(Supplies_Item_Pair_List)
-
         # Building DICT: {Item, Demand}
         Demand = sl.parse_to_dictionary_format(list_auction_items, list_demand_items)
         # st.markdown("##### Auctioneer's Demand per Item")
         # st.write(Demand)
         # st.markdown("---")
 
-        # Building DICT: {(Supp, Item), Supply_Capacity}
-        length_supp_items = len(pair_cross_products)
-        length_supp_with_capacity_list = len(Supplies_Item_Pair_List)
-        # Suppliers_Capacity = {}
-        # for i in 
+        # Building DICT: {TUPLE, Capacity}
+        Supplies_Item_Pair_List = [(str(list_auction_lots[i].get("Participating_Suppliers")[j]), list_auction_lots[i].get("Lot_Item")) for i in range(auction_lots) for j in range(len(list_auction_lots[i].get("Participating_Suppliers")))]
+        # st.write("##### Pair of (Supplier, Item)")
+        # st.write(Supplies_Item_Pair_List)
 
-        Suppliers_Capacity = {(pair_cross_products[i][0], pair_cross_products[i][1]) : (Demand.get(Supplies_Item_Pair_List[j][1]) if Supplies_Item_Pair_List[j][1] in Demand else 0) for i in range(pair_cross_products) for j in range(length_supp_with_capacity_list)}
+        # Building DICT: {(Supp, Item), Supply_Capacity}
+        length_cross_product = len(pair_cross_products)
+        length_supp_with_capacity_list = len(Supplies_Item_Pair_List)
+
+        Suppliers_Capacity = {(pair_cross_products[i][0], pair_cross_products[i][1]) : (Demand.get(Supplies_Item_Pair_List[j][1]) if Supplies_Item_Pair_List[j][1] in Demand else 0) for i in range(length_cross_product) for j in range(length_supp_with_capacity_list)}
         
         st.markdown("##### Suppliers' Capacity")
         for key, value in Suppliers_Capacity.items():
