@@ -39,10 +39,6 @@ def lower_and_upper_bound_constraint(submodel, j, i):
 
 def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary, supplier_capacity_dictionary, budget_dictionary, production_costs_dictionary):
 
-    for key in production_costs_dictionary:
-        key = (str(key[0]), str(key[1]))
-        st.write(key[1])
-
     # Upper-level definition: Auction Problem
     model = ConcreteModel("Upper-level: Auction Problem")
 
@@ -76,19 +72,19 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
     model.supply_capacity := the quantity of item i that supplier j can procure.
     model.production_costs := the production cost of item i if produced by supplier j.
     '''
-    model.Demand = Param(model.i, initialize= demand_dictionary, doc='Auctioneer\'s_Demand_per_Item')
+    model.Demand = Param(model.i, initialize= demand_dictionary, mutable=False, doc='Auctioneer\'s_Demand_per_Item')
     print_into_streamlit("Auctioneer's Demand per Item", model.Demand)
 
-    model.Utility = Param(model.i, initialize= utility_dictionary, doc='Auctioneer\'s_Perceived_Utility_per_Item')
+    model.Utility = Param(model.i, initialize= utility_dictionary, mutable=False, doc='Auctioneer\'s_Perceived_Utility_per_Item')
     print_into_streamlit("Auctioneer's Perceived Utility per Item",  model.Utility)
 
-    model.Supply_capacity = Param(model.j, model.i, initialize= supplier_capacity_dictionary, doc='Suppliers\'_individual_Supply_Capacity_per_Item')
+    model.Supply_capacity = Param(model.j, model.i, initialize= supplier_capacity_dictionary, mutable=False, doc='Suppliers\'_individual_Supply_Capacity_per_Item')
     print_into_streamlit("Suppliers\' individual Supply Capacity per Item",   model.Supply_capacity)
 
-    model.L.Budget = Param(model.i, initialize= budget_dictionary, doc='Auctioneer\'s_expected_Expense_per_Items')
+    model.L.Budget = Param(model.i, initialize= budget_dictionary, mutable=False, doc='Auctioneer\'s_expected_Expense_per_Items')
     print_into_streamlit("Auctioneer's expected Expense per Items",  model.L.Budget)
 
-    model.L.Production_Costs = Param(model.j, model.i, initialize = production_costs_dictionary , doc='Suppliers\'_individual_Production_Cost_per_Item')
+    model.L.Production_Costs = Param(model.j, model.i, initialize = production_costs_dictionary, mutable=False, doc='Suppliers\'_individual_Production_Cost_per_Item')
     print_into_streamlit("Suppliers\' individual Production Cost per Item",  model.L.Production_Costs)
 
     # Objective function assignments
