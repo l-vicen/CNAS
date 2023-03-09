@@ -38,7 +38,6 @@ def solve_auction():
 
         # Getting list of auction lots
         list_auction_lots = sl.get_cell_as_list_of_dict(text_input, dataframe)
-        st.write(list_auction_lots)
 
         # Building list of participating suppliers
         auction_lots = len(list_auction_lots)
@@ -64,9 +63,6 @@ def solve_auction():
                 
         st.markdown("### Input Section")
         percentage_cost_multiplier = st.number_input("Enter COGS Multiplier")
-
-        st.write(pair_cross_products)
-
         if (percentage_cost_multiplier):
             
             # Building DICT: {(Supp, Item), Production_Cost}
@@ -92,13 +88,6 @@ def solve_auction():
                 key = pair_cross_products[i]
                 if key not in Suppliers_Production_Cost:
                     Suppliers_Production_Cost[key] = 0
-
-            # st.markdown("##### Suppliers' Production Costs per Item")
-            for key, value in Suppliers_Production_Cost.items():
-                st.write(key)
-                st.write(value)
-            st.markdown("---") 
-
 
             # Building Bilevel Program
             number_auctioned_items = len(list_auction_items)
