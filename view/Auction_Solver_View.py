@@ -40,7 +40,7 @@ def solve_auction():
 
         # Building list of participating suppliers
         auction_lots = len(list_auction_lots)
-        Participating_Supplier = [str(supp) for i in range(auction_lots) for supp in list_auction_lots[i]["Participating_Suppliers"]]
+        Participating_Supplier = [supp for i in range(auction_lots) for supp in list_auction_lots[i]["Participating_Suppliers"]]
         Participating_Supplier = list(OrderedDict.fromkeys(Participating_Supplier))
 
         # Cross Product (all combinations (Supplier & Items))
