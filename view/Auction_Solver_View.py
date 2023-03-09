@@ -74,11 +74,12 @@ def solve_auction():
 
         Suppliers_Capacity = {}
         for i in range(length_cross_product):
+
             key = (pair_cross_products[i][0], pair_cross_products[i][1])
 
             for j in range(length_supp_with_capacity_list):
 
-                if Supplies_Item_Pair_List[j][1] in Demand:
+                if (key[0] ==  Supplies_Item_Pair_List[j][0] and key[1] ==  Supplies_Item_Pair_List[j][1]):
                     value = Demand.get(Supplies_Item_Pair_List[j][1])
                 else: 
                     value = 0
