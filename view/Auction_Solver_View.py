@@ -14,7 +14,7 @@ def solve_auction():
     st.dataframe(dataframe)
 
     # Insert Target 
-    text_input = st.text_input("Enter the auctionID: ", key="auction_id", help= "The actionID is the identifier of the Pregao.")
+    text_input = st.text_input("Enter the auctionID: ", key="solver_input", help= "The actionID is the identifier of the Pregao.")
     st.markdown("---")
 
     if (text_input):
