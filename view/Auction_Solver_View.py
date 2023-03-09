@@ -52,7 +52,7 @@ def solve_auction():
 
         # Cross Product (all combinations (Supplier & Items))
         pair_cross_products = list(itertools.product(Participating_Supplier, list_auction_items))
-        st.write(len(pair_cross_products))
+        st.write(pair_cross_products)
  
         # Observed Combinations (Supplier & Items)
         Supplies_Item_Pair_List = [(str(list_auction_lots[i].get("Participating_Suppliers")[j]), str(list_auction_lots[i].get("Lot_Item"))) for i in range(auction_lots) for j in range(len(list_auction_lots[i].get("Participating_Suppliers")))]
@@ -61,10 +61,9 @@ def solve_auction():
         length_cross_product = len(pair_cross_products)
         length_supp_with_capacity_list = len(Supplies_Item_Pair_List)
         Suppliers_Capacity = {(Supplies_Item_Pair_List[i][0], Supplies_Item_Pair_List[i][1]) : (Demand.get(Supplies_Item_Pair_List[i][1]) if Supplies_Item_Pair_List[i][1] in Demand else 0) for i in range(length_supp_with_capacity_list)}
-        for key, value in Suppliers_Capacity.items():
-            st.write(key)
-            st.write(value)
-
+        # for key, value in Suppliers_Capacity.items():
+        #     st.write(key)
+        #     st.write(value)
 
         # Adding missing pairs from cross product
         for i in range(length_cross_product):
