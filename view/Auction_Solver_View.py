@@ -22,7 +22,6 @@ def solve_auction():
 
         # Getting list of auctioned items
         list_auction_items = sl.get_cell_as_list(text_input, dataframe, "Items_Auctioned")
-        list_auction_items = [x.lower() for x in list_auction_items]
         st.write(list_auction_items)
 
         # Getting list of demands for items
