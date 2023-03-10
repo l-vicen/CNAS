@@ -150,7 +150,7 @@ def testing_original():
     model.Utility = Param(model.i, initialize={'Apples':20, 'Bananas':30, 'Tomatos':50}, doc='Expected Utility')
     model.Supply_capacity = Param(model.j, model.i, initialize=supplier_capacity, doc='Supply Capacity of Suppliers')
 
-    model.L.Budget = Param(model.i, initialize={'Apples':9.5, 'Bananas':20, 'Tomatos':50}, doc='Demand Items')
+    model.L.Budget = Param(model.i, initialize={'Apples':10, 'Bananas':20, 'Tomatos':50}, doc='Demand Items')
     model.L.Production_Costs = Param(model.j, model.i, initialize=production_costs, doc='Production Cost per Supplier')
 
     # Upper-level constraint assignments
