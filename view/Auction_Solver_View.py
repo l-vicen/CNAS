@@ -21,20 +21,20 @@ def solve_auction():
     if (text_input):
 
         # Getting list of auctioned items
-        list_auction_items = sl.get_cell_as_list(text_input, dataframe, "Items_Auctioned")
+        List_Auction_Items = sl.get_cell_as_list(text_input, dataframe, "Items_Auctioned")
 
         # Getting list of demands for items
         list_demand_items = sl.get_cell_as_list(text_input, dataframe, "Demanded_Quantity_Items")
 
         # Building DICT: {Item, Demand}
-        Demand = sl.parse_to_dictionary_format(list_auction_items, list_demand_items)
+        Demand = sl.parse_to_dictionary_format(List_Auction_Items, list_demand_items)
 
         # Getting list of expected prices per item
         list_budget_items = sl.get_cell_as_list(text_input, dataframe, "Estimated_Price_Items")
 
         # Building DICT: {Item, Budget}
         budget_item_set = [a*b for a,b in zip(list_demand_items,list_budget_items)]
-        Budget = sl.parse_to_dictionary_format(list_auction_items, budget_item_set)
+        Budget = sl.parse_to_dictionary_format(List_Auction_Items, budget_item_set)
 
         # Getting list of auction lots
         list_auction_lots = sl.get_cell_as_list_of_dict(text_input, dataframe)
@@ -45,7 +45,7 @@ def solve_auction():
         Participating_Supplier = list(OrderedDict.fromkeys(Participating_Supplier))
 
         # Cross Product (all combinations (Supplier & Items))
-        pair_cross_products = list(itertools.product(Participating_Supplier, list_auction_items))
+        pair_cross_products = list(itertools.product(Participating_Supplier, List_Auction_Items))
  
         # Observed Combinations (Supplier & Items)
         Supplies_Item_Pair_List = [(str(list_auction_lots[i].get("Participating_Suppliers")[j]), str(list_auction_lots[i].get("Lot_Item"))) for i in range(auction_lots) for j in range(len(list_auction_lots[i].get("Participating_Suppliers")))]
@@ -65,7 +65,6 @@ def solve_auction():
         ''' PART: Building DICTIONARY {(Supp, Item), Production_Cost_per_Supplier_per_Item} for Model '''
         st.markdown("### Input Section")
         percentage_cost_multiplier = st.number_input("Enter COGS Multiplier")
-
         if (percentage_cost_multiplier):
             Suppliers_Production_Cost = {}
             for i in range(length_supp_with_capacity_list):
@@ -83,15 +82,15 @@ def solve_auction():
             for i in range(length_cross_product):
                 key = pair_cross_products[i]
                 if key not in Suppliers_Production_Cost:
-                    Suppliers_Production_Cost[key] = 0
+                    Suppliers_Production_Cost[key] = -1
             ''' ---------------------------------------------------------------------------------------- '''
 
             # Building Bilevel Program
             utility_list = [(exp_expense * 1.2)  for exp_expense in budget_item_set]
-            Utility = sl.parse_to_dictionary_format(list_auction_items, utility_list)
+            Utility = sl.parse_to_dictionary_format(List_Auction_Items, utility_list)
     
             btn_apply_bilevel = st.button("Apply Bilevel Solver")
             st.markdown("---")
             if (btn_apply_bilevel):
-                # bls.build_model(list_auction_items, Participating_Supplier, Demand, Utility, Suppliers_Capacity, Budget, Suppliers_Production_Cost)
-                bls.testing_original()
+                bls.build_model(List_Auction_Items, Participating_Supplier, Demand, Utility, Suppliers_Capacity, Budget, Suppliers_Production_Cost)
+                # bls.testing_original()
