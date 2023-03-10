@@ -100,6 +100,7 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
 
     model.DemandConstraint = Constraint(model.i, rule=demand_requirement_constraint, doc='Auctioneer\'s_Demand_is_fulfilled')
     print_into_streamlit("Demand Constraint",  model.DemandConstraint)
+    print_into_streamlit("Suppliers\' individual Supply Capacity per Item",  model.Supply_capacity)
 
     # Lower-level constraint assignment
     model.L.BidPriceBoundaryConstraint = Constraint(model.j, model.i, rule=lower_and_upper_bound_constraint, doc='Bid_Price_is_non-negative')
