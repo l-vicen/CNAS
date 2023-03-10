@@ -80,10 +80,10 @@ def solve_auction():
                             Suppliers_Production_Cost[key] = value
             
             # Adding missing pairs from cross product
-            # for i in range(length_cross_product):
-            #     key = pair_cross_products[i]
-            #     if key not in Suppliers_Production_Cost:
-            #         Suppliers_Production_Cost[key] = 0
+            for i in range(length_cross_product):
+                key = pair_cross_products[i]
+                if key not in Suppliers_Production_Cost:
+                    Suppliers_Production_Cost[key] = 0
             ''' ---------------------------------------------------------------------------------------- '''
 
             # Building Bilevel Program
