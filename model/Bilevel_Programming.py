@@ -98,7 +98,7 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
     model.SingleSourcingConstraint = Constraint(model.i, rule=single_sourcing_constraint, doc='There_is_at_most_1_winner')
     # print_into_streamlit("Single Sourcing Constraint",  model.SingleSourcingConstraint)
 
-    model.DemandConstraint = Constraint(model.i, rule=demand_requirement_constraint, doc='Auctioneer\'s_Demand_is_fulfilled')
+    model.DemandConstraint = Constraint(model.j, rule=demand_requirement_constraint, doc='Auctioneer\'s_Demand_is_fulfilled')
     # print_into_streamlit("Demand Constraint",  model.DemandConstraint)
 
     # Lower-level constraint assignment
