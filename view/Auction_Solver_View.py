@@ -77,11 +77,13 @@ def solve_auction():
                     for k in range(number_of_supplier_in_this_lot):
                         if (key[0] == str(lot_supplier[k]) and key[1] == str(lot_item)):
                             bids_supp_k = list_auction_lots[j]["History_Bids_Lot"][k]
+                            st.write(bids_supp_k)
+
                             number_bids_supp_k = len(bids_supp_k)
                             sum_bids = 0
-                            
+
                             for bid in range(number_bids_supp_k):
-                                sum_bids += bids_supp_k[bid]
+                                sum_bids += float(bids_supp_k[bid])
                             average_bids = (sum_bids / number_bids_supp_k)
 
                             value = percentage_cost_multiplier * float(average_bids)
