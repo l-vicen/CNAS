@@ -200,9 +200,15 @@ def st_stdout(dst):
     with st_redirect(sys.stdout, dst):
         yield
 
+@contextmanager
+def st_stderr(dst):
+    "This will show the logging"
+    with st_redirect(sys.stderr, dst):
+        yield
+
 """ Helper method to print model components into streamlit """
 def print_into_streamlit(title, model_component):
     msg = "###### {}".format(title)
-    st.markdown(msg)
-    with st_stdout("code"):
+    st.markdown(msg)_:
+    with st_stdout("code"), st_stderr("warning"):
         model_component.pprint()
