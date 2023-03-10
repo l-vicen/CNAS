@@ -15,7 +15,7 @@ import sys
     def pricing_objective_function(model)  := Maximizes the overall bid price submission.
 '''
 def auction_objective_function(model):
-    return sum(((model.Utility[i] * model.X[j,i]) - model.L.P[j,i]) for j,i in model.j*model.i)
+    return sum((model.Utility[i] * model.X[j,i]) - model.L.P[j,i] for j,i in model.j*model.i)
 
 def pricing_objective_function(submodel, model):
     return sum(submodel.P[j,i] for j,i in model.j * model.i)
@@ -89,14 +89,14 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
 
     # Objective function assignments
     model.o = Objective(rule=auction_objective_function(model), sense=maximize, doc='Auction_Problem') # Upper-level 
-    print_into_streamlit("Upper-level Objective Function",  model.o)
+    # print_into_streamlit("Upper-level Objective Function",  model.o)
 
     model.L.o = Objective(rule= pricing_objective_function(model.L, model), sense=maximize, doc='Pricing_Problem') # Lower-level
-    print_into_streamlit("Lower-level Objective Function",  model.L.o)
+    # print_into_streamlit("Lower-level Objective Function",  model.L.o)
 
     # Upper-level constraint assignments
     model.SingleSourcingConstraint = Constraint(model.i, rule=single_sourcing_constraint, doc='There_is_at_most_1_winner')
-    # print_into_streamlit("Single Sourcing Constraint",  model.SingleSourcingConstraint)
+    print_into_streamlit("Single Sourcing Constraint",  model.SingleSourcingConstraint)
 
     model.DemandConstraint = Constraint(model.i, rule=demand_requirement_constraint, doc='Auctioneer\'s_Demand_is_fulfilled')
     # print_into_streamlit("Demand Constraint",  model.DemandConstraint)
