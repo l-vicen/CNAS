@@ -110,10 +110,13 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
 
     # Calling the Big-M Relaxation Solver
     solver = Solver('pao.pyomo.FA')
-    solver.solve(model)   
 
-    print_into_streamlit("Auction Winners",  model.X)
-    print_into_streamlit("Price Setting Results",  model.L.P)
+    try:
+        solver.solve(model)   
+        print_into_streamlit("Auction Winners",  model.X)
+        print_into_streamlit("Price Setting Results",  model.L.P)
+    except ValueError:
+        st.warning("No feasible Solution exists!")
     
 def testing_original():
 
@@ -210,5 +213,5 @@ def st_stderr(dst):
 def print_into_streamlit(title, model_component):
     msg = "###### {}".format(title)
     st.markdown(msg)
-    with st_stdout("code"), st_stderr("warning"):
+    with st_stdout("code"):
         model_component.pprint()
