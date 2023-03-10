@@ -65,6 +65,7 @@ def solve_auction():
         ''' PART: Building DICTIONARY {(Supp, Item), Production_Cost_per_Supplier_per_Item} for Model '''
         st.markdown("### Input Section")
         percentage_cost_multiplier = st.number_input("Enter COGS Multiplier")
+
         if (percentage_cost_multiplier):
             Suppliers_Production_Cost = {}
             for i in range(length_supp_with_capacity_list):
@@ -75,7 +76,15 @@ def solve_auction():
                     lot_item = list_auction_lots[j]["Lot_Item"]
                     for k in range(number_of_supplier_in_this_lot):
                         if (key[0] == str(lot_supplier[k]) and key[1] == str(lot_item)):
-                            value = percentage_cost_multiplier * float(list_auction_lots[j]["History_Bids_Lot"][k][0])
+                            bids_supp_k = list_auction_lots[j]["History_Bids_Lot"][k]
+                            number_bids_supp_k = len(bids_supp_k)
+                            sum_bids = 0
+                            
+                            for bid in range(number_bids_supp_k):
+                                sum_bids += bids_supp_k[bid]
+                            average_bids = (sum_bids / number_bids_supp_k)
+
+                            value = percentage_cost_multiplier * float(average_bids)
                             Suppliers_Production_Cost[key] = value
             
             # Adding missing pairs from cross product
