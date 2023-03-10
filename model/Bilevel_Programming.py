@@ -112,8 +112,8 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
     solver = Solver('pao.pyomo.FA')
     solver.solve(model)   
 
-    # print_into_streamlit("Auction Winners",  model.X)
-    # print_into_streamlit("Price Setting Results",  model.L.P)
+    print_into_streamlit("Auction Winners",  model.X)
+    print_into_streamlit("Price Setting Results",  model.L.P)
     
 def testing_original():
 
