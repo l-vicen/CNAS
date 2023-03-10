@@ -57,10 +57,10 @@ def solve_auction():
         Suppliers_Capacity = {Supplies_Item_Pair_List[i] : (Demand.get(Supplies_Item_Pair_List[i][1]) if Supplies_Item_Pair_List[i][1] in Demand else 0) for i in range(length_supp_with_capacity_list)}
 
         # Adding missing pairs from cross product
-        # for i in range(length_cross_product):
-        #     key = pair_cross_products[i]
-        #     if key not in Suppliers_Capacity:
-        #         Suppliers_Capacity[key] = 0
+        for i in range(length_cross_product):
+            key = pair_cross_products[i]
+            if key not in Suppliers_Capacity:
+                Suppliers_Capacity[key] = 0
 
         ''' PART: Building DICTIONARY {(Supp, Item), Production_Cost_per_Supplier_per_Item} for Model '''
         st.markdown("### Input Section")
@@ -80,10 +80,10 @@ def solve_auction():
                             Suppliers_Production_Cost[key] = value
             
             # Adding missing pairs from cross product
-            # for i in range(length_cross_product):
-            #     key = pair_cross_products[i]
-            #     if key not in Suppliers_Production_Cost:
-            #         Suppliers_Production_Cost[key] = 0
+            for i in range(length_cross_product):
+                key = pair_cross_products[i]
+                if key not in Suppliers_Production_Cost:
+                    Suppliers_Production_Cost[key] = 0
             ''' ---------------------------------------------------------------------------------------- '''
 
             # Building Bilevel Program
