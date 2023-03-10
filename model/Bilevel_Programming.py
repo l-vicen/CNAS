@@ -102,13 +102,13 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
     # print_into_streamlit("Demand Constraint",  model.DemandConstraint)
 
     # Lower-level constraint assignment
-    model.L.BidPriceBoundaryConstraint = Constraint(model.j, model.i, rule=lower_and_upper_bound_constraint, doc='Bid_Price_is_non-negative')
+    # model.L.BidPriceBoundaryConstraint = Constraint(model.j, model.i, rule=lower_and_upper_bound_constraint, doc='Bid_Price_is_non-negative')
     # print_into_streamlit("Bid Price Constraint",  model.L.BidPriceBoundaryConstraint)
 
     print_into_streamlit("Model Formulation",  model)
 
     # Calling the Big-M Relaxation Solver
-    solver = Solver('pao.pyomo.MIBS')
+    solver = Solver('pao.pyomo.FA')
     solver.solve(model)   
 
     # print_into_streamlit("Auction Winners",  model.X)
