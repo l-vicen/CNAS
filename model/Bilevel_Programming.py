@@ -72,16 +72,16 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
     model.supply_capacity := the quantity of item i that supplier j can procure.
     model.production_costs := the production cost of item i if produced by supplier j.
     '''
-    model.Demand = Param(model.j, initialize= demand_dictionary, mutable=False, doc='Auctioneer\'s_Demand_per_Item')
+    model.Demand = Param(model.i, initialize= demand_dictionary, mutable=False, doc='Auctioneer\'s_Demand_per_Item')
     # print_into_streamlit("Auctioneer's Demand per Item", model.Demand)
 
-    model.Utility = Param(model.j, initialize= utility_dictionary, mutable=False, doc='Auctioneer\'s_Perceived_Utility_per_Item')
+    model.Utility = Param(model.i, initialize= utility_dictionary, mutable=False, doc='Auctioneer\'s_Perceived_Utility_per_Item')
     # print_into_streamlit("Auctioneer's Perceived Utility per Item",  model.Utility)
 
     model.Supply_capacity = Param(model.j, model.i, initialize= supplier_capacity_dictionary, mutable=False, doc='Suppliers\'_individual_Supply_Capacity_per_Item')
     # print_into_streamlit("Suppliers\' individual Supply Capacity per Item",   model.Supply_capacity)
 
-    model.L.Budget = Param(model.j, initialize= budget_dictionary, mutable=False, doc='Auctioneer\'s_expected_Expense_per_Items')
+    model.L.Budget = Param(model.i, initialize= budget_dictionary, mutable=False, doc='Auctioneer\'s_expected_Expense_per_Items')
     # print_into_streamlit("Auctioneer's expected Expense per Items",  model.L.Budget)
 
     model.L.Production_Costs = Param(model.j, model.i, initialize = production_costs_dictionary, mutable=False, doc='Suppliers\'_individual_Production_Cost_per_Item')
@@ -95,10 +95,10 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
     # print_into_streamlit("Lower-level Objective Function",  model.L.o)
 
     # Upper-level constraint assignments
-    model.SingleSourcingConstraint = Constraint(model.j, rule=single_sourcing_constraint, doc='There_is_at_most_1_winner')
+    model.SingleSourcingConstraint = Constraint(model.i, rule=single_sourcing_constraint, doc='There_is_at_most_1_winner')
     # print_into_streamlit("Single Sourcing Constraint",  model.SingleSourcingConstraint)
 
-    model.DemandConstraint = Constraint(model.j, rule=demand_requirement_constraint, doc='Auctioneer\'s_Demand_is_fulfilled')
+    model.DemandConstraint = Constraint(model.i, rule=demand_requirement_constraint, doc='Auctioneer\'s_Demand_is_fulfilled')
     # print_into_streamlit("Demand Constraint",  model.DemandConstraint)
 
     # Lower-level constraint assignment
