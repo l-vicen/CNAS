@@ -76,9 +76,10 @@ def solve_auction():
                     lot_item = list_auction_lots[j]["Lot_Item"]
                     for k in range(number_of_supplier_in_this_lot):
                         if (key[0] == str(lot_supplier[k]) and key[1] == str(lot_item)):
-                            bids_supp_k = list_auction_lots[j]["History_Bids_Lot"][k]
-                            st.write(bids_supp_k)
 
+                            # In case there are more than one bid from a supplier we derive his cost based on the average of its
+                            # submitted bids
+                            bids_supp_k = list_auction_lots[j]["History_Bids_Lot"][k]
                             number_bids_supp_k = len(bids_supp_k)
                             sum_bids = 0
 
@@ -86,6 +87,7 @@ def solve_auction():
                                 sum_bids += float(bids_supp_k[bid])
                             average_bids = (sum_bids / number_bids_supp_k)
 
+                            # Multiply by a Cost of Goods Sold Factor
                             value = percentage_cost_multiplier * float(average_bids)
                             Suppliers_Production_Cost[key] = value
             
