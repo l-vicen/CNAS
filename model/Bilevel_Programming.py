@@ -119,41 +119,15 @@ def testing_original():
     # Upper-level definition: Auction Problem
     model = ConcreteModel("Upper-level: Auction Problem")
 
-    '''   Model Subscripts
-
-    model.i := Set of auctioned items.
-    model.j := Set of auction participating suppliers.
-
-    '''
     model.i = Set(initialize=['Apples', 'Bananas', 'Tomatos'], doc='Auctioned Items')
     model.j = Set(initialize=['Christina_GmbH', 'Lucas_GmbH'], doc='Auction Participating Suppliers')
 
-    ''' Upper-level decision variable 
-
-    model.X := Binary variable, equal to 1 if quotation for item i is allocated to supplier j ; 0
-    otherwise.
-
-    '''
     model.X = Var(model.j, model.i, domain=Binary, doc='Decision Variable X') 
 
     # Lower-level definition: Pricing Problem 
     model.L = SubModel(fixed=model.X)
-
-    ''' Lower-level decision variable 
-
-    model.L.P := Real variable, represents the supplier bid price.
-
-    '''
     model.L.P = Var(model.j, model.i, domain=Reals, doc='Decision Variable P') 
 
-    ''' Model Parameters 
-
-    model.Demand := the total demand for item i submitted by auctioneer.
-    model.Utility := expected utility from purchase by the auctioneer.
-    model.supply_capacity := the quantity of item i that supplier j can procure.
-    model.production_costs := the production cost of item i if produced by supplier j.
-
-    '''
     supplier_capacity = {
         ('Christina_GmbH', 'Apples'): 15,
         ('Lucas_GmbH', 'Apples'): 15,
@@ -186,26 +160,12 @@ def testing_original():
     # Lower-level constraint assignment
     model.L.DemandConstraint = Constraint(model.j, model.i, rule=lower_and_upper_bound_constraint, doc='Bid Price is non-negative')
 
-    # Visualizing model composition
-    # model.pprint()
-
-    # Calling the Big-M Relaxation Solver
-
     # Big-M Relaxation
     solver = Solver('pao.pyomo.FA')
     solver.solve(model)
 
-    # solver = Solver('pao.pyomo.REG')
-    # solver.solve(model)
-
     # Visualizing model composition with results
     print_into_streamlit("Original Formulation",  model)
-
-
-    # model.display()
-    # solver.write()
-    # solver.pptrint()
-
 
 """ 
 The redirect code was developed different streamlit community members as discussed in this 
