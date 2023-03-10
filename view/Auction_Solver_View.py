@@ -90,7 +90,7 @@ def solve_auction():
             number_auctioned_items = len(list_auction_items)
             utility_list = []
             for i in range(number_auctioned_items):
-                utility_list.append(random.uniform(100, 200))
+                utility_list.append(random.uniform(500000, 600000))
 
             Utility = sl.parse_to_dictionary_format(list_auction_items, utility_list)
     
