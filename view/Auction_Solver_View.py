@@ -88,10 +88,7 @@ def solve_auction():
 
             # Building Bilevel Program
             number_auctioned_items = len(list_auction_items)
-            utility_list = []
-            for i in range(number_auctioned_items):
-                utility_list.append(random.uniform(500000, 600000))
-
+            utility_list = [(exp_expense * 1.2)  for exp_expense in budget_item_set]
             Utility = sl.parse_to_dictionary_format(list_auction_items, utility_list)
     
             btn_apply_bilevel = st.button("Apply Bilevel Solver")
