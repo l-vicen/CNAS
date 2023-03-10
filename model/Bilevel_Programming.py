@@ -209,6 +209,6 @@ def st_stderr(dst):
 """ Helper method to print model components into streamlit """
 def print_into_streamlit(title, model_component):
     msg = "###### {}".format(title)
-    st.markdown(msg)_:
+    st.markdown(msg)
     with st_stdout("code"), st_stderr("warning"):
         model_component.pprint()
