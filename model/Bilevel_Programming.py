@@ -46,10 +46,10 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
     model.i := Set of auctioned items.
     model.j := Set of auction participating suppliers.
     '''
-    model.i = Set(initialize = [str(x) for x in set_items], doc='Auctioned_Items')
+    model.i = Set(initialize = set_items, doc='Auctioned_Items')
     # print_into_streamlit("Auctioned Items", model.i)
 
-    model.j = Set(initialize=set_suppliers, doc='Auction_Participating_Suppliers')
+    model.j = Set(initialize = set_suppliers, doc='Auction_Participating_Suppliers')
     # print_into_streamlit("Participating Suppliers in Auction", model.j)
 
     ''' Upper-level decision variable 
