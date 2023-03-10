@@ -114,7 +114,8 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
     # print_into_streamlit("Auction Winners",  model.X)
     # print_into_streamlit("Price Setting Results",  model.L.P)
     
-def testing_otiginal():
+def testing_original():
+
     # Upper-level definition: Auction Problem
     model = ConcreteModel("Upper-level: Auction Problem")
 
@@ -178,54 +179,9 @@ def testing_otiginal():
     model.L.Budget = Param(model.i, initialize={'Apples':10, 'Bananas':20, 'Tomatos':50}, doc='Demand Items')
     model.L.production_costs = Param(model.j, model.i, initialize=production_costs, doc='Production Cost per Supplier')
 
-
-    ''' Model Objective Functions
-
-    1) Upper-level: 
-
-        def auction_objective_function(model)  := Maximizes the return of expected utility for given item purchase (Utility * X - Supplier Price)
-
-    2) Lower-level:
-
-        def pricing_objective_function(model)  := Maximizes the overall bid price submission.
-
-    '''
-    def auction_objective_function(model):
-        return sum((model.Utility[i] * model.X[j,i]) - model.L.P[j,i] for j,i in model.j*model.i)
-
-    def pricing_objective_function(submodel, model):
-        return sum(submodel.P[j,i] for j,i in model.j * model.i)
-
-    # Objective function assignments
-    model.o = Objective(rule=auction_objective_function(model), sense=maximize, doc='Auction Problem') # Upper-level 
-    model.L.o = Objective(rule= pricing_objective_function(model.L, model), sense=maximize, doc='Pricing Problem') # Lower-level
-
-    ''' Model Constraints
-
-    1) Upper-level: 
-
-        def single_sourcing_constraint(model, i): Ensures there is only 1 winner per auctioned item.
-
-        def demand_requirement_constraint(model, i): Ensures that the respective supplier can supply the whole quantity of the demanded item. 
-
-    2) Lower-level:
-
-        def lower_and_upper_bound_constraint(submodel, j, i): Ensures that the submitted bid prices lays within a reasonable range. 
-        The lower bound represents the cost of production, the upper bound represents the auctioneer budget.
-
-    '''
-    def single_sourcing_constraint(model, i):
-        return sum(model.X[j,i] for j in model.j) == 1
-
-    def demand_requirement_constraint(model, i):
-        return sum(model.supply_capacity[j,i] * model.X[j,i] for j in model.j) == model.Demand[i]
-
     # Upper-level constraint assignments
     model.SingleSourcingConstraint = Constraint(model.i, rule=single_sourcing_constraint, doc='There is at most 1 winner')
     model.DemandConstraint = Constraint(model.i, rule=demand_requirement_constraint, doc='Auctioneer demand is fulfilled')
-
-    def lower_and_upper_bound_constraint(submodel, j, i):
-        return (submodel.production_costs[j,i], submodel.P[j,i], submodel.Budget[i])
 
     # Lower-level constraint assignment
     model.L.DemandConstraint = Constraint(model.j, model.i, rule=lower_and_upper_bound_constraint, doc='Bid Price is non-negative')
@@ -243,7 +199,8 @@ def testing_otiginal():
     # solver.solve(model)
 
     # Visualizing model composition with results
-    model.pprint()
+    print_into_streamlit("Original Formulation",  model)
+
 
     # model.display()
     # solver.write()
