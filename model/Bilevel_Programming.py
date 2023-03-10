@@ -15,7 +15,7 @@ import sys
     def pricing_objective_function(model)  := Maximizes the overall bid price submission.
 '''
 def auction_objective_function(model):
-    return sum((model.Utility[i] * model.X[j,i]) - model.L.P[j,i] for j,i in model.j*model.i)
+    return sum(((model.Utility[i] * model.X[j,i]) - model.L.P[j,i]) for j,i in model.j*model.i)
 
 def pricing_objective_function(submodel, model):
     return sum(submodel.P[j,i] for j,i in model.j * model.i)
