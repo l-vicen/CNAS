@@ -108,7 +108,7 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
     print_into_streamlit("Model Formulation",  model)
 
     # Calling the Big-M Relaxation Solver
-    solver = Solver('pao.pyomo.FA')
+    solver = Solver('pao.pyomo.MIBS')
     solver.solve(model)   
 
     # print_into_streamlit("Auction Winners",  model.X)
