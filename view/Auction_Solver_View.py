@@ -33,7 +33,8 @@ def solve_auction():
         list_budget_items = sl.get_cell_as_list(text_input, dataframe, "Estimated_Price_Items")
 
         # Building DICT: {Item, Budget}
-        Budget = sl.parse_to_dictionary_format(list_auction_items, list_budget_items)
+        budget_item_set = [a*b for a,b in zip(list_demand_items,list_budget_items)]
+        Budget = sl.parse_to_dictionary_format(list_auction_items, budget_item_set)
 
         # Getting list of auction lots
         list_auction_lots = sl.get_cell_as_list_of_dict(text_input, dataframe)
@@ -66,19 +67,13 @@ def solve_auction():
         percentage_cost_multiplier = st.number_input("Enter COGS Multiplier")
 
         if (percentage_cost_multiplier):
-            
-            # Building DICT: {(Supp, Item), Production_Cost}
             Suppliers_Production_Cost = {}
             for i in range(length_supp_with_capacity_list):
-
                 key = Supplies_Item_Pair_List[i]
-
                 for j in range(auction_lots):
-
                     number_of_supplier_in_this_lot = len(list_auction_lots[j]["Participating_Suppliers"])
                     lot_supplier = list_auction_lots[j]["Participating_Suppliers"]
                     lot_item = list_auction_lots[j]["Lot_Item"]
-
                     for k in range(number_of_supplier_in_this_lot):
                         if (key[0] == str(lot_supplier[k]) and key[1] == str(lot_item)):
                             value = percentage_cost_multiplier * float(list_auction_lots[j]["History_Bids_Lot"][k][0])
