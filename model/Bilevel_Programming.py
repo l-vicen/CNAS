@@ -117,59 +117,6 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
         print_into_streamlit("Price Setting Results",  model.L.P)
     except ValueError:
         st.warning("No feasible Solution exists!")
-    
-def testing_original():
-
-    # Upper-level definition: Auction Problem
-    model = ConcreteModel("Upper-level: Auction Problem")
-
-    model.i = Set(initialize=['Apples', 'Bananas', 'Tomatos'], doc='Auctioned Items')
-    model.j = Set(initialize=['Christina_GmbH', 'Lucas_GmbH'], doc='Auction Participating Suppliers')
-
-    model.X = Var(model.j, model.i, domain=Binary, doc='Decision Variable X') 
-
-    # Lower-level definition: Pricing Problem 
-    model.L = SubModel(fixed=model.X)
-    model.L.P = Var(model.j, model.i, domain=Reals, doc='Decision Variable P') 
-
-    supplier_capacity = {
-        ('Christina_GmbH', 'Apples'): 15,
-        ('Lucas_GmbH', 'Apples'): 15,
-        ('Christina_GmbH', 'Bananas'): 25,
-        ('Lucas_GmbH', 'Bananas'): 15,
-        ('Christina_GmbH', 'Tomatos'):40,
-        ('Lucas_GmbH', 'Tomatos'): 50,
-    }
-
-    production_costs = {
-        ('Christina_GmbH', 'Apples'): 9.75,
-        ('Lucas_GmbH', 'Apples'): 7.5,
-        ('Christina_GmbH', 'Bananas'): 12.5,
-        ('Lucas_GmbH', 'Bananas'): 15,
-        ('Christina_GmbH', 'Tomatos'): 37.5,
-        ('Lucas_GmbH', 'Tomatos'): 50,
-    }
-
-    model.Demand = Param(model.i, initialize={'Apples':15, 'Bananas':25, 'Tomatos':50}, doc='Budget Items')
-    model.Utility = Param(model.i, initialize={'Apples':20, 'Bananas':30, 'Tomatos':50}, doc='Expected Utility')
-    model.Supply_capacity = Param(model.j, model.i, initialize=supplier_capacity, doc='Supply Capacity of Suppliers')
-
-    model.L.Budget = Param(model.i, initialize={'Apples':10, 'Bananas':20, 'Tomatos':50}, doc='Demand Items')
-    model.L.Production_Costs = Param(model.j, model.i, initialize=production_costs, doc='Production Cost per Supplier')
-
-    # Upper-level constraint assignments
-    model.SingleSourcingConstraint = Constraint(model.i, rule=single_sourcing_constraint, doc='There is at most 1 winner')
-    model.DemandConstraint = Constraint(model.i, rule=demand_requirement_constraint, doc='Auctioneer demand is fulfilled')
-
-    # Lower-level constraint assignment
-    model.L.DemandConstraint = Constraint(model.j, model.i, rule=lower_and_upper_bound_constraint, doc='Bid Price is non-negative')
-
-    # Big-M Relaxation
-    solver = Solver('pao.pyomo.FA')
-    solver.solve(model)
-
-    # Visualizing model composition with results
-    print_into_streamlit("Original Formulation",  model)
 
 """ 
 The redirect code was developed different streamlit community members as discussed in this 

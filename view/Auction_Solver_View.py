@@ -98,12 +98,12 @@ def solve_auction():
                     Suppliers_Production_Cost[key] = -1
             ''' ---------------------------------------------------------------------------------------- '''
 
-            # Building Bilevel Program
+            # Defining Utility
             utility_list = [(exp_expense * 1.2)  for exp_expense in budget_item_set]
             Utility = sl.parse_to_dictionary_format(List_Auction_Items, utility_list)
     
+            # Executing Bilevel Solver if btn is pressed
             btn_apply_bilevel = st.button("Apply Bilevel Solver")
             st.markdown("---")
             if (btn_apply_bilevel):
                 bls.build_model(List_Auction_Items, Participating_Supplier, Demand, Utility, Suppliers_Capacity, Budget, Suppliers_Production_Cost)
-                # bls.testing_original()
