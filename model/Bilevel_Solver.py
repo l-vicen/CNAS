@@ -124,12 +124,14 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
         auctionWinners_HeatMap(winner_dataframe)
 
         # Display Prices
-        # p_vals = pd.Series(model.L.P.extract_values(), name=model.X.name)
-        # prices_dataframe_pre = p_vals.to_frame().reset_index()
-        # prices_dataframe_pre = prices_dataframe_pre.rename(columns={"X": "P"})
-        # results_effect = pd.concat([prices_dataframe_pre, winner_dataframe_pre])
+        p_vals = pd.Series(model.L.P.extract_values(), name=model.X.name)
+        prices_dataframe_pre = p_vals.to_frame().reset_index()
+        prices_dataframe_pre = prices_dataframe_pre.rename(columns={"X": "P"})
+        results_effect = prices_dataframe_pre.merge(winner_dataframe_pre, how='left', on=['level_0', 'level_1'])
+        
+
         # results_effect= results_effect[results_effect['X'] != 0]
-        # st.write(results_effect)
+        st.write(results_effect)
        
     except ValueError:
         st.warning("No feasible Solution exists!")
@@ -143,7 +145,6 @@ def auctionWinners_HeatMap(winner_dataframe):
                 y=winner_dataframe.index)
     
     fig.update_xaxes(type='category')
-    fig.update_traces(transpose=True, selector=dict(type='heatmap'))
     st.plotly_chart(fig, use_container_width=True)
     
 
