@@ -128,9 +128,7 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
         prices_dataframe_pre = p_vals.to_frame().reset_index()
         prices_dataframe_pre = prices_dataframe_pre.rename(columns={"X": "P"})
         results_effect = prices_dataframe_pre.merge(winner_dataframe_pre, how='left', on=['level_0', 'level_1'])
-        
-
-        # results_effect= results_effect[results_effect['X'] != 0]
+        results_effect= results_effect[results_effect['X'] != 0]
         st.write(results_effect)
        
     except ValueError:
