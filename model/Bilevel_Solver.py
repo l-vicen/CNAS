@@ -113,22 +113,22 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
     # Calling the Big-M Relaxation Solver
     solver = Solver('pao.pyomo.FA')
 
-    try:
-        solver.solve(model)   
-        print_into_streamlit("Auction Winners",  model.X)
-        print_into_streamlit("Price Setting Results",  model.L.P)
+    # try:
+    solver.solve(model)   
+    print_into_streamlit("Auction Winners",  model.X)
+    print_into_streamlit("Price Setting Results",  model.L.P)
 
-        winner_vector = pd.DataFrame(model.X.extract_values())
-        price_vector = pd.DataFrame(model.L.P.extract_values())
+    winner_vector = pd.DataFrame(model.X.extract_values())
+    price_vector = pd.DataFrame(model.L.P.extract_values())
 
-        st.write(winner_vector)
-        # auction_heat_Map(winner_vector, set_items, set_suppliers)
+    st.write(winner_vector)
+    auction_heat_Map(winner_vector, set_items, set_suppliers)
 
-        st.write(price_vector)
+    st.write(price_vector)
 
 
-    except ValueError:
-        st.warning("No feasible Solution exists!")
+    # except ValueError:
+    #     st.warning("No feasible Solution exists!")
 
 def auction_heat_Map(winner_vector, items, suppliers):
     fig = px.imshow(winner_vector,
