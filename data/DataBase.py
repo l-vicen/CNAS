@@ -168,28 +168,9 @@ def parse_auction_lot(auction_lot, auction_lot_item, smallest_bid):
     # Creates a list with the history dates of the bids of the respective supplier
     item_date_history_2D_list = [[auction_lot_history[i]["dtRegistro"] for i in range(number_bids_in_lot) if (auction_lot_history[i]["nu_cpfcnpj_fornecedor"] == Participating_Suppliers[j])] for j in range(number_suppliers)]
 
-    # TODO: Review this part
-
-    st.write('---------')
-    st.write("Smallest Bid")
-    st.write(smallest_bid)
-    st.write("Bid History")
-    st.write(item_bid_history_2D_list)
-    st.write("Supplier")
+    st.write("Smallest bid {}".format(smallest_bid))
     st.write(Participating_Suppliers)
-    st.write('---------')
-
-    winner_supplier = ""
-    item_bid_size = len(item_bid_history_2D_list)
-    for i in range(item_bid_size):
-        amount_bids = len(item_bid_history_2D_list[i])
-        for j in range(amount_bids):
-            st.write("For item j {} we observed price {}".format(j, item_bid_history_2D_list[i][j]))
-            if (item_bid_history_2D_list[i][j] == smallest_bid):
-
-                winner_supplier = Participating_Suppliers[j]
-            else:
-                continue
+    st.write(item_bid_history_2D_list)
 
     # Summary Dictionary
     dictionary_lot_summary =  {
@@ -198,7 +179,7 @@ def parse_auction_lot(auction_lot, auction_lot_item, smallest_bid):
         "History_Bids_Lot": item_bid_history_2D_list,
         "History_Bid_Dates_Lot": item_date_history_2D_list,
         "Winning_Bid": smallest_bid,
-        "Winner_Supplier": winner_supplier
+        "Winner_Supplier": "TEST"
     }
 
     return dictionary_lot_summary
