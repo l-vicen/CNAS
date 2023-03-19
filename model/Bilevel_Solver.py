@@ -116,15 +116,11 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
 
     try:
         solver.solve(model)   
-        print_into_streamlit("Auction Winner ",  model.X)
 
         # Display Auction Winners
         x_vals = pd.Series(model.X.extract_values(), name=model.X.name)
-    
         winner_dataframe_pre = x_vals.to_frame().reset_index()
         winner_dataframe = winner_dataframe_pre.pivot(index='level_1', columns='level_0')['X'].fillna(0)
-
-        st.write(winner_dataframe)
         auctionWinners_HeatMap(winner_dataframe)
 
         # Display Prices
@@ -147,6 +143,7 @@ def auctionWinners_HeatMap(winner_dataframe):
                 y=winner_dataframe.index)
     
     fig.update_xaxes(type='category')
+    fig.update_traces(transpose=True, selector=dict(type='heatmap'))
     st.plotly_chart(fig, use_container_width=True)
     
 
