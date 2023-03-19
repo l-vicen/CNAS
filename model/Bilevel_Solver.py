@@ -146,7 +146,7 @@ def auctionWinners_HeatMap(winner_dataframe):
                 x=winner_dataframe.columns,
                 y=winner_dataframe.index)
     
-    fig.update_xaxes(side="top")
+    fig.update_xaxes(type='category')
     st.plotly_chart(fig, use_container_width=True)
     
 
