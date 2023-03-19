@@ -175,7 +175,8 @@ def parse_auction_lot(auction_lot, auction_lot_item, smallest_bid):
     st.write(item_bid_history_2D_list)
     st.write("-----")
 
-    min_pair = np.where(item_bid_history_2D_list == np.min(item_bid_history_2D_list))
+    x_numpy = np.array(item_bid_history_2D_list)
+    min_pair = np.where(x_numpy == np.min(x_numpy))
     st.write(min_pair)
 
     # Summary Dictionary
