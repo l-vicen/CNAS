@@ -124,11 +124,10 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
         winner_dataframe_pre = x_vals.to_frame().reset_index()
         winner_dataframe = winner_dataframe_pre.pivot(index='level_1', columns='level_0')['X'].fillna(0)
         
-        st.write(winner_dataframe)
-        st.write(winner_dataframe.columns)
-        st.write(winner_dataframe.index)
 
-        auctionWinners_HeatMap(winner_dataframe, [str(s) for s in winner_dataframe.columns], winner_dataframe.index)
+        supplier_credentials = [str(s) for s in winner_dataframe.columns]
+
+        auctionWinners_HeatMap(winner_dataframe, winner_dataframe.index, supplier_credentials)
 
         # Display Prices
         # p_vals = pd.Series(model.L.P.extract_values(), name=model.X.name)
