@@ -133,19 +133,19 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
 
         results_dict = pd.Series(results_effect.P.values, index=results_effect.level_1).to_dict()
         results_dict_sorted = {key: value for key, value in sorted(results_dict.items())}
-        st.write(results_dict_sorted)
+        total_price_model_suggestion = list(results_dict_sorted.values())
+        st.write(total_price_model_suggestion)
 
-        priceVector_plot(set_items, actual_winning_bids_list, estimated_prices_list, estimated_prices_list, demanded_quantities_list)
+        priceVector_plot(set_items, actual_winning_bids_list, estimated_prices_list, total_price_model_suggestion, demanded_quantities_list)
        
     except ValueError:
         st.warning("No feasible Solution exists!")
 
 
-def priceVector_plot(list_items, actual_winning_bids_list, estimated_prices_list, model_prices, demanded_quatities_list):
+def priceVector_plot(list_items, actual_winning_bids_list, estimated_prices_list, total_price_model_suggestion, demanded_quatities_list):
 
     total_expected_expense_price = [a*b for a,b in zip(estimated_prices_list, demanded_quatities_list)]
     total_actual_winning_bid_price = [a*b for a,b in zip(actual_winning_bids_list, demanded_quatities_list)]
-    total_price_model_suggestion = [a*b for a,b in zip(model_prices, demanded_quatities_list)]
 
     dataframe = pd.DataFrame(list(zip(list_items, total_expected_expense_price, total_actual_winning_bid_price, total_price_model_suggestion)), columns=['Items', 'Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'])
     # st.write(dataframe)
