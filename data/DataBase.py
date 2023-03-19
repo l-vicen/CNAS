@@ -171,18 +171,22 @@ def parse_auction_lot(auction_lot, auction_lot_item, smallest_bid):
     # TODO: Review this part
 
     st.write('---------')
+    st.write("Smallest Bid")
+    st.write(smallest_bid)
+    st.write("Bid History")
     st.write(item_bid_history_2D_list)
+    st.write("Supplier")
+    st.write(Participating_Suppliers)
     st.write('---------')
 
     winner_supplier = ""
     item_bid_size = len(item_bid_history_2D_list)
-
-
     for i in range(item_bid_size):
         amount_bids = len(item_bid_history_2D_list[i])
         for j in range(amount_bids):
             st.write("For item j {} we observed price {}".format(j, item_bid_history_2D_list[i][j]))
             if (item_bid_history_2D_list[i][j] == smallest_bid):
+
                 winner_supplier = Participating_Suppliers[j]
             else:
                 continue
