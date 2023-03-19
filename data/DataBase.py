@@ -169,18 +169,21 @@ def parse_auction_lot(auction_lot, auction_lot_item, smallest_bid):
     item_date_history_2D_list = [[auction_lot_history[i]["dtRegistro"] for i in range(number_bids_in_lot) if (auction_lot_history[i]["nu_cpfcnpj_fornecedor"] == Participating_Suppliers[j])] for j in range(number_suppliers)]
 
     # TODO: Review this part
+
+    st.write('---------')
     st.write(item_bid_history_2D_list)
+    st.write('---------')
+
     winner_supplier = ""
+    item_bid_size = len(item_bid_history_2D_list)
 
 
-    for i in range(len(item_bid_history_2D_list)):
-
+    for i in range(item_bid_size):
         amount_bids = len(item_bid_history_2D_list[i])
         for j in range(amount_bids):
-            st.write("History of bids for item ")
-            st.write(item_bid_history_2D_list[i][j])
+            st.write("For item j {} we observed price {}".format(j, item_bid_history_2D_list[i][j]))
             if (item_bid_history_2D_list[i][j] == smallest_bid):
-                winner_supplier = Participating_Suppliers[i]
+                winner_supplier = Participating_Suppliers[j]
             else:
                 continue
 
