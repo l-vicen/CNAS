@@ -143,14 +143,10 @@ def priceVector_plot(list_items, actual_winning_bids_list, estimated_prices_list
     total_actual_winning_bid_price = [a*b for a,b in zip(actual_winning_bids_list, demanded_quatities_list)]
     total_price_model_suggestion = [a*b for a,b in zip(model_prices, demanded_quatities_list)]
 
-    df = px.data.tips()
-    st.write(df)
-    figT = px.box(df, x="day", y="total_bill", color="smoker")
-    st.plotly_chart(figT, use_container_width=True)
-
     dataframe = pd.DataFrame(list(zip(list_items, total_expected_expense_price, total_actual_winning_bid_price, total_price_model_suggestion)), columns=['Items', 'Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'])
     st.write(dataframe)
-    fig = px.box(dataframe, x='Items', y='Expected Pricing', color="smoker")
+    fig = px.scatter(dataframe, y=['Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'], x="Items")
+    fig.update_traces(marker_size=10)
     st.plotly_chart(fig, use_container_width=True)
 
 
