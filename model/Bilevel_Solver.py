@@ -118,11 +118,11 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
         solver.solve(model)   
         print_into_streamlit("Auction Winner ",  model.X)
 
-
         # Display Auction Winners
         x_vals = pd.Series(model.X.extract_values(), name=model.X.name)
         st.write(x_vals)
-        
+        st.write(x_vals.size)
+
         winner_dataframe_pre = x_vals.to_frame().reset_index()
         winner_dataframe = winner_dataframe_pre.pivot(index='level_1', columns='level_0')['X'].fillna(0)
         auctionWinners_HeatMap(winner_dataframe, winner_dataframe.columns, winner_dataframe.index)
