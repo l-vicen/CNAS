@@ -142,9 +142,9 @@ def auctionWinners_HeatMap(winner_dataframe):
     st.markdown('---')
     st.markdown('### Auction Winners')
     fig = px.imshow(winner_dataframe,
-                labels=dict(x="Items", y="Suppliers", color="Productivity"),
-                x=winner_dataframe.index,
-                y=winner_dataframe.columns)
+                labels=dict(x="Suppliers", y="Items", color="Productivity"),
+                x=winner_dataframe.columns,
+                y=winner_dataframe.index)
     
     fig.update_xaxes(type='category')
     st.plotly_chart(fig, use_container_width=True)
