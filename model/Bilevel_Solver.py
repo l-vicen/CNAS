@@ -120,7 +120,8 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
 
     # winner_vector = pd.DataFrame(model.X.extract_values())
     x_vals = pd.Series(model.X.extract_values(), name=model.X.name)
-    st.write(x_vals)
+    winner_dataframe = x_vals.to_frame()
+    st.write(winner_dataframe)
     # price_vector = pd.DataFrame(model.L.P.extract_values())
 
     # auction_heat_Map(winner_vector, set_items, set_suppliers)
