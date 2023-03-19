@@ -117,11 +117,11 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
         print_into_streamlit("Auction Winners",  model.X)
         print_into_streamlit("Price Setting Results",  model.L.P)
 
-        winner_vector = [i for i in model.X.values]
-        price_vector = [p for p in model.L.P.values]
+        winner_vector = model.X.extract_values()
+        price_vector = model.L.P.extract_values()
 
         st.write(winner_vector)
-        auction_heat_Map(winner_vector, set_items, set_suppliers)
+        # auction_heat_Map(winner_vector, set_items, set_suppliers)
 
         st.write(price_vector)
 
