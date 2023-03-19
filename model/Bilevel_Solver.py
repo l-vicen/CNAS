@@ -132,7 +132,11 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
         results_effect= results_effect[results_effect['X'] != 0]
 
         results_dict = pd.Series(results_effect.P.values, index=results_effect.level_1).to_dict()
+        st.write(results_dict)
+
         results_dict_sorted = {key: value for key, value in sorted(results_dict.items())}
+        st.write(results_dict_sorted)
+        
         total_price_model_suggestion = list(results_dict_sorted.values())
         st.write(total_price_model_suggestion)
 
