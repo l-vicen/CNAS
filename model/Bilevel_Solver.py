@@ -121,11 +121,11 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
 
     # winner_vector = pd.DataFrame(model.X.extract_values())
     x_vals = pd.Series(model.X.extract_values(), name=model.X.name)
-    winner_dataframe = x_vals.to_frame()
+    winner_dataframe = x_vals.to_frame().reset_index()
     st.write(winner_dataframe)
 
-    winners_2D = np.array(x_vals.values.tolist())
-    auction_heat_Map(winners_2D, set_items, set_suppliers)
+    # winners_2D = np.array(x_vals.values.tolist())
+    # auction_heat_Map(winners_2D, set_items, set_suppliers)
 
     # st.write(price_vector)
     # price_vector = pd.DataFrame(model.L.P.extract_values())
