@@ -2,6 +2,7 @@
 from pyomo.environ import *
 from pao.pyomo import *
 import plotly.express as px
+import plotly.graph_objects as go
 import pandas as pd
 import numpy as np
 import streamlit as st
@@ -145,9 +146,22 @@ def priceVector_plot(list_items, actual_winning_bids_list, estimated_prices_list
 
     dataframe = pd.DataFrame(list(zip(list_items, total_expected_expense_price, total_actual_winning_bid_price, total_price_model_suggestion)), columns=['Items', 'Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'])
     st.write(dataframe)
+
+    fig = go.Figure()
+
+    fig.add_trace(go.Box( x="Items", y=['Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing']))
+
+    fig.add_trace(go.Scatter(x="Items", y=['Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing']))
+    
+    fig.update_layout(yaxis2=dict(
+            matches='y',
+            layer="above traces",
+            overlaying="y",       
+        ),)
+
     # fig = px.box(dataframe, y=['Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'], x="Items", points="all", labels=['Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'])
-    fig = px.scatter(dataframe, y=['Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'], x="Items")
-    fig.update_traces(marker_size=10)
+    # fig = px.scatter(dataframe, y=['Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'], x="Items")
+    # fig.update_traces(marker_size=10)
     st.plotly_chart(fig, use_container_width=True)
 
 
