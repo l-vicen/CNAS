@@ -131,19 +131,25 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
         results_effect= results_effect[results_effect['X'] != 0]
         
         st.write(results_effect)
-        priceVector_plot(actual_winning_bids_list, estimated_prices_list, estimated_prices_list, demanded_quantities_list)
+        priceVector_plot(set_items, actual_winning_bids_list, estimated_prices_list, estimated_prices_list, demanded_quantities_list)
        
     except ValueError:
         st.warning("No feasible Solution exists!")
 
 
-def priceVector_plot(actual_winning_bids_list, estimated_prices_list, model_prices, demanded_quatities_list):
-    total_actual_winning_bid_price = [a*b for a,b in zip(actual_winning_bids_list, demanded_quatities_list)]
+def priceVector_plot(list_items, actual_winning_bids_list, estimated_prices_list, model_prices, demanded_quatities_list):
+
     total_expected_expense_price = [a*b for a,b in zip(estimated_prices_list, demanded_quatities_list)]
+    total_actual_winning_bid_price = [a*b for a,b in zip(actual_winning_bids_list, demanded_quatities_list)]
     total_price_model_suggestion = [a*b for a,b in zip(model_prices, demanded_quatities_list)]
-    st.write(total_actual_winning_bid_price)
-    st.write(total_expected_expense_price)
-    st.write(total_price_model_suggestion)
+
+    dataframe = pd.DataFrame(list(zip(list_items, total_expected_expense_price, total_actual_winning_bid_price, total_price_model_suggestion)), columns=['Items', 'Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'])
+    
+    st.write(dataframe)
+    
+    # Here we use a column with categorical data
+    fig = px.histogram(dataframe, x="Items")
+    st.plotly_chart(fig, use_container_width=True)
 
 def auctionWinners_HeatMap(winner_dataframe):
     st.markdown('---')
