@@ -130,8 +130,10 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
         prices_dataframe_pre = prices_dataframe_pre.rename(columns={"X": "P"})
         results_effect = prices_dataframe_pre.merge(winner_dataframe_pre, how='left', on=['level_0', 'level_1'])
         results_effect= results_effect[results_effect['X'] != 0]
-        st.write(results_effect)
-        
+
+        results_dict = pd.Series(results_effect.P.values, index=results_effect.level_1).to_dict()
+        st.write(results_dict)
+
         priceVector_plot(set_items, actual_winning_bids_list, estimated_prices_list, estimated_prices_list, demanded_quantities_list)
        
     except ValueError:
