@@ -177,7 +177,8 @@ def parse_auction_lot(auction_lot, auction_lot_item, smallest_bid):
 
     x_numpy = np.array(item_bid_history_2D_list)
     min_pair = np.where(x_numpy == np.min(x_numpy))
-    st.write(min_pair[0])
+    winner_supplier = Participating_Suppliers[min_pair[0]]
+    st.write(winner_supplier)
 
     # Summary Dictionary
     dictionary_lot_summary =  {
@@ -186,7 +187,7 @@ def parse_auction_lot(auction_lot, auction_lot_item, smallest_bid):
         "History_Bids_Lot": item_bid_history_2D_list,
         "History_Bid_Dates_Lot": item_date_history_2D_list,
         "Winning_Bid": smallest_bid,
-        "Winner_Supplier": "TEST"
+        "Winner_Supplier": winner_supplier
     }
 
     return dictionary_lot_summary
