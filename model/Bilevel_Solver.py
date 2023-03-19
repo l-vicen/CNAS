@@ -2,6 +2,7 @@
 from pyomo.environ import *
 from pao.pyomo import *
 import plotly.express as px
+import pandas as pd
 import streamlit as st
 from streamlit.runtime.scriptrunner.script_run_context import SCRIPT_RUN_CONTEXT_ATTR_NAME
 from threading import current_thread
@@ -117,8 +118,8 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
         print_into_streamlit("Auction Winners",  model.X)
         print_into_streamlit("Price Setting Results",  model.L.P)
 
-        winner_vector = model.X.extract_values()
-        price_vector = model.L.P.extract_values()
+        winner_vector = pd.DataFrame(model.X.extract_values())
+        price_vector = pd.DataFrame(model.L.P.extract_values())
 
         st.write(winner_vector)
         # auction_heat_Map(winner_vector, set_items, set_suppliers)
