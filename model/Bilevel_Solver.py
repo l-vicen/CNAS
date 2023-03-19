@@ -130,8 +130,8 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
         prices_dataframe_pre = prices_dataframe_pre.rename(columns={"X": "P"})
         results_effect = prices_dataframe_pre.merge(winner_dataframe_pre, how='left', on=['level_0', 'level_1'])
         results_effect= results_effect[results_effect['X'] != 0]
-        
         st.write(results_effect)
+        
         priceVector_plot(set_items, actual_winning_bids_list, estimated_prices_list, estimated_prices_list, demanded_quantities_list)
        
     except ValueError:
@@ -145,24 +145,15 @@ def priceVector_plot(list_items, actual_winning_bids_list, estimated_prices_list
     total_price_model_suggestion = [a*b for a,b in zip(model_prices, demanded_quatities_list)]
 
     dataframe = pd.DataFrame(list(zip(list_items, total_expected_expense_price, total_actual_winning_bid_price, total_price_model_suggestion)), columns=['Items', 'Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'])
-    st.write(dataframe)
+    # st.write(dataframe)
 
-    fig = go.Figure()
+    figOne = px.scatter(dataframe, y=['Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'], x="Items")
+    figTwo = px.box(dataframe, y=['Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'], x="Items", points="all")
+    figOne.update_traces(marker_size=10)
 
-    fig.add_trace(go.Box( x="Items", y=['Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing']))
-
-    fig.add_trace(go.Scatter(x="Items", y=['Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing']))
-    
-    fig.update_layout(yaxis2=dict(
-            matches='y',
-            layer="above traces",
-            overlaying="y",       
-        ),)
-
-    # fig = px.box(dataframe, y=['Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'], x="Items", points="all", labels=['Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'])
-    # fig = px.scatter(dataframe, y=['Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'], x="Items")
-    # fig.update_traces(marker_size=10)
-    st.plotly_chart(fig, use_container_width=True)
+    col1, col2 = st.columns(2)
+    col1.plotly_chart(figOne, use_container_width=True)
+    col2.plotly_chart(figTwo, use_container_width=True)
 
 
 def auctionWinners_HeatMap(winner_dataframe):
