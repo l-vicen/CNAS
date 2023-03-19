@@ -90,6 +90,7 @@ def post_db(auction_id, auction_summary, auction_items, auction_history):
 
     # Creating a list with all winning bids (smallest) prices
     Winning_Bids = [float(pregoes[i]["menor_lance"]) if pregoes[i]["menor_lance"] != None else -1 for i in range(length_pregoes)]
+    st.write(Winning_Bids)
 
     # Creating a list with all auction situations (homologated, canceled, etc ....)
     Auction_Situation = [str(pregoes[i]["situacao_item"]) for i in range(length_pregoes)]
@@ -171,6 +172,7 @@ def parse_auction_lot(auction_lot, auction_lot_item, smallest_bid):
     st.write("Smallest bid {}".format(smallest_bid))
     st.write(Participating_Suppliers)
     st.write(item_bid_history_2D_list)
+    st.write("-----")
 
     # Summary Dictionary
     dictionary_lot_summary =  {
