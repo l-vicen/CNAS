@@ -122,7 +122,7 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
     price_vector = pd.DataFrame(model.L.P.extract_values())
 
     st.write(winner_vector)
-    auction_heat_Map(winner_vector, set_items, set_suppliers)
+    # auction_heat_Map(winner_vector, set_items, set_suppliers)
 
     st.write(price_vector)
 
