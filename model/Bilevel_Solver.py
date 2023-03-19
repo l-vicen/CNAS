@@ -143,12 +143,12 @@ def priceVector_plot(list_items, actual_winning_bids_list, estimated_prices_list
     total_actual_winning_bid_price = [a*b for a,b in zip(actual_winning_bids_list, demanded_quatities_list)]
     total_price_model_suggestion = [a*b for a,b in zip(model_prices, demanded_quatities_list)]
 
-    dataframe = pd.DataFrame(list(zip(total_expected_expense_price, total_actual_winning_bid_price, total_price_model_suggestion)), columns=['Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'])
+    dataframe = pd.DataFrame(list(zip(list_items, total_expected_expense_price, total_actual_winning_bid_price, total_price_model_suggestion)), columns=['Items', 'Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'])
     
     st.write(dataframe)
 
     # Here we use a column with categorical data
-    fig = px.box(dataframe.melt(), x=list_items, y="Pricing", color="smoker")
+    fig = px.box(dataframe)
     st.plotly_chart(fig, use_container_width=True)
 
 def auctionWinners_HeatMap(winner_dataframe):
