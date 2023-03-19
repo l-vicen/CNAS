@@ -121,7 +121,8 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
 
     # winner_vector = pd.DataFrame(model.X.extract_values())
     x_vals = pd.Series(model.X.extract_values(), name=model.X.name)
-    winner_dataframe = x_vals.to_frame().reset_index()
+    winner_dataframe = x_vals.to_frame().reset_index().groupby(['level_0', 'level_1'])['X']
+
     st.write(winner_dataframe)
 
     # winners_2D = np.array(x_vals.values.tolist())
