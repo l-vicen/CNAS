@@ -120,20 +120,23 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
 
         # Display Auction Winners
         x_vals = pd.Series(model.X.extract_values(), name=model.X.name)
-        st.write(x_vals)
-        st.write(x_vals.size)
-
+    
         winner_dataframe_pre = x_vals.to_frame().reset_index()
         winner_dataframe = winner_dataframe_pre.pivot(index='level_1', columns='level_0')['X'].fillna(0)
+        
+        st.write(winner_dataframe)
+        st.write(winner_dataframe.columns)
+        st.write(winner_dataframe.index)
+
         auctionWinners_HeatMap(winner_dataframe, winner_dataframe.columns, winner_dataframe.index)
 
         # Display Prices
-        p_vals = pd.Series(model.L.P.extract_values(), name=model.X.name)
-        prices_dataframe_pre = p_vals.to_frame().reset_index()
-        prices_dataframe_pre = prices_dataframe_pre.rename(columns={"X": "P"})
-        results_effect = pd.concat([prices_dataframe_pre, winner_dataframe_pre])
-        results_effect= results_effect[results_effect['X'] != 0]
-        st.write(results_effect)
+        # p_vals = pd.Series(model.L.P.extract_values(), name=model.X.name)
+        # prices_dataframe_pre = p_vals.to_frame().reset_index()
+        # prices_dataframe_pre = prices_dataframe_pre.rename(columns={"X": "P"})
+        # results_effect = pd.concat([prices_dataframe_pre, winner_dataframe_pre])
+        # results_effect= results_effect[results_effect['X'] != 0]
+        # st.write(results_effect)
        
     except ValueError:
         st.warning("No feasible Solution exists!")
@@ -142,7 +145,7 @@ def auctionWinners_HeatMap(winner_dataframe, suppliers, items):
     st.markdown('---')
     st.markdown('### Auction Winners')
     fig = px.imshow(winner_dataframe,
-                labels=dict(x="Suppliers", y="Items", color="Productivity"),
+                labels=dict(x="Items", y="Suppliers", color="Productivity"),
                 x=suppliers,
                 y=items)
     
