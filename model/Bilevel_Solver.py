@@ -114,30 +114,27 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
     # Calling the Big-M Relaxation Solver
     solver = Solver('pao.pyomo.FA')
 
-    # try:
-    solver.solve(model)   
-    print_into_streamlit("Auction Winners",  model.X)
-    print_into_streamlit("Price Setting Results",  model.L.P)
+    try:
+        solver.solve(model)   
+        # Display Auction Winners
+        x_vals = pd.Series(model.X.extract_values(), name=model.X.name)
+        winner_dataframe_pre = x_vals.to_frame().reset_index()
+        winner_dataframe = winner_dataframe_pre.pivot(index='level_1', columns='level_0')['X'].fillna(0)
+        auctionWinners_HeatMap(winner_dataframe, winner_dataframe.columns, winner_dataframe.index)
 
-    # winner_vector = pd.DataFrame(model.X.extract_values())
-    x_vals = pd.Series(model.X.extract_values(), name=model.X.name)
-    winner_dataframe_pre = x_vals.to_frame().reset_index()
-    winner_dataframe = winner_dataframe_pre.pivot(index='level_1', columns='level_0')['X'].fillna(0)
-    auction_heat_Map(winner_dataframe, winner_dataframe.columns, winner_dataframe.index)
+        # Display Prices
+        p_vals = pd.Series(model.L.P.extract_values(), name=model.X.name)
+        prices_dataframe_pre = p_vals.to_frame().reset_index()
+        st.write(prices_dataframe_pre)
+       
+    except ValueError:
+        st.warning("No feasible Solution exists!")
 
-    # winners_2D = np.array(x_vals.values.tolist())
-    # auction_heat_Map(winners_2D, set_items, set_suppliers)
-
-    # st.write(price_vector)
-    # price_vector = pd.DataFrame(model.L.P.extract_values())
-
-
-    # except ValueError:
-    #     st.warning("No feasible Solution exists!")
-
-def auction_heat_Map(winner_dataframe, suppliers, items):
+def auctionWinners_HeatMap(winner_dataframe, suppliers, items):
+    st.markdown('---')
+    st.markdown('### Auction Winners')
     fig = px.imshow(winner_dataframe,
-                labels=dict(x="Items", y="Suppliers", color="Productivity"),
+                labels=dict(x="Suppliers", y="Items", color="Productivity"),
                 x=suppliers,
                 y=items)
     
