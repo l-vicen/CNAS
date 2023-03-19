@@ -128,7 +128,7 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
         st.write(winner_dataframe.columns)
         st.write(winner_dataframe.index)
 
-        auctionWinners_HeatMap(winner_dataframe, winner_dataframe.columns, winner_dataframe.index)
+        auctionWinners_HeatMap(winner_dataframe, [str(s) for s in winner_dataframe.columns], winner_dataframe.index)
 
         # Display Prices
         # p_vals = pd.Series(model.L.P.extract_values(), name=model.X.name)
