@@ -41,7 +41,7 @@ def lower_and_upper_bound_constraint(submodel, j, i):
     # return (submodel.Production_Costs[j,i], submodel.P[j,i], submodel.Budget[i])
     return (0, submodel.P[j,i], submodel.Budget[i])
 
-def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary, supplier_capacity_dictionary, budget_dictionary, production_costs_dictionary):
+def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary, supplier_capacity_dictionary, budget_dictionary, production_costs_dictionary, actual_winning_bids_list, demanded_quantities_list, estimated_prices_list):
 
     # Upper-level definition: Auction Problem
     model = ConcreteModel("Upper-level: Auction Problem")
@@ -129,10 +129,21 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
         prices_dataframe_pre = prices_dataframe_pre.rename(columns={"X": "P"})
         results_effect = prices_dataframe_pre.merge(winner_dataframe_pre, how='left', on=['level_0', 'level_1'])
         results_effect= results_effect[results_effect['X'] != 0]
+        
         st.write(results_effect)
+        priceVector_plot(actual_winning_bids_list, estimated_prices_list, estimated_prices_list, demanded_quantities_list)
        
     except ValueError:
         st.warning("No feasible Solution exists!")
+
+
+def priceVector_plot(actual_winning_bids_list, estimated_prices_list, model_prices, demanded_quatities_list):
+    total_actual_winning_bid_price = [a*b for a,b in zip(actual_winning_bids_list, demanded_quatities_list)]
+    total_expected_expense_price = [a*b for a,b in zip(estimated_prices_list, demanded_quatities_list)]
+    total_price_model_suggestion = [a*b for a,b in zip(model_prices, demanded_quatities_list)]
+    st.write(total_actual_winning_bid_price)
+    st.write(total_expected_expense_price)
+    st.write(total_price_model_suggestion)
 
 def auctionWinners_HeatMap(winner_dataframe):
     st.markdown('---')

@@ -104,4 +104,11 @@ def solve_auction():
             btn_apply_bilevel = st.button("Apply Bilevel Solver")
             st.markdown("---")
             if (btn_apply_bilevel):
-                bls.build_model(List_Auction_Items, Participating_Supplier, Demand, Utility, Suppliers_Capacity, Budget, Suppliers_Production_Cost)
+                
+                # For Visualizations
+                Estimated_prices_list = sl.get_cell_as_list(text_input, dataframe, "Estimated_Price_Items")
+                Actual_winning_bids_list = sl.get_cell_as_list(text_input, dataframe, "Winning_Bids")
+                Demanded_quantities_list = sl.get_cell_as_list(text_input, dataframe, "Demanded_Quantity_Items")
+
+                # Model Build and Solution
+                bls.build_model(List_Auction_Items, Participating_Supplier, Demand, Utility, Suppliers_Capacity, Budget, Suppliers_Production_Cost, Actual_winning_bids_list, Demanded_quantities_list, Estimated_prices_list)
