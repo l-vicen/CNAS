@@ -164,7 +164,7 @@ def parse_auction_lot(auction_lot, auction_lot_item, smallest_bid):
     number_suppliers = len(Participating_Suppliers)
 
     # Creates a list with the history bids of the respective supplier
-    item_bid_history_2D_list = [[auction_lot_history[i]["vl_global"] for i in range(number_bids_in_lot) if (auction_lot_history[i]["nu_cpfcnpj_fornecedor"] == Participating_Suppliers[j])] for j in range(number_suppliers)]
+    item_bid_history_2D_list = [[auction_lot_history[i]["vl_unitario"] for i in range(number_bids_in_lot) if (auction_lot_history[i]["nu_cpfcnpj_fornecedor"] == Participating_Suppliers[j])] for j in range(number_suppliers)]
 
     # Creates a list with the history dates of the bids of the respective supplier
     item_date_history_2D_list = [[auction_lot_history[i]["dtRegistro"] for i in range(number_bids_in_lot) if (auction_lot_history[i]["nu_cpfcnpj_fornecedor"] == Participating_Suppliers[j])] for j in range(number_suppliers)]
