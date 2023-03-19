@@ -135,11 +135,11 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
     # except ValueError:
     #     st.warning("No feasible Solution exists!")
 
-def auction_heat_Map(winner_vector, items, suppliers):
-    fig = px.imshow(winner_vector,
+def auction_heat_Map(winner_dataframe, suppliers, items):
+    fig = px.imshow(winner_dataframe,
                 labels=dict(x="Items", y="Suppliers", color="Productivity"),
-                x=items,
-                y=suppliers)
+                x=suppliers,
+                y=items)
     
     fig.update_xaxes(side="top")
     st.plotly_chart(fig, use_container_width=True)
