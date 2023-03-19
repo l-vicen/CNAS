@@ -171,6 +171,7 @@ def parse_auction_lot(auction_lot, auction_lot_item, smallest_bid):
     item_date_history_2D_list = [[auction_lot_history[i]["dtRegistro"] for i in range(number_bids_in_lot) if (auction_lot_history[i]["nu_cpfcnpj_fornecedor"] == Participating_Suppliers[j])] for j in range(number_suppliers)]
 
     # Trick to find the winner for every lot
+    winner_supplier = "None"
     if len(Participating_Suppliers) != 0:
         x_numpy = np.array(item_bid_history_2D_list)
         min_pair = np.where(x_numpy == np.min(x_numpy))
