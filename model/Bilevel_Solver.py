@@ -125,7 +125,7 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
         # Display Prices
         p_vals = pd.Series(model.L.P.extract_values(), name=model.X.name)
         prices_dataframe_pre = p_vals.to_frame().reset_index()
-        prices_dataframe_pre.rename(columns={"X": "P"})
+        prices_dataframe_pre = prices_dataframe_pre.rename(columns={"X": "P"})
         results_effect = pd.concat([prices_dataframe_pre, winner_dataframe_pre])
         results_effect= results_effect[results_effect['X'] != 0]
         st.write(results_effect)
