@@ -118,13 +118,14 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
     print_into_streamlit("Auction Winners",  model.X)
     print_into_streamlit("Price Setting Results",  model.L.P)
 
-    winner_vector = pd.DataFrame(model.X.extract_values())
-    price_vector = pd.DataFrame(model.L.P.extract_values())
+    # winner_vector = pd.DataFrame(model.X.extract_values())
+    x_vals = pd.Series(model.X.extract_values(), name=model.X.name)
+    st.write(x_vals)
+    # price_vector = pd.DataFrame(model.L.P.extract_values())
 
-    st.write(winner_vector)
     # auction_heat_Map(winner_vector, set_items, set_suppliers)
 
-    st.write(price_vector)
+    # st.write(price_vector)
 
 
     # except ValueError:
