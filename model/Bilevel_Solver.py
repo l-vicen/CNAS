@@ -125,7 +125,7 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
         # Display Prices
         p_vals = pd.Series(model.L.P.extract_values(), name=model.X.name)
         prices_dataframe_pre = p_vals.to_frame().reset_index()
-        results_effect = pd.concat([prices_dataframe_pre, winner_dataframe_pre], axis=1)
+        results_effect = pd.concat([prices_dataframe_pre, winner_dataframe_pre])
         st.write(results_effect)
        
     except ValueError:
