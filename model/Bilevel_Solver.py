@@ -145,8 +145,9 @@ def priceVector_plot(list_items, actual_winning_bids_list, estimated_prices_list
 
     dataframe = pd.DataFrame(list(zip(list_items, total_expected_expense_price, total_actual_winning_bid_price, total_price_model_suggestion)), columns=['Items', 'Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'])
     st.write(dataframe)
-    fig = px.box(dataframe, y=['Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'], x="Items", points="all", labels=['Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'])
-    # fig.update_traces(marker_size=10)
+    # fig = px.box(dataframe, y=['Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'], x="Items", points="all", labels=['Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'])
+    fig = px.scatter(dataframe, y=['Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'], x="Items")
+    fig.update_traces(marker_size=10)
     st.plotly_chart(fig, use_container_width=True)
 
 
