@@ -138,7 +138,8 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
 
 
 def priceVector_plot(list_items, actual_winning_bids_list, estimated_prices_list, total_price_model_suggestion, demanded_quatities_list):
-
+    st.markdown('---')
+    st.markdown('### Pricing Determination')
     total_expected_expense_price = [a*b for a,b in zip(estimated_prices_list, demanded_quatities_list)]
     total_actual_winning_bid_price = [a*b for a,b in zip(actual_winning_bids_list, demanded_quatities_list)]
 
@@ -146,8 +147,8 @@ def priceVector_plot(list_items, actual_winning_bids_list, estimated_prices_list
     dataframe['Model Suggested Pricing'] = dataframe['Items'].map(total_price_model_suggestion)
     st.write(dataframe)
 
-    figOne = px.scatter(dataframe, y=['Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'], x="Items")
-    figTwo = px.box(dataframe, y=['Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'], x="Items", points="all")
+    figOne = px.scatter(dataframe, y=['Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'], x="Items", labels=dict(x="Items", y="Pricing"))
+    figTwo = px.box(dataframe, y=['Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'], x="Items", points="all", labels=dict(x="Items", y="Pricing"))
     figOne.update_traces(marker_size=10)
 
     col1, col2 = st.columns(2)
@@ -159,7 +160,7 @@ def auctionWinners_HeatMap(winner_dataframe):
     st.markdown('---')
     st.markdown('### Auction Winners')
     fig = px.imshow(winner_dataframe,
-                labels=dict(x="Suppliers", y="Items", color="Productivity"),
+                labels=dict(x="Suppliers", y="Items"),
                 x=winner_dataframe.columns,
                 y=winner_dataframe.index)
     
