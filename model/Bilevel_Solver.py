@@ -148,7 +148,7 @@ def priceVector_plot(list_items, actual_winning_bids_list, estimated_prices_list
     st.write(dataframe)
 
     # Here we use a column with categorical data
-    fig = px.box(dataframe, x="Items", y="Pricing", color="smoker")
+    fig = px.box(dataframe.melt(), x="Items", y="Pricing", color="smoker")
     st.plotly_chart(fig, use_container_width=True)
 
 def auctionWinners_HeatMap(winner_dataframe):
