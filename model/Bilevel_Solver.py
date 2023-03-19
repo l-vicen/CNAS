@@ -116,6 +116,9 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
 
     try:
         solver.solve(model)   
+        print_into_streamlit("Auction Winner",  model.X)
+
+
         # Display Auction Winners
         x_vals = pd.Series(model.X.extract_values(), name=model.X.name)
         winner_dataframe_pre = x_vals.to_frame().reset_index()
