@@ -1,9 +1,8 @@
 import streamlit as st
-import model.Bilevel_Programming as bls
-import model.Solver_Parser as sl
+import model.Bilevel_Solver as bls
+import model.Parser as sl
 import data.DataBase as db
 from collections import OrderedDict
-import random
 import itertools
 
 def solve_auction():
@@ -96,8 +95,7 @@ def solve_auction():
                 key = pair_cross_products[i]
                 if key not in Suppliers_Production_Cost:
                     Suppliers_Production_Cost[key] = -1
-            ''' ---------------------------------------------------------------------------------------- '''
-
+        
             # Defining Utility
             utility_list = [(exp_expense * 1.2)  for exp_expense in budget_item_set]
             Utility = sl.parse_to_dictionary_format(List_Auction_Items, utility_list)
