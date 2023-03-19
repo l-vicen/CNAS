@@ -1,6 +1,7 @@
 # 3rdParty Libraries
 import streamlit as st
 import pandas as pd
+import numpy as np
 from google.oauth2 import service_account
 from shillelagh.backends.apsw.db import connect
 
@@ -173,6 +174,9 @@ def parse_auction_lot(auction_lot, auction_lot_item, smallest_bid):
     st.write(Participating_Suppliers)
     st.write(item_bid_history_2D_list)
     st.write("-----")
+
+    min_pair = np.where(item_bid_history_2D_list == np.min(item_bid_history_2D_list))
+    st.write(min_pair)
 
     # Summary Dictionary
     dictionary_lot_summary =  {
