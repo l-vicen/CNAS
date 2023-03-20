@@ -2,9 +2,7 @@
 from pyomo.environ import *
 from pao.pyomo import *
 import plotly.express as px
-import plotly.graph_objects as go
 import pandas as pd
-import numpy as np
 import streamlit as st
 from streamlit.runtime.scriptrunner.script_run_context import SCRIPT_RUN_CONTEXT_ATTR_NAME
 from threading import current_thread
@@ -42,7 +40,7 @@ def lower_and_upper_bound_constraint(submodel, j, i):
     # return (submodel.Production_Costs[j,i], submodel.P[j,i], submodel.Budget[i])
     return (0, submodel.P[j,i], submodel.Budget[i])
 
-def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary, supplier_capacity_dictionary, budget_dictionary, production_costs_dictionary, actual_winning_bids_list, demanded_quantities_list, estimated_prices_list):
+def build_model(chosen_solver, set_items, set_suppliers, demand_dictionary, utility_dictionary, supplier_capacity_dictionary, budget_dictionary, production_costs_dictionary, actual_winning_bids_list, demanded_quantities_list, estimated_prices_list):
 
     # Upper-level definition: Auction Problem
     model = ConcreteModel("Upper-level: Auction Problem")
@@ -113,7 +111,7 @@ def build_model(set_items, set_suppliers, demand_dictionary, utility_dictionary,
     print_into_streamlit("Model Formulation",  model)
 
     # Calling the Big-M Relaxation Solver
-    solver = Solver('pao.pyomo.FA')
+    solver = Solver(chosen_solver)
 
     try:
         solver.solve(model)   

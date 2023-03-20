@@ -1,9 +1,9 @@
+# Libraries
 import streamlit as st
 import data.Extractor as Extractor
 import data.DataBase as DataBase
 
 TEXT_INPUT = ""
-
 def insert_into_data_set_view():
 
     st.title("POST: Data Set")

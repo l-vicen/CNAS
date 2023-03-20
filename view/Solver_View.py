@@ -99,6 +99,9 @@ def solve_auction():
             # Defining Utility
             utility_list = [(exp_expense * 1.2)  for exp_expense in budget_item_set]
             Utility = sl.parse_to_dictionary_format(List_Auction_Items, utility_list)
+
+            solver_options = ['pao.pyomo.FA','pao.pyomo.MIBS', 'pao.pyomo.PCCG']
+            chosen_solver = st.selectbox('How would you like to solve the bilevel problem?', solver_options)
     
             # Executing Bilevel Solver if btn is pressed
             btn_apply_bilevel = st.button("Apply Bilevel Solver")
@@ -111,4 +114,4 @@ def solve_auction():
                 Demanded_quantities_list = sl.get_cell_as_list(text_input, dataframe, "Demanded_Quantity_Items")
 
                 # Model Build and Solution
-                bls.build_model(List_Auction_Items, Participating_Supplier, Demand, Utility, Suppliers_Capacity, Budget, Suppliers_Production_Cost, Actual_winning_bids_list, Demanded_quantities_list, Estimated_prices_list)
+                bls.build_model(chosen_solver, List_Auction_Items, Participating_Supplier, Demand, Utility, Suppliers_Capacity, Budget, Suppliers_Production_Cost, Actual_winning_bids_list, Demanded_quantities_list, Estimated_prices_list)
