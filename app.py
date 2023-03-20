@@ -17,7 +17,8 @@ page = st.sidebar.selectbox('Choose Page', features)
 st.sidebar.markdown('---')
 
 if page == features[0]:
-    pass
+    st.title("CNAS Application")
+    st.info("Is is a streamlit application able to query auction data from ComprasNet Platform storing them into a proprietary data base (Google Sheet).")
 elif page == features[1]:
     get_view.get_data_set_view()
 elif page == features[2]:
