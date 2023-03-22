@@ -16,10 +16,9 @@ def solve_auction():
     st.dataframe(dataframe)
 
     st.markdown("---")
-    st.markdown("### User Input")
+    st.markdown("### Input Section")
     # Insert Target 
     text_input = st.text_input("Enter the auctionID: ", key="solver_input", help= "The actionID is found in the first column of the proprietary data set.")
-    st.markdown("---")
 
     if (text_input):
 
@@ -66,7 +65,6 @@ def solve_auction():
                 Suppliers_Capacity[key] = 0
 
         ''' PART: Building DICTIONARY {(Supp, Item), Production_Cost_per_Supplier_per_Item} for Model '''
-        st.markdown("### Input Section")
         percentage_cost_multiplier = st.number_input("Enter COGS Multiplier")
 
         if (percentage_cost_multiplier):
