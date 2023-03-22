@@ -102,7 +102,7 @@ def solve_auction():
             utility_list = [(exp_expense * 1.2)  for exp_expense in budget_item_set]
             Utility = sl.parse_to_dictionary_format(List_Auction_Items, utility_list)
 
-            solver_options = ['pao.pyomo.FA','pao.pyomo.MIBS', 'pao.pyomo.PCCG']
+            solver_options = ['pao.pyomo.FA','pao.pyomo.MIBS']
             chosen_solver = st.selectbox('How would you like to solve the bilevel problem?', solver_options)
     
             # Executing Bilevel Solver if btn is pressed

@@ -40,7 +40,7 @@ def lower_and_upper_bound_constraint(submodel, j, i):
     # return (submodel.Production_Costs[j,i], submodel.P[j,i], submodel.Budget[i])
     return (0, submodel.P[j,i], submodel.Budget[i])
 
-def build_model(chosen_solver, set_items, set_suppliers, demand_dictionary, utility_dictionary, supplier_capacity_dictionary, budget_dictionary, production_costs_dictionary, actual_winning_bids_list, demanded_quantities_list, estimated_prices_list):
+def build_model(chosen_solver, bigM, set_items, set_suppliers, demand_dictionary, utility_dictionary, supplier_capacity_dictionary, budget_dictionary, production_costs_dictionary, actual_winning_bids_list, demanded_quantities_list, estimated_prices_list):
 
     # Upper-level definition: Auction Problem
     model = ConcreteModel("Upper-level: Auction Problem")
@@ -114,7 +114,12 @@ def build_model(chosen_solver, set_items, set_suppliers, demand_dictionary, util
     solver = Solver(chosen_solver)
 
     try:
-        solver.solve(model)   
+
+        if (chosen_solver == "pao.pyomo.FA"):
+            solver.solve(model, linearize_bigm = bigM)
+        else:
+            solver.solve(model)
+
 
         # Display Auction Winners
         x_vals = pd.Series(model.X.extract_values(), name=model.X.name)
