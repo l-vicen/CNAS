@@ -105,7 +105,7 @@ def solve_auction():
             solver_options = ['pao.pyomo.FA','pao.pyomo.MIBS']
             chosen_solver = st.selectbox('How would you like to solve the bilevel problem?', solver_options)
 
-            bigM = st.number_input('Insert an estimate for the Big-M parameter:')
+            bigM = int(st.number_input('Insert an estimate for the Big-M parameter:'))
     
             # Executing Bilevel Solver if btn is pressed
             btn_apply_bilevel = st.button("Apply Bilevel Solver")
