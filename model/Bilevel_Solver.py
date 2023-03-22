@@ -34,7 +34,7 @@ def single_sourcing_constraint(model, i):
     return sum(model.X[j,i] for j in model.j) == 1
 
 def demand_requirement_constraint(model, i):
-    return sum(model.Supply_capacity[j,i] * model.X[j,i] for j in model.j) == model.Demand[i]
+    return sum(model.Supply_capacity[j,i] * model.X[j,i] for j in model.j) >= model.Demand[i]
 
 def lower_and_upper_bound_constraint(submodel, j, i):
     # return (submodel.Production_Costs[j,i], submodel.P[j,i], submodel.Budget[i])
