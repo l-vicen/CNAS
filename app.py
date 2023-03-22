@@ -8,7 +8,7 @@ import view.Solver_View as solver_view
 st.set_page_config(layout="wide")
 
 # Side Bar Class Declaration
-st.sidebar.image('assets/tum_logo.png')
+st.sidebar.image('assets/auction.png')
 st.sidebar.markdown('---')
 
 # Sidebar attributes
