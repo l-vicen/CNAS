@@ -104,6 +104,8 @@ def solve_auction():
 
             solver_options = ['pao.pyomo.FA','pao.pyomo.MIBS']
             chosen_solver = st.selectbox('How would you like to solve the bilevel problem?', solver_options)
+
+            bigM = st.number_input('Insert an estimate for the Big-M parameter:')
     
             # Executing Bilevel Solver if btn is pressed
             btn_apply_bilevel = st.button("Apply Bilevel Solver")
@@ -116,4 +118,4 @@ def solve_auction():
                 Demanded_quantities_list = sl.get_cell_as_list(text_input, dataframe, "Demanded_Quantity_Items")
 
                 # Model Build and Solution
-                bls.build_model(chosen_solver, List_Auction_Items, Participating_Supplier, Demand, Utility, Suppliers_Capacity, Budget, Suppliers_Production_Cost, Actual_winning_bids_list, Demanded_quantities_list, Estimated_prices_list)
+                bls.build_model(chosen_solver, bigM, List_Auction_Items, Participating_Supplier, Demand, Utility, Suppliers_Capacity, Budget, Suppliers_Production_Cost, Actual_winning_bids_list, Demanded_quantities_list, Estimated_prices_list)
