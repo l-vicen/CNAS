@@ -38,8 +38,8 @@ def demand_requirement_constraint(model, i):
 
 def lower_and_upper_bound_constraint(submodel, j, i):
     # return (submodel.Production_Costs[j,i], submodel.P[j,i], submodel.Budget[i])
-    # return (0, submodel.P[j,i], submodel.Budget[i])
-    return (0, submodel.P[j,i])
+    return (0, submodel.P[j,i], submodel.Budget[i])
+    # return (0, submodel.P[j,i])
 
 def build_model(chosen_solver, set_items, set_suppliers, demand_dictionary, utility_dictionary, supplier_capacity_dictionary, budget_dictionary, production_costs_dictionary, actual_winning_bids_list, demanded_quantities_list, estimated_prices_list):
 
