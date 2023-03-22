@@ -143,7 +143,7 @@ def priceVector_plot(list_items, actual_winning_bids_list, estimated_prices_list
 
     dataframe = pd.DataFrame(list(zip(list_items, total_expected_expense_price, total_actual_winning_bid_price)), columns=['Items', 'Expected Pricing', 'Actual Winning Pricing'])
     dataframe['Model Suggested Pricing'] = dataframe['Items'].map(total_price_model_suggestion)
-    st.write(dataframe)
+    # st.write(dataframe)
 
     figOne = px.scatter(dataframe, y=['Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'], x="Items", labels=dict(x="Items", y="Pricing"))
     figTwo = px.box(dataframe, y=['Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'], x="Items", points="all", labels=dict(x="Items", y="Pricing"))
