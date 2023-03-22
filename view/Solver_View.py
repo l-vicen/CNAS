@@ -8,13 +8,16 @@ import itertools
 def solve_auction():
 
     st.title("SOLVER: Bilevel Programming")
+    st.info("This page allows users to build the model of any ComprasNet auction in the proprietary data set.")
+    st.markdown("---")
 
     # Get Data Set
     dataframe = db.get_db()
     st.dataframe(dataframe)
 
+    st.markdown("---")
+    st.markdown("### User Input")
     # Insert Target 
-    st.info("This page allows users to build the model of any ComprasNet auction in the proprietary data set.")
     text_input = st.text_input("Enter the auctionID: ", key="solver_input", help= "The actionID is found in the first column of the proprietary data set.")
     st.markdown("---")
 
