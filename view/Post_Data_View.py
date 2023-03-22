@@ -7,9 +7,11 @@ TEXT_INPUT = ""
 def insert_into_data_set_view():
 
     st.title("POST: Data Set")
-
+    st.info("This page allows users to input an auction identifier into the input box below which than queries the data from ComprasNet's platform and sends it to the proprietary data set.")
+    st.markdown("---")
+    
     # Insert Target 
-    text_input = st.text_input("Enter the auctionID: ", key="auction_id", help= "The actionID is the identifier of the Pregao.")
+    text_input = st.text_input("Enter the auctionID: ", key="auction_id", help= "The actionID is a sixteen-digit combination of two auction identifiers (ID_Responsible_Auctioneer + ZERO + Auction_Number)")
     btn_clicked = st.button("Insert")
     st.markdown("---")
 

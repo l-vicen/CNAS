@@ -18,7 +18,9 @@ st.sidebar.markdown('---')
 
 if page == features[0]:
     st.title("CNAS Application")
-    st.info("Is is a streamlit application able to query auction data from ComprasNet Platform storing them into a proprietary data base (Google Sheet).")
+    st.info("Is is a web application able to query auction data from ComprasNet Platform storing them into a proprietary data base (Google Sheet).")
+    st.markdown("---")
+    st.markdown("## How to use it")
 elif page == features[1]:
     get_view.get_data_set_view()
 elif page == features[2]:

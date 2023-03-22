@@ -14,7 +14,8 @@ def solve_auction():
     st.dataframe(dataframe)
 
     # Insert Target 
-    text_input = st.text_input("Enter the auctionID: ", key="solver_input", help= "The actionID is the identifier of the Pregao.")
+    st.info("This page allows users to build the model of any ComprasNet auction in the proprietary data set.")
+    text_input = st.text_input("Enter the auctionID: ", key="solver_input", help= "The actionID is found in the first column of the proprietary data set.")
     st.markdown("---")
 
     if (text_input):
