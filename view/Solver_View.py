@@ -103,7 +103,7 @@ def solve_auction():
                     Suppliers_Production_Cost[key] = -1
         
             # Defining Utility
-            utility_list = [(exp_expense * 1.2)  for exp_expense in budget_item_set]
+            utility_list = [(exp_expense * 1.2)  for exp_expense in list_budget_items]
             Utility = sl.parse_to_dictionary_format(List_Auction_Items, utility_list)
 
             solver_options = ['pao.pyomo.FA','pao.pyomo.MIBS']
