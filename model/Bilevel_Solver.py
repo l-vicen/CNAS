@@ -2,6 +2,7 @@
 from pyomo.environ import *
 from pao.pyomo import *
 import plotly.express as px
+import plotly.graph_objects as go
 import pandas as pd
 import streamlit as st
 from streamlit.runtime.scriptrunner.script_run_context import SCRIPT_RUN_CONTEXT_ATTR_NAME
@@ -143,7 +144,6 @@ def priceVector_plot(list_items, actual_winning_bids_list, estimated_prices_list
     st.markdown('### Pricing Determination')
     total_expected_expense_price = [a*b for a,b in zip(estimated_prices_list, demanded_quantities_list)]
     total_actual_winning_bid_price = [a*b for a,b in zip(actual_winning_bids_list, demanded_quantities_list)]
- 
     dataframe = pd.DataFrame(list(zip(list_items, total_expected_expense_price, total_actual_winning_bid_price)), columns=['Items', 'Expected Pricing', 'Actual Winning Pricing'])
     
     count = 0
@@ -151,26 +151,50 @@ def priceVector_plot(list_items, actual_winning_bids_list, estimated_prices_list
         total_price_model_suggestion[k] = v * demanded_quantities_list[count]
         count = count + 1
 
-    st.markdown("### Total Per Item")
-    st.write(total_price_model_suggestion)
-
     dataframe['Model Suggested Pricing'] = dataframe['Items'].map(total_price_model_suggestion)
-    st.write(dataframe)
 
     figOne = px.scatter(dataframe, y=['Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'], x="Items",
                 labels={
                      "value": "Pricing",
                      "variable": "Pricing Models"
                  })
-    figTwo = px.box(dataframe, y=['Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'], x="Items",
-                    color= 'Items',
-                    points="all",
-                    labels={
-                     "value": "Pricing",
-                     "variable": "Pricing Models"
-                 })
-    figOne.update_traces(marker_size=10)
+    
 
+    # figTwo = px.box(dataframe, y=['Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'], x="Items",
+    #                 color= 'Items',
+    #                 points="all",
+    #                 labels={
+    #                  "value": "Pricing",
+    #                  "variable": "Pricing Models"
+    #              })
+
+    figTwo = go.Figure()
+    figTwo.add_trace(go.Box(
+            x="Items",
+            name='Markers',
+            line_color='rgba(128, 128, 128, .0)',
+            fillcolor='darkgrey',
+            yaxis='y2'
+        ))
+    
+    figTwo.add_trace(go.Scatter(
+            x="Items",
+            y=['Markers']*len("Items"),
+            name='Markers',
+            mode="markers",
+            marker_color='orange',
+            marker_size=8
+        #     layer='below' # does not work
+        ))
+    
+    figTwo.update_layout(yaxis2=dict(
+                matches='y',
+                layer="above traces",
+                overlaying="y",       
+    ),)
+
+    
+    figOne.update_traces(marker_size=10)
     col1, col2 = st.columns(2)
     col1.plotly_chart(figOne, use_container_width=True)
     col2.plotly_chart(figTwo, use_container_width=True)
