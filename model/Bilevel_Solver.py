@@ -149,6 +149,10 @@ def priceVector_plot(list_items, actual_winning_bids_list, estimated_prices_list
     # total_model_determination_bid_price = [a*b for a,b in zip(total_price_model_suggestion, demanded_quantities_list)]
 
     dataframe = pd.DataFrame(list(zip(list_items, total_expected_expense_price, total_actual_winning_bid_price)), columns=['Items', 'Expected Pricing', 'Actual Winning Pricing'])
+    total_price_model_suggestion = {k: demanded_quantities_list[v-2]*total_price_model_suggestion[k] for k, v in total_price_model_suggestion.items()}
+    st.markdown("### Total Per Item")
+    st.write(total_price_model_suggestion)
+
     dataframe['Model Suggested Pricing'] = dataframe['Items'].map(total_price_model_suggestion)
     st.write(dataframe)
 
