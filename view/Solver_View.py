@@ -100,12 +100,11 @@ def solve_auction():
             Utility = sl.parse_to_dictionary_format(List_Auction_Items, utility_list)
 
             solver_options = ['pao.pyomo.FA','pao.pyomo.MIBS']
-
+            chosen_solver = st.selectbox('How would you like to solve the bilevel problem?', solver_options)
+            
             if ('pao.pyomo.MIBS'):
                 st.warning("The iterface to MibS is a prototype that has not been well-tested. This interface will be documented and finalized in an upcoming release of PAO. For more see (https://pao.readthedocs.io/en/latest/solvers.html).")
 
-            chosen_solver = st.selectbox('How would you like to solve the bilevel problem?', solver_options)
-    
             # Executing Bilevel Solver if btn is pressed
             btn_apply_bilevel = st.button("Apply Bilevel Solver")
             st.markdown("---")
