@@ -160,41 +160,16 @@ def priceVector_plot(list_items, actual_winning_bids_list, estimated_prices_list
                  })
     
 
-    # figTwo = px.box(dataframe, y=['Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'], x="Items",
-    #                 color= 'Items',
-    #                 points="all",
-    #                 labels={
-    #                  "value": "Pricing",
-    #                  "variable": "Pricing Models"
-    #              })
-
-    figTwo = go.Figure()
-    figTwo.add_trace(go.Box(
-            x="Items",
-            name='Markers',
-            line_color='rgba(128, 128, 128, .0)',
-            fillcolor='darkgrey',
-            yaxis='y2'
-        ))
-    
-    figTwo.add_trace(go.Scatter(
-            x="Items",
-            y=['Markers']*len("Items"),
-            name='Markers',
-            mode="markers",
-            marker_color='orange',
-            marker_size=8
-        #     layer='below' # does not work
-        ))
-    
-    figTwo.update_layout(yaxis2=dict(
-                matches='y',
-                layer="above traces",
-                overlaying="y",       
-    ),)
-
+    figTwo = px.box(dataframe, y=['Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'], x="Items",
+                    points="all",
+                    labels={
+                     "value": "Pricing",
+                     "variable": "Pricing Models"
+                 })
     
     figOne.update_traces(marker_size=10)
+    figTwo.update_traces(marker_size=10)
+    
     col1, col2 = st.columns(2)
     col1.plotly_chart(figOne, use_container_width=True)
     col2.plotly_chart(figTwo, use_container_width=True)
