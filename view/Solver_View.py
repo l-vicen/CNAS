@@ -24,28 +24,23 @@ def solve_auction():
 
         # Getting list of auctioned items
         List_Auction_Items = sl.get_cell_as_list(text_input, dataframe, "Items_Auctioned")
+        # st.markdown("### Auctioned Items")
+        # st.write(List_Auction_Items)
 
-        # Getting list of demands for items
+        # Getting list of demands for items & Building DICT: {Item, Demand}
         list_demand_items = sl.get_cell_as_list(text_input, dataframe, "Demanded_Quantity_Items")
-
-        # Building DICT: {Item, Demand}
         Demand = sl.parse_to_dictionary_format(List_Auction_Items, list_demand_items)
-        st.markdown("### Demand List")
-        st.write(Demand)
+        # st.markdown("### Demand List")
+        # st.write(Demand)
 
-        # Getting list of expected prices per item
+        # Getting list of expected prices per item & Building DICT: {Item, Budget}
         list_budget_items = sl.get_cell_as_list(text_input, dataframe, "Estimated_Price_Items")
-        st.markdown("### Budget List")
-        st.write(list_budget_items)
-
-        # Building DICT: {Item, Budget}
-        # budget_item_set = [a*b for a,b in zip(list_demand_items,list_budget_items)]
         Budget = sl.parse_to_dictionary_format(List_Auction_Items, list_budget_items)
+        # st.markdown("### Budget List")
+        # st.write(list_budget_items)
 
-        # Getting list of auction lots
+        # Getting list of auction lots & Building list of participating suppliers
         list_auction_lots = sl.get_cell_as_list_of_dict(text_input, dataframe)
-
-        # Building list of participating suppliers
         auction_lots = len(list_auction_lots)
         Participating_Supplier = [str(supp) for i in range(auction_lots) for supp in list_auction_lots[i]["Participating_Suppliers"]]
         Participating_Supplier = list(OrderedDict.fromkeys(Participating_Supplier))
@@ -57,7 +52,6 @@ def solve_auction():
         Supplies_Item_Pair_List = [(str(list_auction_lots[i].get("Participating_Suppliers")[j]), str(list_auction_lots[i].get("Lot_Item"))) for i in range(auction_lots) for j in range(len(list_auction_lots[i].get("Participating_Suppliers")))]
         
         ''' PART: Building DICTIONARY {(Supp, Item), Supply_Capacity} for Model '''
-
         length_cross_product = len(pair_cross_products)
         length_supp_with_capacity_list = len(Supplies_Item_Pair_List)
         Suppliers_Capacity = {Supplies_Item_Pair_List[i] : (Demand.get(Supplies_Item_Pair_List[i][1]) if Supplies_Item_Pair_List[i][1] in Demand else 0) for i in range(length_supp_with_capacity_list)}
@@ -70,7 +64,6 @@ def solve_auction():
 
         ''' PART: Building DICTIONARY {(Supp, Item), Production_Cost_per_Supplier_per_Item} for Model '''
         percentage_cost_multiplier = st.number_input("Enter COGS Multiplier")
-
         if (percentage_cost_multiplier):
             Suppliers_Production_Cost = {}
             for i in range(length_supp_with_capacity_list):
