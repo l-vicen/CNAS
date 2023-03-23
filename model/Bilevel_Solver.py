@@ -89,7 +89,7 @@ def build_model(chosen_solver, set_items, set_suppliers, demand_dictionary, util
     # print_into_streamlit("Auctioneer's expected Expense per Items",  model.L.Budget)
 
     model.L.Production_Costs = Param(model.j, model.i, initialize = production_costs_dictionary, mutable=False, doc='Suppliers\'_individual_Production_Cost_per_Item')
-    # print_into_streamlit("Suppliers\' individual Production Cost per Item",  model.L.Production_Costs)
+    print_into_streamlit("Suppliers\' individual Production Cost per Item",  model.L.Production_Costs)
 
     # Objective function assignments
     model.o = Objective(rule=auction_objective_function(model), sense=maximize, doc='Auction_Problem') # Upper-level 
