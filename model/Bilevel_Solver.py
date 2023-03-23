@@ -37,8 +37,8 @@ def demand_requirement_constraint(model, i):
     return sum(model.Supply_capacity[j,i] * model.X[j,i] for j in model.j) >= model.Demand[i]
 
 def lower_and_upper_bound_constraint(submodel, j, i):
-    # return (submodel.Production_Costs[j,i], submodel.P[j,i], submodel.Budget[i])
-    return (0, submodel.P[j,i], submodel.Budget[i])
+    return (submodel.Production_Costs[j,i], submodel.P[j,i], submodel.Budget[i])
+    # return (0, submodel.P[j,i], submodel.Budget[i])
     # return (0, submodel.P[j,i])
 
 def build_model(chosen_solver, set_items, set_suppliers, demand_dictionary, utility_dictionary, supplier_capacity_dictionary, budget_dictionary, production_costs_dictionary, actual_winning_bids_list, demanded_quantities_list, estimated_prices_list):
@@ -120,6 +120,7 @@ def build_model(chosen_solver, set_items, set_suppliers, demand_dictionary, util
             solver.solve(model)
         else:
             solver.solve(model)
+            st.warning("The iterface to MibS is a prototype that has not been well-tested. This interface will be documented and finalized in an upcoming release of PAO. For more see (https://pao.readthedocs.io/en/latest/solvers.html).")
 
 
         # Display Auction Winners
