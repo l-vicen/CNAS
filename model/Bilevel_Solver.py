@@ -77,7 +77,7 @@ def build_model(chosen_solver, set_items, set_suppliers, demand_dictionary, util
     model.production_costs := the production cost of item i if produced by supplier j.
     '''
     model.Demand = Param(model.i, initialize= demand_dictionary, mutable=False, doc='Auctioneer\'s_Demand_per_Item')
-    # print_into_streamlit("Auctioneer's Demand per Item", model.Demand)
+    print_into_streamlit("Auctioneer's Demand per Item", model.Demand)
 
     model.Utility = Param(model.i, initialize= utility_dictionary, mutable=False, doc='Auctioneer\'s_Perceived_Utility_per_Item')
     # print_into_streamlit("Auctioneer's Perceived Utility per Item",  model.Utility)
@@ -86,7 +86,7 @@ def build_model(chosen_solver, set_items, set_suppliers, demand_dictionary, util
     # print_into_streamlit("Suppliers\' individual Supply Capacity per Item",   model.Supply_capacity)
 
     model.L.Budget = Param(model.i, initialize= budget_dictionary, mutable=False, doc='Auctioneer\'s_expected_Expense_per_Items')
-    # print_into_streamlit("Auctioneer's expected Expense per Items",  model.L.Budget)
+    print_into_streamlit("Auctioneer's expected Expense per Items",  model.L.Budget)
 
     model.L.Production_Costs = Param(model.j, model.i, initialize = production_costs_dictionary, mutable=False, doc='Suppliers\'_individual_Production_Cost_per_Item')
     # print_into_streamlit("Suppliers\' individual Production Cost per Item",  model.L.Production_Costs)
