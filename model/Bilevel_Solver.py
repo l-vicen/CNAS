@@ -165,8 +165,10 @@ def priceVector_plot(list_items, actual_winning_bids_list, estimated_prices_list
                      "value": "Pricing",
                      "variable": "Pricing Models"
                  })
-    figTwo = px.box(dataframe, y=['Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'], x="Items", points="all",
-                     labels={
+    figTwo = px.box(dataframe, y=['Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'], x="Items",
+                    color= ['Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'],
+                    points="all",
+                    labels={
                      "value": "Pricing",
                      "variable": "Pricing Models"
                  })
