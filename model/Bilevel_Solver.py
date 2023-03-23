@@ -37,9 +37,8 @@ def demand_requirement_constraint(model, i):
     return sum(model.Supply_capacity[j,i] * model.X[j,i] for j in model.j) >= model.Demand[i]
 
 def lower_and_upper_bound_constraint(submodel, j, i):
-    return (submodel.Production_Costs[j,i], submodel.P[j,i], submodel.Budget[i])
-    # return (0, submodel.P[j,i], submodel.Budget[i])
-    # return (0, submodel.P[j,i])
+    # return (submodel.Production_Costs[j,i], submodel.P[j,i], submodel.Budget[i])
+    return (0, submodel.P[j,i], submodel.Budget[i])
 
 def build_model(chosen_solver, set_items, set_suppliers, demand_dictionary, utility_dictionary, supplier_capacity_dictionary, budget_dictionary, production_costs_dictionary, actual_winning_bids_list, demanded_quantities_list, estimated_prices_list):
 
@@ -89,7 +88,7 @@ def build_model(chosen_solver, set_items, set_suppliers, demand_dictionary, util
     # print_into_streamlit("Auctioneer's expected Expense per Items",  model.L.Budget)
 
     model.L.Production_Costs = Param(model.j, model.i, initialize = production_costs_dictionary, mutable=False, doc='Suppliers\'_individual_Production_Cost_per_Item')
-    print_into_streamlit("Suppliers\' individual Production Cost per Item",  model.L.Production_Costs)
+    # print_into_streamlit("Suppliers\' individual Production Cost per Item",  model.L.Production_Costs)
 
     # Objective function assignments
     model.o = Objective(rule=auction_objective_function(model), sense=maximize, doc='Auction_Problem') # Upper-level 
@@ -115,13 +114,10 @@ def build_model(chosen_solver, set_items, set_suppliers, demand_dictionary, util
     solver = Solver(chosen_solver)
 
     try:
-
         if (chosen_solver == "pao.pyomo.FA"):
             solver.solve(model)
         else:
             solver.solve(model)
-            st.warning("The iterface to MibS is a prototype that has not been well-tested. This interface will be documented and finalized in an upcoming release of PAO. For more see (https://pao.readthedocs.io/en/latest/solvers.html).")
-
 
         # Display Auction Winners
         x_vals = pd.Series(model.X.extract_values(), name=model.X.name)
