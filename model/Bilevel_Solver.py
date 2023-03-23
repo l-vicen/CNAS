@@ -138,15 +138,16 @@ def build_model(chosen_solver, set_items, set_suppliers, demand_dictionary, util
         st.warning("No feasible Solution exists!")
 
 
-def priceVector_plot(list_items, actual_winning_bids_list, estimated_prices_list, total_price_model_suggestion, demanded_quatities_list):
+def priceVector_plot(list_items, actual_winning_bids_list, estimated_prices_list, total_price_model_suggestion, demanded_quantities_list):
     st.markdown('---')
     st.markdown('### Pricing Determination')
-    total_expected_expense_price = [a*b for a,b in zip(estimated_prices_list, demanded_quatities_list)]
-    total_actual_winning_bid_price = [a*b for a,b in zip(actual_winning_bids_list, demanded_quatities_list)]
+    total_expected_expense_price = [a*b for a,b in zip(estimated_prices_list, demanded_quantities_list)]
+    total_actual_winning_bid_price = [a*b for a,b in zip(actual_winning_bids_list, demanded_quantities_list)]
+    total_model_determination_bid_price = [a*b for a,b in zip(total_price_model_suggestion, demanded_quantities_list)]
 
-    dataframe = pd.DataFrame(list(zip(list_items, total_expected_expense_price, total_actual_winning_bid_price)), columns=['Items', 'Expected Pricing', 'Actual Winning Pricing'])
-    dataframe['Model Suggested Pricing'] = dataframe['Items'].map(total_price_model_suggestion)
-    # st.write(dataframe)
+    dataframe = pd.DataFrame(list(zip(list_items, total_expected_expense_price, total_actual_winning_bid_price, total_model_determination_bid_price)), columns=['Items', 'Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'])
+    # dataframe['Model Suggested Pricing'] = dataframe['Items'].map(total_price_model_suggestion)
+    st.write(dataframe)
 
     figOne = px.scatter(dataframe, y=['Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'], x="Items", labels=dict(x="Items", y="Pricing"))
     figTwo = px.box(dataframe, y=['Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'], x="Items", points="all", labels=dict(x="Items", y="Pricing"))
