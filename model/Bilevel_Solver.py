@@ -160,7 +160,11 @@ def priceVector_plot(list_items, actual_winning_bids_list, estimated_prices_list
     dataframe['Model Suggested Pricing'] = dataframe['Items'].map(total_price_model_suggestion)
     st.write(dataframe)
 
-    figOne = px.scatter(dataframe, y=['Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'], x="Items", labels=dict(x="Items", y="Pricing"))
+    figOne = px.scatter(dataframe, y=['Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'], x="Items",
+                labels={
+                     "value": "Pricing",
+                     "variable": "Pricing Models"
+                 })
     figTwo = px.box(dataframe, y=['Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'], x="Items", points="all", labels=dict(x="Items", y="Pricing"))
     figOne.update_traces(marker_size=10)
 
