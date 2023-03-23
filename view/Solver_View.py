@@ -30,9 +30,13 @@ def solve_auction():
 
         # Building DICT: {Item, Demand}
         Demand = sl.parse_to_dictionary_format(List_Auction_Items, list_demand_items)
+        st.markdown("### Demand List")
+        st.write(Demand)
 
         # Getting list of expected prices per item
         list_budget_items = sl.get_cell_as_list(text_input, dataframe, "Estimated_Price_Items")
+        st.markdown("### Budget List")
+        st.write(list_budget_items)
 
         # Building DICT: {Item, Budget}
         budget_item_set = [a*b for a,b in zip(list_demand_items,list_budget_items)]
