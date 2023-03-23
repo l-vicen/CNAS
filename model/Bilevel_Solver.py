@@ -133,6 +133,8 @@ def build_model(chosen_solver, set_items, set_suppliers, demand_dictionary, util
         results_effect= results_effect[results_effect['X'] != 0]
         results_dict = pd.Series(results_effect.P.values, index=results_effect.level_1).to_dict()
         st.write(results_dict)
+        st.write(demanded_quantities_list)
+
         priceVector_plot(set_items, actual_winning_bids_list, estimated_prices_list, results_dict, demanded_quantities_list)
        
     except ValueError:
