@@ -169,7 +169,8 @@ def priceVector_plot(list_items, actual_winning_bids_list, estimated_prices_list
     
     figOne.update_traces(marker_size=10)
     figTwo.update_traces(marker_size=10)
-    
+    figTwo.update_yaxes(type='category')
+
     col1, col2 = st.columns(2)
     col1.plotly_chart(figOne, use_container_width=True)
     col2.plotly_chart(figTwo, use_container_width=True)
