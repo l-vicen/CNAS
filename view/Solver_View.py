@@ -39,8 +39,8 @@ def solve_auction():
         st.write(list_budget_items)
 
         # Building DICT: {Item, Budget}
-        budget_item_set = [a*b for a,b in zip(list_demand_items,list_budget_items)]
-        Budget = sl.parse_to_dictionary_format(List_Auction_Items, budget_item_set)
+        # budget_item_set = [a*b for a,b in zip(list_demand_items,list_budget_items)]
+        Budget = sl.parse_to_dictionary_format(List_Auction_Items, list_budget_items)
 
         # Getting list of auction lots
         list_auction_lots = sl.get_cell_as_list_of_dict(text_input, dataframe)
