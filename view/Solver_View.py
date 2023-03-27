@@ -105,6 +105,8 @@ def solve_auction():
             if (chosen_solver == 'pao.pyomo.MIBS'):
                 st.warning("\"The iterface to MibS is a prototype that has not been well-tested. This interface will be documented and finalized in an upcoming release of PAO\". For more see (https://pao.readthedocs.io/en/latest/solvers.html).")
 
+            bigM = st.number_input('Choose Big-M Value')
+
             # Executing Bilevel Solver if btn is pressed
             btn_apply_bilevel = st.button("Apply Bilevel Solver")
             st.markdown("---")
@@ -116,4 +118,4 @@ def solve_auction():
                 Demanded_quantities_list = sl.get_cell_as_list(text_input, dataframe, "Demanded_Quantity_Items")
 
                 # Model Build and Solution
-                bls.build_model(chosen_solver, List_Auction_Items, Participating_Supplier, Demand, Utility, Suppliers_Capacity, Budget, Suppliers_Production_Cost, Actual_winning_bids_list, Demanded_quantities_list, Estimated_prices_list)
+                bls.build_model(bigM, chosen_solver, List_Auction_Items, Participating_Supplier, Demand, Utility, Suppliers_Capacity, Budget, Suppliers_Production_Cost, Actual_winning_bids_list, Demanded_quantities_list, Estimated_prices_list)
