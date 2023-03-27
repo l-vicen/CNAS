@@ -102,11 +102,11 @@ def solve_auction():
             solver_options = ['pao.pyomo.FA','pao.pyomo.MIBS']
             chosen_solver = st.selectbox('How would you like to solve the bilevel problem?', solver_options)
             
-            if (chosen_solver == 'pao.pyomo.MIBS'):
-                st.warning("\"The iterface to MibS is a prototype that has not been well-tested. This interface will be documented and finalized in an upcoming release of PAO\". For more see (https://pao.readthedocs.io/en/latest/solvers.html).")
-                bigM = 0
-            else:
+            
+            if (chosen_solver == 'pao.pyomo.FA'):
                 bigM = st.number_input('Choose Big-M Value', key=bigM)
+            else:
+                st.warning("\"The iterface to MibS is a prototype that has not been well-tested. This interface will be documented and finalized in an upcoming release of PAO\". For more see (https://pao.readthedocs.io/en/latest/solvers.html).")
 
             # Executing Bilevel Solver if btn is pressed
             btn_apply_bilevel = st.button("Apply Bilevel Solver")
