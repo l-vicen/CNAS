@@ -104,14 +104,14 @@ def solve_auction():
             
             
             if (chosen_solver == 'pao.pyomo.FA'):
-                bigM = st.number_input('Choose Big-M Value', key=bigM)
+                bigM = st.number_input('Choose Big-M Value', key=bigM,value=100)
             else:
                 st.warning("\"The iterface to MibS is a prototype that has not been well-tested. This interface will be documented and finalized in an upcoming release of PAO\". For more see (https://pao.readthedocs.io/en/latest/solvers.html).")
 
             # Executing Bilevel Solver if btn is pressed
             btn_apply_bilevel = st.button("Apply Bilevel Solver")
             st.markdown("---")
-            if (btn_apply_bilevel):
+            if (btn_apply_bilevel and bigM != 0):
                 
                 # For Visualizations
                 Estimated_prices_list = sl.get_cell_as_list(text_input, dataframe, "Estimated_Price_Items")
