@@ -104,8 +104,9 @@ def solve_auction():
             
             if (chosen_solver == 'pao.pyomo.MIBS'):
                 st.warning("\"The iterface to MibS is a prototype that has not been well-tested. This interface will be documented and finalized in an upcoming release of PAO\". For more see (https://pao.readthedocs.io/en/latest/solvers.html).")
-
-            bigM = st.number_input('Choose Big-M Value')
+                bigM = 0
+            else:
+                bigM = st.number_input('Choose Big-M Value', key=bigM)
 
             # Executing Bilevel Solver if btn is pressed
             btn_apply_bilevel = st.button("Apply Bilevel Solver")
