@@ -2,7 +2,6 @@
 from pyomo.environ import *
 from pao.pyomo import *
 import plotly.express as px
-import plotly.graph_objects as go
 import pandas as pd
 import streamlit as st
 from streamlit.runtime.scriptrunner.script_run_context import SCRIPT_RUN_CONTEXT_ATTR_NAME
