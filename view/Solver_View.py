@@ -98,18 +98,16 @@ def solve_auction():
             # Defining Utility
             utility_list = [(exp_expense * 1.2)  for exp_expense in list_budget_items]
             Utility = sl.parse_to_dictionary_format(List_Auction_Items, utility_list)
-
             solver_options = ['pao.pyomo.FA','pao.pyomo.MIBS']
             chosen_solver = st.selectbox('How would you like to solve the bilevel problem?', solver_options)
-            bigM = st.number_input('Choose Big-M Value', value=100)
-        
+
             if (chosen_solver == 'pao.pyomo.MIBS'):
                  st.warning("\"The iterface to MibS is a prototype that has not been well-tested. This interface will be documented and finalized in an upcoming release of PAO\". For more see (https://pao.readthedocs.io/en/latest/solvers.html).")
 
             # Executing Bilevel Solver if btn is pressed
             btn_apply_bilevel = st.button("Apply Bilevel Solver")
             st.markdown("---")
-            
+
             if (btn_apply_bilevel):
                 # For Visualizations
                 Estimated_prices_list = sl.get_cell_as_list(text_input, dataframe, "Estimated_Price_Items")
@@ -117,4 +115,4 @@ def solve_auction():
                 Demanded_quantities_list = sl.get_cell_as_list(text_input, dataframe, "Demanded_Quantity_Items")
 
                 # Model Build and Solution
-                bls.build_model(bigM, chosen_solver, List_Auction_Items, Participating_Supplier, Demand, Utility, Suppliers_Capacity, Budget, Suppliers_Production_Cost, Actual_winning_bids_list, Demanded_quantities_list, Estimated_prices_list)
+                bls.build_model(chosen_solver, List_Auction_Items, Participating_Supplier, Demand, Utility, Suppliers_Capacity, Budget, Suppliers_Production_Cost, Actual_winning_bids_list, Demanded_quantities_list, Estimated_prices_list)
