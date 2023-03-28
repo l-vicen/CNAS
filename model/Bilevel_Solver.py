@@ -108,7 +108,7 @@ def build_model(chosen_solver, set_items, set_suppliers, demand_dictionary, util
     model.L.BidPriceBoundaryConstraint = Constraint(model.j, model.i, rule=lower_and_upper_bound_constraint, doc='Bid_Price_is_non-negative')
     # print_into_streamlit("Bid Price Constraint",  model.L.BidPriceBoundaryConstraint)
 
-    print_into_streamlit("Model Formulation",  model)
+    # print_into_streamlit("Model Formulation",  model)
 
     try:
         if (chosen_solver == "pao.pyomo.FA"):
@@ -153,6 +153,7 @@ def priceVector_plot(list_items, actual_winning_bids_list, estimated_prices_list
         count = count + 1
 
     dataframe['Model Suggested Pricing'] = dataframe['Items'].map(total_price_model_suggestion)
+    st.write(dataframe)
 
     figOne = px.scatter(dataframe, y=['Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'], x="Items",
                 labels={
