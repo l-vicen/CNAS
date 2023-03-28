@@ -150,6 +150,9 @@ def priceVector_plot(list_items, actual_winning_bids_list, estimated_prices_list
     st.write(demanded_quantities_list)
     st.write(total_price_model_suggestion)
 
+    quantity_mapper = dict(zip(list_items, demanded_quantities_list))
+    st.write(quantity_mapper)
+
     count = 0
     for k, v in total_price_model_suggestion.items():
         total_price_model_suggestion[k] = v * demanded_quantities_list[count]
