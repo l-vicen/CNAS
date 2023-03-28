@@ -159,12 +159,12 @@ def priceVector_plot(list_items, actual_winning_bids_list, estimated_prices_list
     total_adjusted_for_quantity = {k: total_price_model_suggestion[k]*quantity_mapper[k] for k in quantity_mapper}
     st.write(total_adjusted_for_quantity)
 
-    count = 0
-    for k, v in total_price_model_suggestion.items():
-        total_price_model_suggestion[k] = v * demanded_quantities_list[count]
-        count = count + 1
+    # count = 0
+    # for k, v in total_price_model_suggestion.items():
+    #     total_price_model_suggestion[k] = v * demanded_quantities_list[count]
+    #     count = count + 1
 
-    dataframe['Model Suggested Pricing'] = dataframe['Items'].map(total_price_model_suggestion)
+    dataframe['Model Suggested Pricing'] = dataframe['Items'].map(total_adjusted_for_quantity)
     st.write(dataframe)
 
     figOne = px.scatter(dataframe, y=['Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'], x="Items",
