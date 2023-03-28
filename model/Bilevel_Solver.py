@@ -119,6 +119,8 @@ def build_model(chosen_solver, set_items, set_suppliers, demand_dictionary, util
             solver = Solver(chosen_solver)
             solver.solve(model)
 
+        print_into_streamlit("Solved Model Formulation",  model)
+
         # Display Auction Winners
         x_vals = pd.Series(model.X.extract_values(), name=model.X.name)
         winner_dataframe_pre = x_vals.to_frame().reset_index()
