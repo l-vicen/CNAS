@@ -154,20 +154,13 @@ def priceVector_plot(list_items, actual_winning_bids_list, estimated_prices_list
     # Adjusting price found per unit to the whole quantity
     total_price_model_suggestion = collections.OrderedDict(sorted(total_price_model_suggestion.items()))
     # st.write(total_price_model_suggestion)
-
     quantity_mapper = collections.OrderedDict(sorted(dict(zip(list_items, demanded_quantities_list)).items()))
     # st.write(quantity_mapper)
-
     total_adjusted_for_quantity = {k: total_price_model_suggestion[k]*quantity_mapper[k] for k in quantity_mapper}
     # st.write(total_adjusted_for_quantity)
 
-    # count = 0
-    # for k, v in total_price_model_suggestion.items():
-    #     total_price_model_suggestion[k] = v * demanded_quantities_list[count]
-    #     count = count + 1
-
     dataframe['Model Suggested Pricing'] = dataframe['Items'].map(total_adjusted_for_quantity)
-    st.write(dataframe)
+    # st.write(dataframe)
 
     figOne = px.scatter(dataframe, y=['Expected Pricing', 'Actual Winning Pricing', 'Model Suggested Pricing'], x="Items",
                 labels={
