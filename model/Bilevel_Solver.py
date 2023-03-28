@@ -4,6 +4,7 @@ from pao.pyomo import *
 import plotly.express as px
 import pandas as pd
 import streamlit as st
+import collections
 from streamlit.runtime.scriptrunner.script_run_context import SCRIPT_RUN_CONTEXT_ATTR_NAME
 from threading import current_thread
 from contextlib import contextmanager
@@ -139,7 +140,7 @@ def build_model(chosen_solver, set_items, set_suppliers, demand_dictionary, util
     except ValueError:
         st.warning("No feasible Solution exists!")
 
-
+"""Scatter Plot Function"""
 def priceVector_plot(list_items, actual_winning_bids_list, estimated_prices_list, total_price_model_suggestion, demanded_quantities_list):
     st.markdown('---')
     st.markdown('### Pricing Determination')
@@ -148,6 +149,8 @@ def priceVector_plot(list_items, actual_winning_bids_list, estimated_prices_list
     dataframe = pd.DataFrame(list(zip(list_items, total_expected_expense_price, total_actual_winning_bid_price)), columns=['Items', 'Expected Pricing', 'Actual Winning Pricing'])
     
     st.write(demanded_quantities_list)
+    st.write(total_price_model_suggestion)
+    total_price_model_suggestion = collections.OrderedDict(sorted(total_price_model_suggestion.items()))
     st.write(total_price_model_suggestion)
 
     quantity_mapper = dict(zip(list_items, demanded_quantities_list))
@@ -182,6 +185,7 @@ def priceVector_plot(list_items, actual_winning_bids_list, estimated_prices_list
     col2.plotly_chart(figTwo, use_container_width=True)
 
 
+"""Heat Map Plot Function"""
 def auctionWinners_HeatMap(winner_dataframe):
     st.markdown('---')
     st.markdown('### Auction Winners')
