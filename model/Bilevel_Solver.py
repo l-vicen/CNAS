@@ -146,15 +146,18 @@ def priceVector_plot(list_items, actual_winning_bids_list, estimated_prices_list
     st.markdown('### Pricing Determination')
     total_expected_expense_price = [a*b for a,b in zip(estimated_prices_list, demanded_quantities_list)]
     total_actual_winning_bid_price = [a*b for a,b in zip(actual_winning_bids_list, demanded_quantities_list)]
-    dataframe = pd.DataFrame(list(zip(list_items, total_expected_expense_price, total_actual_winning_bid_price)), columns=['Items', 'Expected Pricing', 'Actual Winning Pricing'])
-    
-    st.write(demanded_quantities_list)
-    st.write(total_price_model_suggestion)
+    dataframe = pd.DataFrame(list(zip(list_items, total_expected_expense_price, total_actual_winning_bid_price)), columns=['Items', 'Expected Pricing', 'Actual Winning Pricing'])    
+    # st.write(demanded_quantities_list)
+    # st.write(total_price_model_suggestion)
+
     total_price_model_suggestion = collections.OrderedDict(sorted(total_price_model_suggestion.items()))
     st.write(total_price_model_suggestion)
 
     quantity_mapper = collections.OrderedDict(sorted(dict(zip(list_items, demanded_quantities_list)).items()))
     st.write(quantity_mapper)
+
+    total_adjusted_for_quantity = {k: total_price_model_suggestion[k]*quantity_mapper[k] for k in quantity_mapper}
+    st.write(total_adjusted_for_quantity)
 
     count = 0
     for k, v in total_price_model_suggestion.items():
