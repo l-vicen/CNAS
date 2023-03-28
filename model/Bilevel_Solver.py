@@ -109,7 +109,7 @@ def build_model(chosen_solver, set_items, set_suppliers, demand_dictionary, util
     model.L.BidPriceBoundaryConstraint = Constraint(model.j, model.i, rule=lower_and_upper_bound_constraint, doc='Bid_Price_is_non-negative')
     # print_into_streamlit("Bid Price Constraint",  model.L.BidPriceBoundaryConstraint)
 
-    # print_into_streamlit("Model Formulation",  model)
+    print_into_streamlit("Model Formulation",  model)
 
     try:
         if (chosen_solver == "pao.pyomo.FA"):
@@ -120,15 +120,16 @@ def build_model(chosen_solver, set_items, set_suppliers, demand_dictionary, util
             solver = Solver(chosen_solver)
             solver.solve(model)
 
-        print_into_streamlit("Solved Model Formulation",  model)
+        # This prints the model formulation again filled with the solutions for X and P
+        # print_into_streamlit("Solved Model Formulation",  model)
 
-        # Display Auction Winners
+        # Display Auction Winners as a Heat Map
         x_vals = pd.Series(model.X.extract_values(), name=model.X.name)
         winner_dataframe_pre = x_vals.to_frame().reset_index()
         winner_dataframe = winner_dataframe_pre.pivot(index='level_1', columns='level_0')['X'].fillna(0)
         auctionWinners_HeatMap(winner_dataframe)
 
-        # Display Prices
+        # Display Prices as a Scatter Plot 
         p_vals = pd.Series(model.L.P.extract_values(), name=model.X.name)
         prices_dataframe_pre = p_vals.to_frame().reset_index()
         prices_dataframe_pre = prices_dataframe_pre.rename(columns={"X": "P"})
@@ -150,14 +151,15 @@ def priceVector_plot(list_items, actual_winning_bids_list, estimated_prices_list
     # st.write(demanded_quantities_list)
     # st.write(total_price_model_suggestion)
 
+    # Adjusting price found per unit to the whole quantity
     total_price_model_suggestion = collections.OrderedDict(sorted(total_price_model_suggestion.items()))
-    st.write(total_price_model_suggestion)
+    # st.write(total_price_model_suggestion)
 
     quantity_mapper = collections.OrderedDict(sorted(dict(zip(list_items, demanded_quantities_list)).items()))
-    st.write(quantity_mapper)
+    # st.write(quantity_mapper)
 
     total_adjusted_for_quantity = {k: total_price_model_suggestion[k]*quantity_mapper[k] for k in quantity_mapper}
-    st.write(total_adjusted_for_quantity)
+    # st.write(total_adjusted_for_quantity)
 
     # count = 0
     # for k, v in total_price_model_suggestion.items():
