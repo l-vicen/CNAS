@@ -153,7 +153,7 @@ def priceVector_plot(list_items, actual_winning_bids_list, estimated_prices_list
     total_price_model_suggestion = collections.OrderedDict(sorted(total_price_model_suggestion.items()))
     st.write(total_price_model_suggestion)
 
-    quantity_mapper = dict(zip(list_items, demanded_quantities_list))
+    quantity_mapper = collections.OrderedDict(sorted(dict(zip(list_items, demanded_quantities_list)).items()))
     st.write(quantity_mapper)
 
     count = 0
