@@ -1,1 +1,5 @@
 libglpk-dev
+libgmp-dev
+libglpk40 
+libsuitesparse-dev
+zlib1g-dev
