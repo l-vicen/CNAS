@@ -24,7 +24,7 @@ codespell==2.2.2
 comm==0.1.2
 coverage==7.2.1
 cryptography==3.4.8
-cyipopt==1.2.0
+# cyipopt==1.2.0
 Cython==0.29.28
 debugpy==1.6.6
 decorator==5.1.1
